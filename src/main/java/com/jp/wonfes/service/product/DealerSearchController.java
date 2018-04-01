@@ -35,8 +35,8 @@ public class DealerSearchController {
 		fm.put("0009", "その他");
 	}
 	
-//	@Autowired
-//	private DealerInfoDao dao;
+	@Autowired
+	private DealerInfoDao dao;
 	
 	/**
 	 * 初期表示
@@ -69,29 +69,40 @@ public class DealerSearchController {
 	@RequestMapping(value = "/g04/search", method = RequestMethod.GET)
 	public String search(@ModelAttribute  DealerSearchCondForm form, Model model) {
 
-		// TODO Qoあとで
-//		DealerInfoQo q = new DealerInfoQo();
-//		q.setDealerKey(form.getDealerCode());
-//		List<DealerInfoQo> list = null;
+		DealerInfoQo q = new DealerInfoQo();
+		q.setName(form.getDealerName());
+		List<DealerInfoQo> list = null;
 	
-//		try {
-//			//検索処理の実行
-////			list = dao.searchDealerInfo(q);
-//			model.addAttribute("message", "検索結果："+list.size()+"件");
-//		} catch (WfsDataException e) {
-//			e.printStackTrace();
-//			model.addAttribute("message", e.getMessage());
-//		}
+		try {
+			//検索処理の実行
+			list = dao.searchDealerInfo(q);
+			model.addAttribute("message", "検索結果："+list.size()+"件");
+		} catch (WfsDataException e) {
+			e.printStackTrace();
+			model.addAttribute("message", e.getMessage());
+		}
 		
-		List<DelaerSearchResultForm> list = this.getMockdata1();
 		model.addAttribute("fm", form);
 		model.addAttribute("field", fm);
-		model.addAttribute("data", list);
+		model.addAttribute("data", this.mapperQotoForm(list));
 		
 		return "dealersearch";
 	}
 	
 	// モック
+	private List<DelaerSearchResultForm> mapperQotoForm(List<DealerInfoQo> list) {
+		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
+		for (DealerInfoQo q : list) {
+			DelaerSearchResultForm f = new DelaerSearchResultForm();
+			f.setDealerName(q.getName());
+			f.setTakuban(q.getTakuban());
+			f.setHpUrl(q.getHpLink());
+			f.setTwUrl(q.getTwLink());
+			arlist.add(f);
+		}
+		return arlist;
+	}
+	
 	
 	private List<DelaerSearchResultForm> getMockdata1() {
 

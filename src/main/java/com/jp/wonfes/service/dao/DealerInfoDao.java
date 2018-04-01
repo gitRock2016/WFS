@@ -5,8 +5,18 @@ import java.util.List;
 import org.springframework.cglib.core.DuplicatesPredicate;
 
 public interface DealerInfoDao {
-	// 基本情報の検索
+	/**
+	 * ディーラー情報の検索
+	 * @param qo
+	 * @return
+	 * @throws WfsDataException
+	 */
 	List<DealerInfoQo> searchDealerInfo(DealerInfoQo qo) throws WfsDataException;
-	// 基本情報の登録
+
+	/**
+	 * ディーラー情報の登録
+	 * @param qo
+	 * @throws WfsDataException
+	 */
 	void registDealerInfo(DealerInfoQo qo) throws WfsDataException;
 }

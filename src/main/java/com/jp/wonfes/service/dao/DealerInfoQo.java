@@ -1,28 +1,51 @@
 package com.jp.wonfes.service.dao;
 
 public class DealerInfoQo {
-	private String dealerKey;
-	private String dealerName;
+	private Integer dealerId;
+	private String name;
 	private String takuban;
-	public String getDealerKey() {
-		return dealerKey;
+	private String dealerIconCd ;
+	private String hpLink  ;
+	private String twLink;
+	
+	
+	public Integer getDealerId() {
+		return dealerId;
 	}
-	public void setDealerKey(String dealerKey) {
-		this.dealerKey = dealerKey;
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
 	}
-	public String getDealerName() {
-		return dealerName;
+	public String getName() {
+		return name;
 	}
-	public void setDealerName(String dealerName) {
-		this.dealerName = dealerName;
+	public void setName(String name) {
+		this.name = name;
 	}
+	public String getDealerIconCd() {
+		return dealerIconCd;
+	}
+	
 	public String getTakuban() {
 		return takuban;
 	}
 	public void setTakuban(String takuban) {
 		this.takuban = takuban;
 	}
-	
+	public void setDealerIconCd(String dealerIconCd) {
+		this.dealerIconCd = dealerIconCd;
+	}
+	public String getHpLink() {
+		return hpLink;
+	}
+	public void setHpLink(String hpLink) {
+		this.hpLink = hpLink;
+	}
+	public String getTwLink() {
+		return twLink;
+	}
+	public void setTwLink(String twLink) {
+		this.twLink = twLink;
+	}
 	
 	
 }

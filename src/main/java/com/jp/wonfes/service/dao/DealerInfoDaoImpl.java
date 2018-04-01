@@ -18,55 +18,54 @@ public class DealerInfoDaoImpl implements DealerInfoDao{
 	
 	public List<DealerInfoQo> searchDealerInfo(DealerInfoQo qo) throws WfsDataException {
 		
-		if (qo.getDealerKey() == null ) {
+		// check
+		if (qo.getDealerId() == null && qo.getName() == null) {
 			throw new WfsDataException("ディーラ情報の登録値が不正です");
 		}
+		// sql
+		StringBuilder selsql = new StringBuilder("select dealer_id , name, takuban, dealer_icon_cd, hp_link, tw_link  from dealer");
+		// mapper
+		RowMapper<DealerInfoQo> rm = new RowMapper<DealerInfoQo>() {
+			  public DealerInfoQo mapRow(ResultSet rs, int rowNum) throws SQLException {
+					DealerInfoQo q = new DealerInfoQo();
+					q.setDealerId(rs.getInt("dealer_id"));
+					q.setName(rs.getString("name"));
+					q.setTakuban(rs.getString("takuban"));
+					q.setDealerIconCd(rs.getString("dealer_icon_cd"));
+					q.setHpLink(rs.getString("hp_link"));
+					q.setTwLink(rs.getString("tw_link"));
+					return q;
+				}};
 		
-		String c =qo.getDealerKey();
+		// 検索条件
+		String nameKey = qo.getName(); //名前
 		List<DealerInfoQo> list = null;
-			if(! "".equals(c)) {
-				list = jt.query("select dealer_cd , name, takuban from dealer where dealer_cd = ?"
-						, new RowMapper<DealerInfoQo>() {
-							public DealerInfoQo mapRow(ResultSet rs, int rowNum) throws SQLException {
-								DealerInfoQo q = new DealerInfoQo();
-								q.setDealerKey(rs.getString("dealer_cd"));
-								q.setDealerName(rs.getString("name"));
-								q.setTakuban(rs.getString("takuban"));
-								return q;
-							}}
-						,c
-						);
-			}else {
-				list = jt.query("select dealer_cd , name, takuban from dealer "
-						, new RowMapper<DealerInfoQo>() {
-							public DealerInfoQo mapRow(ResultSet rs, int rowNum) throws SQLException {
-								DealerInfoQo q = new DealerInfoQo();
-								q.setDealerKey(rs.getString("dealer_cd"));
-								q.setDealerName(rs.getString("name"));
-								q.setTakuban(rs.getString("takuban"));
-								return q;
-							}}
-						);
-			}
+		if (!"".equals(nameKey)) {
+			selsql.append(" where name like ? || '%' ");
+			list = jt.query(selsql.toString(), rm, nameKey);
+		} else {
+			list = jt.query(selsql.toString(), rm);
+		}
+		
 		return list;
 	}
 	
 	public void registDealerInfo(DealerInfoQo qo) throws WfsDataException {
 		// とりあえずチェック
 		// null
-		if (qo.getDealerKey() == null || qo.getDealerName() == null || qo.getTakuban() == null) {
-			throw new WfsDataException("ディーラ情報の登録値が不正です");
-		}
-		if (qo.getDealerKey().equals("") || qo.getDealerName().equals("") || qo.getTakuban().equals("")) {
-			throw new WfsDataException("ディーラ情報の登録値が不正です");
-		}
-		// 一意制約
-		if(! this.searchDealerInfo(qo).isEmpty()) {
-			throw new WfsDataException("ディーラ情報がすでに登録されています");
-		};
-		
-		
-		jt.update("insert into dealer values(?, ?, ?)", qo.getDealerKey(), qo.getDealerName(), Integer.valueOf(qo.getTakuban()));
+//		if (qo.getDealerKey() == null || qo.getDealerName() == null || qo.getTakuban() == null) {
+//			throw new WfsDataException("ディーラ情報の登録値が不正です");
+//		}
+//		if (qo.getDealerKey().equals("") || qo.getDealerName().equals("") || qo.getTakuban().equals("")) {
+//			throw new WfsDataException("ディーラ情報の登録値が不正です");
+//		}
+//		// 一意制約
+//		if(! this.searchDealerInfo(qo).isEmpty()) {
+//			throw new WfsDataException("ディーラ情報がすでに登録されています");
+//		};
+//		
+//		
+//		jt.update("insert into dealer values(?, ?, ?)", qo.getDealerKey(), qo.getDealerName(), Integer.valueOf(qo.getTakuban()));
 		
 	}
 

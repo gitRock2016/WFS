@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.product;
+	package com.jp.wonfes.service.product;
 
 import java.util.List;
 
@@ -26,7 +26,4 @@ public class DelaerRegistForm {
 		this.productList = productList;
 	}
 
-	
-	
-		
 }
