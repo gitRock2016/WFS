@@ -63,13 +63,5 @@ public class DealerRegistController {
 
 		return "dealerregist";
 	}
-	
-	// TODO　お試し
-	private List<DealerRegistSampleRadio> getRadio() {
-		List<DealerRegistSampleRadio> arrayList = new ArrayList<DealerRegistSampleRadio>();
-		arrayList.add(new DealerRegistSampleRadio("aaaaaaaaaaaaaaa女","female"));
-		arrayList.add(new DealerRegistSampleRadio("aaaaaaaaaaaaaaa男","male"));
-		return arrayList;
-	}
-	
+
 }

@@ -1,6 +1,6 @@
-package com.jp.wonfes.service.product;
+package com.jp.wonfes.service.sample;
 
-public class DelaerSearchFormSample {
+public class DealerSearchFormSample {
 	private String searchKey1;
 
 	public String getSearchKey1() {

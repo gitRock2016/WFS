@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.product;
+package com.jp.wonfes.service.sample;
 
 public class DealerRegistSampleRadio {
 	private String label;

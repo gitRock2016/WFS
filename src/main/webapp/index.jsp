@@ -14,7 +14,8 @@
 	<h4>localhost</h4>
 	<a href="http://localhost:8080/WonFesSys/g03/init">アカウント情報画面, localhost</a><br/>	
 	<a href="http://localhost:8080/WonFesSys/g04/init">ディーラー検索画面, localhost</a><br/>	
-	<a href="http://localhost:8080/WonFesSys/g06/init">ディーラー登録画面, localhost</a><br/>	
+	<a href="http://localhost:8080/WonFesSys/g06/init">ディーラー登録画面, localhost</a><br/>
+	<a href="http://localhost:8080/WonFesSys/sample/init">sample画面, localhost</a><br/>
 	
 	<h4>結合</h4>
 	<a href="http://www.iwatakhr69.net/WonFesSys/g03/init">アカウント情報画面</a><br/>	
