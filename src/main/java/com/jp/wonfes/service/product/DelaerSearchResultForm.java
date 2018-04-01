@@ -1,9 +1,12 @@
 package com.jp.wonfes.service.product;
 
 public class DelaerSearchResultForm {
+	//でぃーらー
 	private String dealerName;
 	private String takuban;
-	private String link;
+	private String hpUrl;
+	private String twUrl;
+	
 	public String getDealerName() {
 		return dealerName;
 	}
@@ -16,11 +19,18 @@ public class DelaerSearchResultForm {
 	public void setTakuban(String takuban) {
 		this.takuban = takuban;
 	}
-	public String getLink() {
-		return link;
+	public String getHpUrl() {
+		return hpUrl;
 	}
-	public void setLink(String link) {
-		this.link = link;
+	public void setHpUrl(String hpUrl) {
+		this.hpUrl = hpUrl;
 	}
+	public String getTwUrl() {
+		return twUrl;
+	}
+	public void setTwUrl(String twUrl) {
+		this.twUrl = twUrl;
+	}
+	
 	
 }
