@@ -1,22 +1,12 @@
 package com.jp.wonfes.service.product;
 
+import java.util.List;
 
 public class DelaerRegistForm {
-	private String dealerCode;
 	private String dealerName;
 	private String takuban;
-	private Integer[] filed;
-	private String sex;
-	private String birthplace;
+	private List<DealerRegistSearchResultProductForm> productList;
 	
-	
-	public String getDealerCode() {
-		return dealerCode;
-	}
-	public void setDealerCode(String dealerCode) {
-		this.dealerCode = dealerCode;
-	}
-
 	public String getDealerName() {
 		return dealerName;
 	}
@@ -29,26 +19,14 @@ public class DelaerRegistForm {
 	public void setTakuban(String takuban) {
 		this.takuban = takuban;
 	}
-	public Integer[] getFiled() {
-		return filed;
+	public List<DealerRegistSearchResultProductForm> getProductList() {
+		return productList;
 	}
-	public void setFiled(Integer[] filed) {
-		this.filed = filed;
+	public void setProductList(List<DealerRegistSearchResultProductForm> productList) {
+		this.productList = productList;
 	}
-	public String getSex() {
-		return sex;
-	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-	public String getBirthplace() {
-		return birthplace;
-	}
-	public void setBirthplace(String birthplace) {
-		this.birthplace = birthplace;
-	}
-	
-	
 
 	
+	
+		
 }

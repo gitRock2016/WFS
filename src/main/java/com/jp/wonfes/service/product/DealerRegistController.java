@@ -18,44 +18,21 @@ import com.jp.wonfes.service.dao.WfsDataException;
 
 @Controller
 public class DealerRegistController {
-	
-	@Autowired
-	private DealerInfoDao dealerInfoDao;
-	
-	
+
+//	@Autowired
+//	private DealerInfoDao dealerInfoDao;
+//	
 	@RequestMapping(value="/g06/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		
 		DelaerRegistForm delaerRegistForm = new DelaerRegistForm();
 		
-		// ディーラコード
-		delaerRegistForm.setDealerCode("D000");
 		// ディーラ名
-		delaerRegistForm.setDealerName("ディーラ名");
+		delaerRegistForm.setDealerName("");
 		// 卓番
-		delaerRegistForm.setTakuban("1234");
-		// ジャンル
-		delaerRegistForm.setFiled(new Integer[] {2}); // チェックボックスの初期値を設定
-		Map<Integer, String> fieldMap = new HashMap<Integer,String>(); 
-		//チェックボックスの表示項目を設定
-		fieldMap.put(1, "艦これ");
-		fieldMap.put(2, "ガルパン");
-		fieldMap.put(3, "FGO");
-		model.addAttribute("fieldMap", fieldMap);
-		
-		// 性別
-		delaerRegistForm.setSex("male"); // 初期値の設定
-		model.addAttribute("seibetsuList", this.getRadio()); // radiobuttonsのlavel、valueの設定
-		
-		// 出身地
-		delaerRegistForm.setBirthplace("1"); // 初期値の設定
-		Map<String, String> birthPlaceMap = new HashMap<String,String>();
-		birthPlaceMap.put("1", "愛媛");
-		birthPlaceMap.put("2", "徳島");
-		birthPlaceMap.put("3", "香川");
-		birthPlaceMap.put("4", "高知");
-		model.addAttribute("birthplaceList",birthPlaceMap);
-
+		delaerRegistForm.setTakuban("");
+		// 作品簡易リスト
+		delaerRegistForm.setProductList(null);
 		
 		model.addAttribute("delaerRegistForm", delaerRegistForm);
 		model.addAttribute("message", "");
@@ -65,59 +42,25 @@ public class DealerRegistController {
 	@RequestMapping(value="/g06/regist", method=RequestMethod.POST)
 	public String regist(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
 		
-		//登録処理
-		String dc = dealerRegistForm.getDealerCode();
-		String dn = dealerRegistForm.getDealerName();
-		String dt = dealerRegistForm.getTakuban();
+		System.out.println(dealerRegistForm.getDealerName());
+		System.out.println(dealerRegistForm.getTakuban());
+//		for(DealerRegistSearchResultProductForm e :dealerRegistForm.getProductList()){
+//			System.out.println("proname:" + e.getProductName() + e.getPrice() );
+//			System.out.println(e.getProductName());
+//			System.out.println(e.getPrice());
+//			System.out.println(e.getProduct_fields());
+//			
+//		}
 		
-		DealerInfoQo dealerInfoQo = new DealerInfoQo();
-		dealerInfoQo.setDealerKey(dc);
-		dealerInfoQo.setDealerName(dn);
-		dealerInfoQo.setTakuban(dt);
-		try {
-			dealerInfoDao.registDealerInfo(dealerInfoQo);
-			model.addAttribute("message", "登録成功");
-		} catch (WfsDataException e) {
-			e.printStackTrace();
-			model.addAttribute("message", e.getMessage());
-		}
-		
-		// ディーラコード
-		dealerRegistForm.setDealerCode(dc);
-		// ディーラ名
-		dealerRegistForm.setDealerName(dn);
-		// 卓番
-		dealerRegistForm.setTakuban(dt);
-		// ジャンル
-		Integer[] chkvalues = dealerRegistForm.getFiled();
-		System.out.println("ジャンル");
-		for(Integer i : chkvalues) {
-			System.out.println(i);
-		}
-		Map<Integer, String> fieldMap = new HashMap<Integer,String>(); //チェックボックスの表示項目を設定
-		fieldMap.put(1, "艦これ");
-		fieldMap.put(2, "ガルパン");
-		fieldMap.put(3, "FGO");
-		model.addAttribute("fieldMap", fieldMap);
-		
-		// ↓お試し
-		// 性別
-		System.out.println("性別");
-		System.out.println(dealerRegistForm.getSex());
-		model.addAttribute("seibetsuList", this.getRadio());
-		
-		// 出身地
-		System.out.println("出身地");
-		System.out.println(dealerRegistForm.getBirthplace());
-		Map<String, String> birthPlaceMap = new HashMap<String,String>();
-		birthPlaceMap.put("1", "愛媛");
-		birthPlaceMap.put("2", "徳島");
-		birthPlaceMap.put("3", "香川");
-		birthPlaceMap.put("4", "高知");
-		model.addAttribute("birthplaceList",birthPlaceMap);
-		// ↑お試し
+//		DealerRegistSearchResultProductForm p = 
+//				new DealerRegistSearchResultProductForm("", new String[] { "0003" }, 1244);
+//		List<DealerRegistSearchResultProductForm> plist = new ArrayList<DealerRegistSearchResultProductForm>();
+//		plist.add(p);
+//		delaerRegistForm.setProductList(plist);
 		
 		model.addAttribute("delaerRegistForm", dealerRegistForm);
+		model.addAttribute("message", "");
+
 		return "dealerregist";
 	}
 	
