@@ -48,8 +48,8 @@
 					<td><c:out value="${obj.dealerName}" /></td>
 					<td><c:out value="${obj.takuban}" /></td>
 					<td><a href="">TODO ディーラー詳細画面へ遷移</a></td>
-					<td><c:out value="${obj.hpUrl}" /></td>
-					<td><c:out value="${obj.twUrl}" /></td>
+					<td><a href="${obj.hpUrl}">HP</a></td>
+					<td><a href="${obj.twUrl}">twitterアカウント</a></td>
 					<%-- 				<td><c:out value="${obj.link}" /></td> --%>
 				</tr>
 			</c:forEach>
