@@ -38,6 +38,9 @@ public class Ex {
 			FileInputStream fIStream= new FileInputStream(res);
 			InputStreamReader r = new InputStreamReader(fIStream, "UTF-8");
 			
+			// mybatis.xmlのenvironmentタグのidを指定し、環境に応じたFactoryを作成できる
+			// SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(r,"development");
+			//指定しない場合は、defaultで作成される
 			SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(r);
 			sqs = sf.openSession();
 			DealerInfoQo q = sqs.selectOne(namespace, new Integer(1));
