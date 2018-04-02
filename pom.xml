@@ -116,5 +116,28 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.3-1102-jdbc4</version>
 		</dependency>
+
+		<!-- mybatis導入お試し 　0402-->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+<!-- 		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaber</artifactId>
+			<version>1.6.8</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency> -->
+		
 	</dependencies>	
 </project>
