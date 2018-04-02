@@ -30,4 +30,18 @@
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource"></constructor-arg>
 	</bean>
+	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:db/mybatis.xml"></property>
+		<property name="mapperLocations" >
+			<list>
+				<value>classpath:/com/jp/wonfes/service/dao/mapper/DealerMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
 </beans>
