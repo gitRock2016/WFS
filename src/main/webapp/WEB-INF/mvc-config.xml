@@ -31,7 +31,8 @@
 		<constructor-arg ref="dataSource"></constructor-arg>
 	</bean>
 	
-	<bean id="sqlSessionFactory"
+	<!-- springとmybatisの連携 -->
+<!-- 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:db/mybatis.xml"></property>
@@ -43,5 +44,6 @@
 	</bean>
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
-	</bean>
+	</bean> -->
+	<!-- springとmybatisの連携 -->
 </beans>
