@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="D:\MyEdocument\MyPG\webapl\WonFesSys\maven\repository\org\postgresql\postgresql\9.3-1102-jdbc4\postgresql-9.3-1102-jdbc4.jar" />
+	<context id="context1">
+		<jdbcConnection
+			driverClass="org.postgresql.Driver"
+			connectionURL="jdbc:postgresql://localhost:5432/postgres"
+			userId="postgres"
+			password="password" />
+			
+		<javaModelGenerator
+			targetPackage="com.jp.wonfes.service.dao.gen"
+			targetProject="src/main/java/" />
+		<sqlMapGenerator
+			targetPackage="com.jp.wonfes.service.dao.mapper.gen"
+			targetProject="src/main/java/" />
+		<javaClientGenerator
+			targetPackage="com.jp.wonfes.service.dao.gen"
+			targetProject="src/main/java/"
+			type="XMLMAPPER" />
+<!-- 					<javaModelGenerator targetPackage="com.jp.wonfes.service.dao.gen"
+			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main\" />
+		<sqlMapGenerator targetPackage="com.jp.wonfes.service.dao.mapper.gen"
+			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main" />
+		<javaClientGenerator targetPackage="com.jp.wonfes.service.dao.gen"
+			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main"
+			type="XMLMAPPER" /> -->
+		<!-- // ↑ 3行すべてに、MyBatisのクラスを入れたいパッケージ名と、プロジェクトのファイルパスを入れてください -->
+		<table schema="public" tableName="dealer" />
+		<table schema="public" tableName="dealer_detail" />
+		<table schema="public" tableName="prd_field_master" />
+		<!-- // ↑ DB名とテーブル名を入れてください -->
+	</context>
+</generatorConfiguration>
