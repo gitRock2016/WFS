@@ -11,8 +11,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.jp.wonfes.service.dao.DealerInfoQo;
-import com.jp.wonfes.service.dao.mapper.DealerMapper;
+import com.jp.wonfes.service.dao.product.DealerInfoQo;
+import com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper;
+
 
 /**
  * Spring-mybatisを連携せず、mybatis単独で動作確認した。
@@ -28,7 +29,7 @@ public class Ex {
 		// mybatis設定ファイルへのパス指定
 		String res="src\\main\\resources\\db\\mybatis.xml";
 		// マッパー.xml,namespace+selectidと同じもの
-		String namespace ="com.jp.wonfes.service.dao.mapper.DealerMapper.selectDealer";
+		String namespace ="com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper.selectDealer";
 		SqlSession sqs  =null;
 		
 		try {
@@ -55,11 +56,11 @@ public class Ex {
 			/* namespaceをインターフェースで指定
 			 * xmlとインターフェースでmapping済みなので
 			 * メソッドを確認する必要はない*/
-			DealerMapper dmapper = sqs.getMapper(DealerMapper.class);
+			DealerSampleMapper dmapper = sqs.getMapper(DealerSampleMapper.class);
 			DealerInfoQo q2 = dmapper.selectDealer(1);
 
-//			System.out.println(q1.getName());
-			System.out.println(q2.getName());
+			System.out.println("q1:" + q1.getName());
+			System.out.println("q2:" + q2.getName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {

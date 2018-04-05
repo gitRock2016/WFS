@@ -11,27 +11,23 @@
 			userId="postgres"
 			password="password" />
 			
+		<!-- Model, Example, Key クラス -->
 		<javaModelGenerator
-			targetPackage="com.jp.wonfes.service.dao.gen"
+			targetPackage="com.jp.wonfes.service.dao.common"
 			targetProject="src/main/java/" />
+		<!-- マッパーxml -->
 		<sqlMapGenerator
-			targetPackage="com.jp.wonfes.service.dao.mapper.gen"
+			targetPackage="com.jp.wonfes.service.dao.common.mapper"
 			targetProject="src/main/java/" />
+		<!-- マッパーインターフェース -->
 		<javaClientGenerator
-			targetPackage="com.jp.wonfes.service.dao.gen"
+			targetPackage="com.jp.wonfes.service.dao.common.mapper"
 			targetProject="src/main/java/"
 			type="XMLMAPPER" />
-<!-- 					<javaModelGenerator targetPackage="com.jp.wonfes.service.dao.gen"
-			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main\" />
-		<sqlMapGenerator targetPackage="com.jp.wonfes.service.dao.mapper.gen"
-			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main" />
-		<javaClientGenerator targetPackage="com.jp.wonfes.service.dao.gen"
-			targetProject="D:\MyEdocument\MyPG\workspace-sts\WonFesSys2\src\main"
-			type="XMLMAPPER" /> -->
-		<!-- // ↑ 3行すべてに、MyBatisのクラスを入れたいパッケージ名と、プロジェクトのファイルパスを入れてください -->
+			
 		<table schema="public" tableName="dealer" />
 		<table schema="public" tableName="dealer_detail" />
 		<table schema="public" tableName="prd_field_master" />
-		<!-- // ↑ DB名とテーブル名を入れてください -->
+		
 	</context>
 </generatorConfiguration>

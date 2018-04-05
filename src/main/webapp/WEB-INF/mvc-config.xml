@@ -13,9 +13,9 @@
 	<context:component-scan base-package="com.jp.wonfes.service.*" />
 	<context:property-placeholder location="classpath:db/*.properties"/>
 	
+	<!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -34,13 +34,16 @@
 	<!-- springとmybatisの連携 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<!-- ↓environmentタグの内容は無視される・・らしい -->
-		<property name="mapperLocations"  value="classpath*:com/jp/wonfes/service/dao/mapper/*.xml"></property>
+		<property name="mapperLocations">
+			<list>
+				<value>com/jp/wonfes/service/dao/product/mapper/*.xml"</value>
+			</list>
+		</property>
 	</bean>
-<!-- 		<property name="configLocation" value="classpath:db/mybatis.xml"></property> -->
-		<!-- com/jp/wonfes/service/dao/mapper/DealerMapper.xml -->
-<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-  <constructor-arg index="0" ref="sqlSessionFactory" />
-</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
 
 </beans>

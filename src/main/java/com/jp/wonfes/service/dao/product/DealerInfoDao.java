@@ -1,8 +1,11 @@
-package com.jp.wonfes.service.dao;
+package com.jp.wonfes.service.dao.product;
 
 import java.util.List;
 
 import org.springframework.cglib.core.DuplicatesPredicate;
+
+import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.product.DealerInfoQo;
 
 public interface DealerInfoDao {
 	/**

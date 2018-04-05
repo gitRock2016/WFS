@@ -9,12 +9,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.product.DealerSampleDao;
+
 
 @Controller
 public class SampleController {
-
+	
+	@Autowired
+	private DealerSampleDao dao;
+	
 	@RequestMapping(value="/sample/init", method=RequestMethod.GET)
 	public String init(Model model) {
+		try {
+			dao.searchDealerInfo();
+		} catch (WfsDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		model.addAttribute("message", "HelloSample!");
 		return "sample";
 	}

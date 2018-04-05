@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.dao;
+package com.jp.wonfes.service.dao.product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,13 +6,16 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.jp.wonfes.service.dao.mapper.DealerMapper;
+import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.product.DealerInfoQo;
 
 /**
  * Spring JDBCを利用したデータ取得
@@ -26,7 +29,6 @@ public class DealerInfoDaoImpl implements DealerInfoDao{
 
 	@Autowired
 	private JdbcTemplate jt;
-	
 	
 	public List<DealerInfoQo> searchDealerInfo(DealerInfoQo qo) throws WfsDataException {
 		
@@ -70,7 +72,7 @@ public class DealerInfoDaoImpl implements DealerInfoDao{
 	}
 	
 	public void registDealerInfo(DealerInfoQo qo) throws WfsDataException {
-		// TODO　作成後で
+		// TODO　後で作成
 		// とりあえずチェック
 		// null
 //		if (qo.getDealerKey() == null || qo.getDealerName() == null || qo.getTakuban() == null) {

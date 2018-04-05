@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jp.wonfes.service.dao.DealerInfoDao;
-import com.jp.wonfes.service.dao.DealerInfoQo;
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.product.DealerInfoDao;
+import com.jp.wonfes.service.dao.product.DealerInfoQo;
 
 @Controller
 public class DealerSearchController {

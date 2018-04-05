@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jp.wonfes.service.dao.mapper.DealerMapper">
+<mapper namespace="com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper">
 	<select id="selectDealer" parameterType="int" resultMap="dealerResultMap" >
 		select * from dealer where dealer_id = #{dealer_id}
 	</select>
 
-	<resultMap id="dealerResultMap" type="com.jp.wonfes.service.dao.DealerInfoQo">
+	<resultMap id="dealerResultMap" type="com.jp.wonfes.service.dao.product.DealerInfoQo">
 		<id property="dealerId" column="dealer_id" />
 		<result property="name" column="name" />
 		<result property="takuban" column="takuban" />

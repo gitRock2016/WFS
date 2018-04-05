@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.dao;
+package com.jp.wonfes.service.dao.product;
 
 public class DealerInfoQo {
 	private Integer dealerId;
