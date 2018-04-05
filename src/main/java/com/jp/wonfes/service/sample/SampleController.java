@@ -9,14 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jp.wonfes.service.dao.MyBatisSpringDealerDao;
-
 
 @Controller
 public class SampleController {
 
-
-	
 	@RequestMapping(value="/sample/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		model.addAttribute("message", "HelloSample!");

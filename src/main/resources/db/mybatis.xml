@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			</dataSource>
 		</environment>
 	</environments>
-	<mappers>
+<!-- 	<mappers>
 		<mapper resource="com/jp/wonfes/service/dao/mapper/DealerMapper.xml" />
-	</mappers>
+	</mappers> -->
 </configuration>

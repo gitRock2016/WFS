@@ -32,18 +32,15 @@
 	</bean>
 	
 	<!-- springとmybatisの連携 -->
-<!-- 	<bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="classpath:db/mybatis.xml"></property>
-		<property name="mapperLocations" >
-			<list>
-				<value>classpath:/com/jp/wonfes/service/dao/mapper/DealerMapper.xml</value>
-			</list>
-		</property>
+		<!-- ↓environmentタグの内容は無視される・・らしい -->
+		<property name="mapperLocations"  value="classpath*:com/jp/wonfes/service/dao/mapper/*.xml"></property>
 	</bean>
-	<bean class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
-	</bean> -->
-	<!-- springとmybatisの連携 -->
+<!-- 		<property name="configLocation" value="classpath:db/mybatis.xml"></property> -->
+		<!-- com/jp/wonfes/service/dao/mapper/DealerMapper.xml -->
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactory" />
+</bean>
+
 </beans>
