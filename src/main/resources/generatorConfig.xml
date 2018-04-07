@@ -2,8 +2,9 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
+<!-- 		location="D:\MyEdocument\MyPG\webapl\WonFesSys\maven\repository\org\postgresql\postgresql\9.3-1102-jdbc4\postgresql-9.3-1102-jdbc4.jar" /> -->
 	<classPathEntry
-		location="D:\MyEdocument\MyPG\webapl\WonFesSys\maven\repository\org\postgresql\postgresql\9.3-1102-jdbc4\postgresql-9.3-1102-jdbc4.jar" />
+		location="C:\Users\rock\.m2\repository\org\postgresql\postgresql\9.3-1102-jdbc4\postgresql-9.3-1102-jdbc4.jar" />
 	<context id="context1">
 		<jdbcConnection
 			driverClass="org.postgresql.Driver"
@@ -17,8 +18,8 @@
 			targetProject="src/main/java/" />
 		<!-- マッパーxml -->
 		<sqlMapGenerator
-			targetPackage="com.jp.wonfes.service.dao.common.mapper"
-			targetProject="src/main/java/" />
+			targetPackage="db.mapper.common"
+			targetProject="src/main/resources/"/>
 		<!-- マッパーインターフェース -->
 		<javaClientGenerator
 			targetPackage="com.jp.wonfes.service.dao.common.mapper"

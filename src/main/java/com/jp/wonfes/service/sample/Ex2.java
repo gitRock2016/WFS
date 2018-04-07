@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jp.wonfes.service.dao.WfsDataException;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper;
 
@@ -37,9 +36,20 @@ public class Ex2 {
 
 	}
 	
+	/**
+	 * SqlSessionがnullで動作しない。多分DIが動作しないので、インジェクションできていないため
+	 * 動作確認する場合は、Ex.javaのようにSqlSessionをnewする必要がある
+	 * 
+	 */
 	public void dotry1() {
-		DealerSampleMapper dmapper = sqs.getMapper(DealerSampleMapper.class);
-		DealerInfoQo q = dmapper.selectDealer(1);
+		// マッパー.xml,namespace+selectidと同じもの
+		String namespace ="com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper.selectDealer";
+		
+		DealerInfoQo q = sqs.selectOne(namespace, new Integer(1));
+//		DealerSampleMapper dmapper = sqs.getMapper(DealerSampleMapper.class);
+//		DealerInfoQo q = dmapper.selectDealer(1);
+		
+		
 		System.out.println(q.getName());
 	}
 }

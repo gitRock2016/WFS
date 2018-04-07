@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
 
 
@@ -21,13 +22,15 @@ public class SampleController {
 	
 	@RequestMapping(value="/sample/init", method=RequestMethod.GET)
 	public String init(Model model) {
+		List<DealerInfoQo> l =null;
 		try {
-			dao.searchDealerInfo();
+			l =dao.searchDealerInfo();
+			
 		} catch (WfsDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addAttribute("message", "HelloSample!");
+		model.addAttribute("message", "HelloSample!" + l.get(0).getName());
 		return "sample";
 	}
 	

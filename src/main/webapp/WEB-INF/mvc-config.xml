@@ -36,7 +36,9 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations">
 			<list>
-				<value>com/jp/wonfes/service/dao/product/mapper/*.xml"</value>
+				<!-- xmlなどのリソースはsrc/main/rosources配下に格納すること -->
+				<value>classpath:db/mapper/*.xml</value>
+				<value>classpath:db/mapper/common/*.xml</value>
 			</list>
 		</property>
 	</bean>
