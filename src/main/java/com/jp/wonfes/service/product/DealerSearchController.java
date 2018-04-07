@@ -48,7 +48,9 @@ public class DealerSearchController {
 	@Autowired
 	private SqlSession sqs;
 	
-
+	@Autowired
+	private DealerMapper dmm;
+	
 	/**
 	 * 初期表示
 	 * @param model
@@ -86,12 +88,16 @@ public class DealerSearchController {
 //		List<DealerInfoQo> list = null;
 		
 		List<Dealer> list = null;
-		DealerMapper mp1 = sqs.getMapper(DealerMapper.class);
+		/*インジェクションしたsqlsessionを利用*/
+//		DealerMapper mp1 = sqs.getMapper(DealerMapper.class);
 		DealerExample de1 = new DealerExample();
 		if (form.getDealerName() != null && !"".equals(form.getDealerName())) {
 			de1.createCriteria().andNameLike(form.getDealerName()+"%");
 		}
-		list = mp1.selectByExample(de1);
+		
+//		list = mp1.selectByExample(de1);
+		/*インジェクションしたMapperを利用*/
+		list = dmm.selectByExample(de1);
 		model.addAttribute("message", "検索結果："+list.size()+"件");
 		
 	

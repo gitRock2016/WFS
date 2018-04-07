@@ -46,6 +46,29 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
-
-
+	
+	<!-- マッパーのインジェクション -->
+	<!-- 自動生成Dao-->
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.DealerMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.DealerDetailMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.PrdFieldMasterMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<!-- 自作Dao-->
+	<!-- なし-->
+	
+	<!-- マッパーのインジェクションを楽にできる-->
+	<!-- 利用しているBeanが明示的にわかるようにしたいので、利用しない -->
+	<!--
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jp.wonfes.service.dao.common.mapper"></property>
+	</bean>
+	 -->
 </beans>
