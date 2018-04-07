@@ -19,6 +19,7 @@ import com.jp.wonfes.service.dao.product.DealerInfoQo;
 
 /**
  * Spring JDBCを利用したデータ取得
+ * ※myBatisを利用しない実装
  * 対象テーブル：dealerテーブル
  * 
  * @author rock

@@ -19,6 +19,7 @@ import com.jp.wonfes.service.dao.product.mapper.DealerSampleMapper;
  * Spring-mybatisを連携せず、mybatis単独で動作確認した。
  * xmlなど設定ファイルのパス指定、連携がうまく行っていることを確認できた。
  * 
+
  * マッパーインターフェースの利用
  * @author rock
  *

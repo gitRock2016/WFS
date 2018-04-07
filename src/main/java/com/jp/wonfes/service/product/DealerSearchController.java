@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.common.Dealer;
+import com.jp.wonfes.service.dao.common.DealerExample;
+import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoDao;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 
@@ -37,9 +41,14 @@ public class DealerSearchController {
 		fm.put("0009", "その他");
 	}
 	
+	/*myBatisを利用しないデータ取得*/
 	@Autowired
 	private DealerInfoDao dao;
 	
+	@Autowired
+	private SqlSession sqs;
+	
+
 	/**
 	 * 初期表示
 	 * @param model
@@ -70,23 +79,35 @@ public class DealerSearchController {
 	 */
 	@RequestMapping(value = "/g04/search", method = RequestMethod.GET)
 	public String search(@ModelAttribute  DealerSearchCondForm form, Model model) {
-
-		DealerInfoQo q = new DealerInfoQo();
-		q.setName(form.getDealerName());
-		List<DealerInfoQo> list = null;
-	
-		try {
-			//検索処理の実行
-			list = dao.searchDealerInfo(q);
-			model.addAttribute("message", "検索結果："+list.size()+"件");
-		} catch (WfsDataException e) {
-			e.printStackTrace();
-			model.addAttribute("message", e.getMessage());
+		
+		
+//		DealerInfoQo q = new DealerInfoQo();
+//		q.setName(form.getDealerName());
+//		List<DealerInfoQo> list = null;
+		
+		List<Dealer> list = null;
+		DealerMapper mp1 = sqs.getMapper(DealerMapper.class);
+		DealerExample de1 = new DealerExample();
+		if (form.getDealerName() != null && !"".equals(form.getDealerName())) {
+			de1.createCriteria().andNameLike(form.getDealerName()+"%");
 		}
+		list = mp1.selectByExample(de1);
+		model.addAttribute("message", "検索結果："+list.size()+"件");
+		
+	
+//		try {
+//			//検索処理の実行
+//			list = dao.searchDealerInfo(q);
+//		model.addAttribute("message", "検索結果："+list.size()+"件");
+//		} catch (WfsDataException e) {
+//			e.printStackTrace();
+//			model.addAttribute("message", e.getMessage());
+//		}
 		
 		model.addAttribute("fm", form);
 		model.addAttribute("field", fm);
-		model.addAttribute("data", this.mapperQotoForm(list));
+//		model.addAttribute("data", this.mapperQotoForm(list));
+		model.addAttribute("data", this.mapperQotoForm2(list));
 		
 		return "dealersearch";
 	}
@@ -105,6 +126,18 @@ public class DealerSearchController {
 		return arlist;
 	}
 	
+	private List<DelaerSearchResultForm> mapperQotoForm2(List<Dealer> list) {
+		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
+		for (Dealer q : list) {
+			DelaerSearchResultForm f = new DelaerSearchResultForm();
+			f.setDealerName(q.getName());
+			f.setTakuban(q.getTakuban());
+			f.setHpUrl(q.getHpLink());
+			f.setTwUrl(q.getTwLink());
+			arlist.add(f);
+		}
+		return arlist;
+	}	
 	
 	private List<DelaerSearchResultForm> getMockdata1() {
 
