@@ -44,8 +44,23 @@
 		<c:if test="${data !=null}">
 			<c:forEach var="obj" items="${data}" varStatus="obj_status">
 				<tr>
-					<td><c:out value="${obj_status.count}" /></td>
-					<td><c:out value="${obj.dealerName}" /></td>
+					<td><c:out value="${obj_status.count}" /><br/>
+					</td>
+					<td>
+<!-- TODO
+ 						urlタグを利用してエンコードした値では遷移できない
+						エンコードした値をSrpingがうまく解釈できていないのかも
+						暫定で、urlタグは利用しない
+ -->
+<%--  					<c:url value="/g11/init/${obj.id}" var="url"/> --%>
+
+<!-- 						c:urlを使わないと、コンテキストを自動設定してくれない -->
+<%-- 						<a href="WonFesSys/g11/init/${obj.id}"><c:out value="${obj.dealerName}" /></a> --%>
+
+	 					<c:url value="/g11/init" var="bUrl"/>
+						<a href="${bUrl}/${obj.id}"><c:out value="${obj.dealerName}" /></a>
+						<br/>
+					</td>
 					<td><c:out value="${obj.takuban}" /></td>
 					<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td>
 					<td><a href="${obj.hpUrl}">HP</a></td>

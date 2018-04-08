@@ -102,6 +102,7 @@ public class DealerSearchController {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
 		for (Dealer q : list) {
 			DelaerSearchResultForm f = new DelaerSearchResultForm();
+			f.setId(q.getDealerId());
 			f.setDealerName(q.getName());
 			f.setTakuban(q.getTakuban());
 			f.setHpUrl(q.getHpLink());

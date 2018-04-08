@@ -1,12 +1,20 @@
 	package com.jp.wonfes.service.product.form;
 
 public class DelaerRegistForm {
+	private Integer id;
 	private String dealerName;
 	private String takuban;
 	private String hpLink;
 	private String twLink;
 	  
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getDealerName() {
 		return dealerName;
 	}

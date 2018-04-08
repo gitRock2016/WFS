@@ -8,14 +8,15 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>登録画面</title>
+		<title>登録編集画面</title>
 	</head> 
 	<body>
 
-		<h2>登録画面</h2>
+		<h2>登録編集画面</h2>
 		<div><font color="red">${message}</font></div>
 		TODO　Pre版
 		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
+			<form:hidden path="id"/>
 			TODO　画像アイコン、アップボタン<br>
 			<table border=1>
 				<tr>
