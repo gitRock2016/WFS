@@ -5,6 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jp.wonfes.service.login.form.AccountInfoFavProuctForm;
+import com.jp.wonfes.service.login.form.AccountInfoForm;
+
 @Controller
 public class AccountInfoController {
 	@RequestMapping(value = "/g03/init", method = RequestMethod.GET)

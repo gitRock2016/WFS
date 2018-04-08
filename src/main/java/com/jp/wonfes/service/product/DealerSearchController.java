@@ -24,6 +24,8 @@ import com.jp.wonfes.service.dao.common.DealerExample;
 import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoDao;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
+import com.jp.wonfes.service.product.form.DealerSearchCondForm;
+import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
 @Controller
 public class DealerSearchController {

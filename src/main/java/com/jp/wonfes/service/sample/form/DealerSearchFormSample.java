@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.sample;
+package com.jp.wonfes.service.sample.form;
 
 public class DealerSearchFormSample {
 	private String searchKey1;

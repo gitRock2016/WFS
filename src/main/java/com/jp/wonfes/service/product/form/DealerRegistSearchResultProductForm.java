@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.product;
+package com.jp.wonfes.service.product.form;
 
 public class DealerRegistSearchResultProductForm {
 	private String productName;

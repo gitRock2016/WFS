@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.product.form.DelaerRegistForm;
 
 @Controller
 public class DealerRegistController {
