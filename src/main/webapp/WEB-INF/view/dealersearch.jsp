@@ -13,7 +13,7 @@
 
 <body>
 	<h2>検索画面</h2>
-	TODO 作成中
+	TODO Pre版
 	<div>${message}</div>
 	
 	<h4>検索条件</h4>
@@ -47,10 +47,9 @@
 					<td><c:out value="${obj_status.count}" /></td>
 					<td><c:out value="${obj.dealerName}" /></td>
 					<td><c:out value="${obj.takuban}" /></td>
-					<td><a href="">TODO ディーラー詳細画面へ遷移</a></td>
+					<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td>
 					<td><a href="${obj.hpUrl}">HP</a></td>
-					<td><a href="${obj.twUrl}">twitterアカウント</a></td>
-					<%-- 				<td><c:out value="${obj.link}" /></td> --%>
+					<td><a href="${obj.twUrl}">twitter</a></td>
 				</tr>
 			</c:forEach>
 		</c:if>

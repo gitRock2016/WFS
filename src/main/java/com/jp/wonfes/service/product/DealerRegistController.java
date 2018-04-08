@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.common.base.Strings;
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.common.Dealer;
+import com.jp.wonfes.service.dao.common.DealerExample;
+import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.product.form.DelaerRegistForm;
 
 @Controller
 public class DealerRegistController {
 
-//	@Autowired
-//	private DealerInfoDao dealerInfoDao;
+	@Autowired
+	private DealerMapper dlMapper;
 //	
 	@RequestMapping(value="/g06/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		
 		DelaerRegistForm delaerRegistForm = new DelaerRegistForm();
-		
-		// ディーラ名
-		delaerRegistForm.setDealerName("");
-		// 卓番
-		delaerRegistForm.setTakuban("");
-		// 作品簡易リスト
-		delaerRegistForm.setProductList(null);
+		/*初期値*/
+		delaerRegistForm.setDealerName(""); // ディーラ名
+		delaerRegistForm.setTakuban(""); // 卓番
 		
 		model.addAttribute("delaerRegistForm", delaerRegistForm);
 		model.addAttribute("message", "");
@@ -41,26 +41,58 @@ public class DealerRegistController {
 	@RequestMapping(value="/g06/regist", method=RequestMethod.POST)
 	public String regist(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
 		
-		System.out.println(dealerRegistForm.getDealerName());
-		System.out.println(dealerRegistForm.getTakuban());
-//		for(DealerRegistSearchResultProductForm e :dealerRegistForm.getProductList()){
-//			System.out.println("proname:" + e.getProductName() + e.getPrice() );
-//			System.out.println(e.getProductName());
-//			System.out.println(e.getPrice());
-//			System.out.println(e.getProduct_fields());
-//			
-//		}
+		// チェック
+		//　同じ名前ならエラーとする
+		String name = dealerRegistForm.getDealerName();
+		String takuban = dealerRegistForm.getTakuban();
+		boolean isEr = false;
+		if (Strings.isNullOrEmpty(name)) {
+			model.addAttribute("message", "エラー：名前が入力されていません");
+		}
+		if(takuban.length()!=6){
+			model.addAttribute("message", "エラー：卓番は6桁入力してください");
+		}
+		if(isEr) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			return "dealerregist";
+		}
 		
-//		DealerRegistSearchResultProductForm p = 
-//				new DealerRegistSearchResultProductForm("", new String[] { "0003" }, 1244);
-//		List<DealerRegistSearchResultProductForm> plist = new ArrayList<DealerRegistSearchResultProductForm>();
-//		plist.add(p);
-//		delaerRegistForm.setProductList(plist);
+		// 登録
+		// nullは空文字に変換する
+		DealerExample e1 = new DealerExample();
+		List<Dealer> dlist =dlMapper.selectByExample(e1);
+		Integer maxid = this.getDlistMax(dlist); // Id
+		
+		Dealer dealer = new Dealer();
+		dealer.setDealerId(maxid+1); //Id
+		dealer.setName(name); //名前
+		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
+		// TODO　画像登録を後にするため固定値とする
+		dealer.setDealerIconCd("XXX"); // ディーラーアイコンコード
+		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
+		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
+		dlMapper.insert(dealer);
 		
 		model.addAttribute("delaerRegistForm", dealerRegistForm);
-		model.addAttribute("message", "");
+		model.addAttribute("message", "情報：登録完了しました");
 
 		return "dealerregist";
+	}
+	
+	/**
+	 * idの最大値を取得する
+	 * @param list
+	 * @return
+	 */
+	private int getDlistMax(List<Dealer> list) {
+		Integer id = new Integer(0);
+		for(Dealer d : list) {
+			Integer a = d.getDealerId();
+			if(a > id) { // idは0より大きいため、初回は必ずtrue
+				id = a;
+			}
+		}
+		return id;
 	}
 
 }

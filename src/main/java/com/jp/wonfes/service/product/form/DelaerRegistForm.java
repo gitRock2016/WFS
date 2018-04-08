@@ -1,11 +1,11 @@
 	package com.jp.wonfes.service.product.form;
 
-import java.util.List;
-
 public class DelaerRegistForm {
 	private String dealerName;
 	private String takuban;
-	private List<DealerRegistSearchResultProductForm> productList;
+	private String hpLink;
+	private String twLink;
+	  
 	
 	public String getDealerName() {
 		return dealerName;
@@ -19,11 +19,18 @@ public class DelaerRegistForm {
 	public void setTakuban(String takuban) {
 		this.takuban = takuban;
 	}
-	public List<DealerRegistSearchResultProductForm> getProductList() {
-		return productList;
+	public String getHpLink() {
+		return hpLink;
 	}
-	public void setProductList(List<DealerRegistSearchResultProductForm> productList) {
-		this.productList = productList;
+	public void setHpLink(String hpLink) {
+		this.hpLink = hpLink;
 	}
+	public String getTwLink() {
+		return twLink;
+	}
+	public void setTwLink(String twLink) {
+		this.twLink = twLink;
+	}
+	
 
 }
