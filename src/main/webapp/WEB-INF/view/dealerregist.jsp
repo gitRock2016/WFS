@@ -8,11 +8,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>登録編集画面</title>
+		<title>登録画面</title>
 	</head> 
 	<body>
 
-		<h2>登録編集画面</h2>
+		<h2>登録画面</h2>
 		<div><font color="red">${message}</font></div>
 		TODO　Pre版
 		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
@@ -39,9 +39,7 @@
 			<br>
 			<input type="submit" value="登録ボタン">
 		</form:form>
-	<a href="http://localhost:8080/WonFesSys/g04/init">ディーラー検索画面, localhost</a><br/>	
-	<h4>結合</h4>
-	<a href="http://www.iwatakhr69.net/WonFesSys/g04/init">ディーラー検索画面</a><br/>	
+	<c:url value="/g04/init" var="tosch"></c:url><a href="${tosch }">ディーラー検索画面</a><br/>
 	</body>
 	
 </html>

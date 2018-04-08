@@ -29,6 +29,7 @@
 			</tr>
 	</table>
 	<input type="submit" value="検索">
+	<c:url value="/g06/init" var="toreg"></c:url><a href="${toreg}">ディーラー登録画面</a>
 	</form:form>
 
 	<h4>検索結果</h4>
@@ -69,7 +70,6 @@
 			</c:forEach>
 		</c:if>
 	</table>
-
 </body>
 
 </html>

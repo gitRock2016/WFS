@@ -15,7 +15,7 @@
 		<h2>登録編集画面</h2>
 		<div><font color="red">${message}</font></div>
 		TODO　Pre版
-		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
+		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g11/edit">
 			<form:hidden path="id"/>
 			TODO　画像アイコン、アップボタン<br>
 			<table border=1>
@@ -38,11 +38,11 @@
 			</table>
 			※JSで4桁半角数字に保管（1234⇒12-34）
 			<br>
-			<input type="submit" value="登録ボタン">
+			<input type="submit" value="登録ボタン" name="edit">
+			<input type="submit" value="削除ボタン"name="del">
 		</form:form>
-	<a href="http://localhost:8080/WonFesSys/g04/init">ディーラー検索画面, localhost</a><br/>	
-	<h4>結合</h4>
-	<a href="http://www.iwatakhr69.net/WonFesSys/g04/init">ディーラー検索画面</a><br/>	
+		<c:url value="/g04/init" var="tosch"></c:url>
+		<a href="${tosch }">ディーラー検索画面</a>
 	</body>
 	
 </html>

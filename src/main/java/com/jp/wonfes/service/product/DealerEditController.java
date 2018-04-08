@@ -45,17 +45,20 @@ public class DealerEditController {
 	}
 	
 	@RequestMapping(value="/g11/edit", method=RequestMethod.POST)
-	public String regist(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
+	public String edit(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
 		
 		// チェック
+		// TODO データ存在しなければエラー
 		//　同じ名前ならエラーとする
 		String name = dealerRegistForm.getDealerName();
 		String takuban = dealerRegistForm.getTakuban();
 		boolean isEr = false;
 		if (Strings.isNullOrEmpty(name)) {
+			isEr=true;
 			model.addAttribute("message", "エラー：名前が入力されていません");
 		}
 		if(takuban.length()!=6){
+			isEr=true;
 			model.addAttribute("message", "エラー：卓番は6桁入力してください");
 		}
 		if(isEr) {
@@ -63,42 +66,45 @@ public class DealerEditController {
 			return "dealerregist";
 		}
 		
-		// 登録
+		// 更新
 		// nullは空文字に変換する
-		DealerExample e1 = new DealerExample();
-		List<Dealer> dlist =dlMapper.selectByExample(e1);
-		Integer maxid = this.getDlistMax(dlist); // Id
-		
-		Dealer dealer = new Dealer();
-		dealer.setDealerId(maxid+1); //Id
-		dealer.setName(name); //名前
-		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		// TODO　画像登録を後にするため固定値とする
-		dealer.setDealerIconCd("XXX"); // ディーラーアイコンコード
-		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
-		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-		dlMapper.insert(dealer);
-		
-		model.addAttribute("delaerRegistForm", dealerRegistForm);
-		model.addAttribute("message", "情報：登録完了しました");
+		Dealer dl1 =new Dealer();
+		dl1.setDealerId(dealerRegistForm.getId()); //Id
+		dl1.setName(name); //名前
+		dl1.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
+		dl1.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
+		dl1.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 
-		return "dealerregist";
+		if (dlMapper.updateByPrimaryKeySelective(dl1) == 0) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("message", "情報：更新対象がありません。");
+			return "dealerregist";
+		}
+		return "redirect:/g12/init";
 	}
 	
-	/**
-	 * idの最大値を取得する
-	 * @param list
-	 * @return
-	 */
-	private int getDlistMax(List<Dealer> list) {
-		Integer id = new Integer(0);
-		for(Dealer d : list) {
-			Integer a = d.getDealerId();
-			if(a > id) { // idは0より大きいため、初回は必ずtrue
-				id = a;
-			}
+	@RequestMapping(value="/g11/del", method=RequestMethod.POST)
+	public String delete(@ModelAttribute DelaerRegistForm form, Model model) {
+		
+		// check
+		// 削除対象が存在するかどうか
+		boolean isEr = false;
+		int _id = form.getId();
+		String erm = "エラー：";
+		if(_id==0) {
+			isEr=true;
+			erm = erm +"不正なid値です";
 		}
-		return id;
+
+		if (dlMapper.deleteByPrimaryKey(_id) == 0) {
+			erm = erm + "削除対象のデータありません";
+			model.addAttribute("message", erm);
+			return "dealeredit";
+		}
+		
+		model.addAttribute("delaerRegistForm", form);
+
+		return "redirect:/g13/init";
 	}
 
 }

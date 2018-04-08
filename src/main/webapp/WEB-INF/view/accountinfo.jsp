@@ -32,11 +32,8 @@
 			</c:forEach>
 		</c:if>
 	</table>
-	<a href="http://localhost:8080/WonFesSys/g04/init">ディーラー検索画面, localhost</a><br/>	
-	<a href="http://localhost:8080/WonFesSys/g06/init">ディーラー登録画面, localhost</a><br/>	
-	
-	<a href="http://www.iwatakhr69.net/WonFesSys/g04/init">ディーラー検索画面</a><br/>	
-	<a href="http://www.iwatakhr69.net/WonFesSys/g06/init">ディーラー登録画面</a><br/>	
+	<c:url value="/g04/init" var="tosch"></c:url><a href="${tosch }">ディーラー検索画面</a><br/>
+	<c:url value="/g06/init" var="toreg"></c:url><a href="${toreg}">ディーラー登録画面</a>
 </body>
 
 </html>
