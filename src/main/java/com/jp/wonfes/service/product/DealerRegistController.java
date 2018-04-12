@@ -41,18 +41,22 @@ public class DealerRegistController {
 	@RequestMapping(value="/g06/regist", method=RequestMethod.POST)
 	public String regist(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
 		
-		// チェック
-		//　同じ名前ならエラーとする
 		String name = dealerRegistForm.getDealerName();
 		String takuban = dealerRegistForm.getTakuban();
+		
+		// チェック
+		String err = "";
 		boolean isEr = false;
 		if (Strings.isNullOrEmpty(name)) {
-			model.addAttribute("message", "エラー：名前が入力されていません");
+			isEr=true;
+			err = err + "エラー：名前が入力されていません";
 		}
 		if(takuban.length()!=6){
-			model.addAttribute("message", "エラー：卓番は6桁入力してください");
+			isEr=true;
+			err = err + "<br/>" + "エラー：卓盤は6桁まで入力できます";
 		}
 		if(isEr) {
+			model.addAttribute("message", err);
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealerregist";
 		}

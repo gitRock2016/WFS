@@ -11,7 +11,7 @@
 		<script src="<c:url value="/js/jquery-3.3.1.js" />"></script>
 		<script src="<c:url value="/js/sample.js" />"></script>
 		<script>
-			alert("jsp直書きのJSの呼び出し");
+			// alert("jsp直書きのJSの呼び出し");
 		</script>
 	</head> 
 	<body>
