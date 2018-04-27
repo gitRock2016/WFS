@@ -8,17 +8,28 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<!-- git管理の都合により、プロジェクト名にあわせ変更。もともとは「WonFesSys」 -->
 	<display-name>WonFesSys2</display-name>
 
-	<!-- - Location of the XML file that defines the root application context. 
-		- Applied by ContextLoaderListener. -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/application-config.xml</param-value>
-	</context-param>
-
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- - Location of the XML file that defines the root application context. 
+		- Applied by ContextLoaderListener. -->
+	<!-- TODO コンフィグレーションクラスを指定するため暫定コメントアウト、つかってなさげなので -->
+<!-- <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application-config.xml</param-value>
+	</context-param> -->
 
+	<!-- SpringSecurity設定 -->
+	<context-param>
+		<param-name>cotextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<!-- コンフィグレーションクラスを指定 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>com.jp.wonfes.common.WebSecurityConfig</param-value>
+	</context-param>
 
 	<!-- - Servlet that dispatches request to registered handlers (Controller 
 		implementations). -->
@@ -49,6 +60,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>	
+	<!-- SpringSecurity設定 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
 
 </web-app>

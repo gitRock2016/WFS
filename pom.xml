@@ -136,6 +136,28 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+
+<!--
+		下記でUsageが一番多いversionを利用している
+		 https://mvnrepository.com/search?q=org.springframework.security
+-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+		
+		
 	</dependencies>
 	
 	<!-- Mybatisgenerator -->
