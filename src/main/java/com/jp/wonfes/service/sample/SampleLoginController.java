@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SampleLoginController {
 	
 	
-	@RequestMapping(value="/samplelogin", method=RequestMethod.GET)
+	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model model) {
 		return "samplelogin";
 	}

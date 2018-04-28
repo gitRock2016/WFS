@@ -17,6 +17,7 @@
 		<span style="color: red"><c:out
 				value="${SPRING_SECURITY_LAST_EXCEPTION.message }"></c:out></span>
 	</c:if>
+	<c:url var="loginurl" value="/login"/>
 	<form:form action=${loginurl }>
 	<input type="text" id="username" name="username">:username
 	<input type="text" id="password" name="password">:password
