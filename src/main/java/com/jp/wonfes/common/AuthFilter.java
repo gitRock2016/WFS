@@ -1,0 +1,59 @@
+package com.jp.wonfes.common;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class AuthFilter implements Filter {
+
+	public AuthFilter() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		
+		HttpSession session = ((HttpServletRequest)request).getSession();
+		String target = ((HttpServletRequest) request).getRequestURI();
+		if(session ==null) {
+			session = ((HttpServletRequest)request).getSession(true);
+			session.setAttribute("target", target);
+			
+			// TODo
+        	System.out.println("sessionなし１．");
+        	System.out.println("target:"+target);
+			((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
+		}else {
+            Object loginCheck = session.getAttribute("login");
+            if (loginCheck == null){
+    			session.setAttribute("target", target);
+            	System.out.println("logincheck,NG");
+            	System.out.println("target:"+target);
+            	((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
+            }else {
+            	System.out.println("logincheck,ZOK");
+            }
+		}
+
+		chain.doFilter(request, response);
+	}
+
+	public void destroy() {
+		// TODO Auto-generated method stub
+
+	}
+
+}
