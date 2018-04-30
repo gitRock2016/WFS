@@ -82,14 +82,6 @@
 		<property name="basePackage" value="com.jp.wonfes.service.dao.common.mapper"></property>
 	</bean>
 	 -->
-	 
-	<sec:http pattern="/resources/**" security ="none"/>
-	<sec:http>
-		<sec:form-login login-page="/login"/>
-		<sec:intercept-url pattern="/**" access="permitAll" />
-		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
-		<sec:logout/>
-	</sec:http>
-	<sec:authentication-manager/>
+
 	
 </beans>
