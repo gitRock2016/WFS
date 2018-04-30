@@ -7,18 +7,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>samplelogin</title>
+<title>認証画面</title>
 </head>
 <body>
-	<h3>ログインフォーム、サンプル</h3>
+	<h3>ログイン</h3>
 	<c:url value="/g00/login" var="login"/>
 	<form action="${login }" method="POST">
 		user:<input type="text" id="user" name="user">
-		password:<input type="text" id="password" name="user">
+		password:<input type="text" id="password" name="password">
 		<input type="submit"/>
 	</form>
-	
-	
-	
 </body>
 </html>

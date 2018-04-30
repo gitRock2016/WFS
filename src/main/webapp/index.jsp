@@ -11,16 +11,10 @@
 	</head> 
 	<body>
 	<h2>開発画面へ</h2>
-	<h4>localhost</h4>
-	<a href="http://localhost:8080/WonFesSys/g03/init">アカウント情報画面, localhost</a><br/>	
-	<a href="http://localhost:8080/WonFesSys/g04/init">ディーラー検索画面, localhost</a><br/>	
-	<a href="http://localhost:8080/WonFesSys/g06/init">ディーラー登録画面, localhost</a><br/>
-	<a href="http://localhost:8080/WonFesSys/sample/init">sample画面, localhost</a><br/>
+	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
+	<c:url value="/g04/init" var="g04_init" /><a href="${g04_init}">ディーラー検索画面</a><br/>
+	<c:url value="/g06/init" var="g06_init" /><a href="${g06_init}">ディーラー登録画面</a><br/>
+	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
+	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>
 	
-	<h4>結合</h4>
-	<a href="http://www.iwatakhr69.net/WonFesSys/g03/init">アカウント情報画面</a><br/>	
-	<a href="http://www.iwatakhr69.net/WonFesSys/g04/init">ディーラー検索画面</a><br/>	
-	<a href="http://www.iwatakhr69.net/WonFesSys/g06/init">ディーラー登録画面</a><br/>	
-	
-	</body>
 </html>

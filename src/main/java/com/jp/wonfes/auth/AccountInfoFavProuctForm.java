@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.login.form;
+package com.jp.wonfes.auth;
 
 public class AccountInfoFavProuctForm {
 	private String productName;
