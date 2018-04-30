@@ -1,4 +1,4 @@
-package com.jp.wonfes.service.login.form;
+package com.jp.wonfes.auth;
 
 import java.util.ArrayList;
 import java.util.List;

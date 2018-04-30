@@ -1,12 +1,12 @@
-package com.jp.wonfes.service.login;
+package com.jp.wonfes.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jp.wonfes.service.login.form.AccountInfoFavProuctForm;
-import com.jp.wonfes.service.login.form.AccountInfoForm;
+import com.jp.wonfes.auth.AccountInfoFavProuctForm;
+import com.jp.wonfes.auth.AccountInfoForm;
 
 @Controller
 public class AccountInfoController {

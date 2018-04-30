@@ -26,9 +26,10 @@
 			targetProject="src/main/java/"
 			type="XMLMAPPER" />
 			
-		<table schema="public" tableName="dealer" />
+<!-- 		<table schema="public" tableName="dealer" />
 		<table schema="public" tableName="dealer_detail" />
-		<table schema="public" tableName="prd_field_master" />
-		
+		<table schema="public" tableName="prd_field_master" /> -->
+				<table schema="public" tableName="usr" />
+		<table schema="public" tableName="usr_role" />
 	</context>
 </generatorConfiguration>

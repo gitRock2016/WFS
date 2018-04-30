@@ -7,18 +7,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>samplelogin</title>
+<title>認証失敗画面</title>
 </head>
 <body>
-	<h3>ログインフォーム、サンプル</h3>
-	<c:url value="/g00/login" var="login"/>
-	<form action="${login }" method="POST">
-		user:<input type="text" id="user" name="user">
-		password:<input type="text" id="password" name="user">
-		<input type="submit"/>
-	</form>
-	
-	
+	<h3>ログインエラー</h3>
+	アカウント情報が登録されていません。アカウント登録し再度ログインしてください。
+	<br/>
+	<c:url value="/g03/init" var="account"/><a href="${account} ">アカウント登録画面へ</a>
+	<br/>
+	<c:url value="/" var="index"/><a href="${index} ">TOPへ</a>
 	
 </body>
 </html>
