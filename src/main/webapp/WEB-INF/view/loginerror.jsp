@@ -11,9 +11,10 @@
 </head>
 <body>
 	<h3>ログインエラー</h3>
-	アカウント情報が登録されていません。アカウント登録し再度ログインしてください。
+	<div>${message }</div>
+	アカウント登録し再度ログインしてください。
 	<br/>
-	<c:url value="/g03/init" var="account"/><a href="${account} ">アカウント登録画面へ</a>
+	<c:url value="/g02/init" var="account"/><a href="${account} ">アカウント登録画面へ</a>
 	<br/>
 	<c:url value="/" var="index"/><a href="${index} ">TOPへ</a>
 	

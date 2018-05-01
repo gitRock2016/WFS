@@ -11,10 +11,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.common.Usr;
+import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
 
@@ -26,6 +33,9 @@ import com.jp.wonfes.service.dao.product.DealerSampleDao;
 @Controller
 public class AuthenticateController {
 	
+	@Autowired
+	private UsrMapper usrmapper;
+	
 	@RequestMapping(value = "/g00/login", method = RequestMethod.GET)
 	public String init(Model model) {
 		System.out.println("get,/g00/login");
@@ -33,19 +43,14 @@ public class AuthenticateController {
 	}
 
 	@RequestMapping(value = "/g00/login", method = RequestMethod.POST)
-	public String auth(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public String auth(HttpSession session, @ModelAttribute LoginForm form, Model model) {
 		System.out.println("post,/g00/login");
 
-		String username=null;
-		String password=null;
+		String userid=form.getUserid();
+		String password=form.getUserpassword();
 
-		// TODO 認証用Formクラスを作成しそこから取得するようにする
-		username=(String) request.getParameter("user");
-		password=(String) request.getParameter("password");
-		
 		// TODO 権限テーブルにアクセスできるようにする
-		if(this.isAuth(username, password)) {
+		if(this.isAuth(userid, password)) {
 			// 認証OKの場合
 			session.setAttribute("login", "OK");
 			String target = (String) session.getAttribute("target");
@@ -53,36 +58,44 @@ public class AuthenticateController {
 			String redirectsaki = target.substring("/WonFesSys".length());
 			return "redirect:" + redirectsaki;
 		}else {
+			model.addAttribute("message","userid, passwordが不正です。再入力してください");
 			return "loginerror";
 		}
 		
 	}
 	
 	@RequestMapping(value = "/g00/logout", method = RequestMethod.GET)
-	public void logout(HttpSession session, HttpServletRequest request,
+	public String logout(HttpSession session, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		session.invalidate();
-		try {
-			// TODO WEB-INF直下のindex.jspへの指定が不明だったので、サーブレットを利用している
-			//　よくよく考えるとmvc-configでview配下を指定しているのでresponseを利用したこの遷移はルール破り。
-			//　最終的にviewフォルダ配下にtop画面など作成すること
-			response.sendRedirect("/WonFesSys/");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			// TODO WEB-INF直下のindex.jspへの指定が不明だったので、サーブレットを利用している
+//			//　よくよく考えるとmvc-configでview配下を指定しているのでresponseを利用したこの遷移はルール破り。
+//			//　最終的にviewフォルダ配下にtop画面など作成すること
+//			//
+////			response.sendRedirect("/WonFesSys/");
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return "logout";
 		
 	}
 	
-	// TODO DBアクセスした認証機能に変更する、
-	// TODO md5暗号化処理に変更
-	private boolean isAuth(String username, String password) {
-		boolean isauth=false;
-		
-		if(username.equals("iwatakhr") && password.equals("password")) {
-			isauth=true;
+	// TODO USRテーブルのpasswordカラムを見直す
+//	・NOT NULL属性を追加
+	private boolean isAuth(String userid, String password) {
+		Usr u = usrmapper.selectByPrimaryKey(userid);
+		if (u == null) {
+			return false;
 		}
-		return isauth;
+		String pwd = CharMatcher.WHITESPACE.trimTrailingFrom(u.getPasswd());
+		if (!Objects.equal(password, pwd)) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	

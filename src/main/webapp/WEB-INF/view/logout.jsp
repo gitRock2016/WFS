@@ -7,15 +7,17 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>認証画面</title>
+<title>logout画面</title>
 </head>
 <body>
-	<h3>ログイン</h3>
-	<c:url value="/g00/login" var="login"/>
-	<form:form action="${login }" method="POST" modelAttribute="loginForm">
-		user:<input type="text" id="user" name="userid">
-		password:<input type="text" id="password" name="userpassword">
-		<input type="submit"/>
-	</form:form>
+	<h3>ログアウト</h3>
+	ログアウトしました。
+	<br/>
+	<c:url value="/" var="top"/><a href="${top }">TOP画面へ</a>
+	<br/>
+	<c:url value="/g00/login" var="login"/><a href="${login }">Login画面へ</a>
+	<br/>
+	
+
 </body>
 </html>

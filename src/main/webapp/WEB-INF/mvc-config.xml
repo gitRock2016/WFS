@@ -72,6 +72,14 @@
 		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.PrdFieldMasterMapper"></property>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.UsrMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.UsrRoleMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
 	<!-- 自作Dao-->
 	<!-- なし-->
 	

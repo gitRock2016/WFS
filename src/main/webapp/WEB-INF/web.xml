@@ -68,10 +68,10 @@
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/g01/*</url-pattern>
 	</filter-mapping>	
-	<filter-mapping>
+<!-- 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/g02/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>	 -->
 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/g03/*</url-pattern>
