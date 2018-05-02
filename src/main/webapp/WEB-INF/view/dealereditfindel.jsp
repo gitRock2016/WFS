@@ -11,6 +11,7 @@
 		<title>登録編集完了（削除）画面</title>
 	</head> 
 	<body>
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 		<h2>登録編集完了（削除）画面</h2>
 		<div>ディーラー情報を削除しました。</div>
 		<c:url value="/g04/init" var="tosch"></c:url>

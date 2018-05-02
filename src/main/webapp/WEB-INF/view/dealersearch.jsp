@@ -12,6 +12,7 @@
 </head>
 
 <body>
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 	<h2>検索画面</h2>
 	TODO Pre版
 	<div>${message}</div>

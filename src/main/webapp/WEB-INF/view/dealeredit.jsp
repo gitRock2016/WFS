@@ -26,7 +26,7 @@
 		</script>
 	</head> 
 	<body>
-
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 		<h2>登録編集画面</h2>
 		<div><font color="red">${message}</font></div>
 		TODO　Pre版

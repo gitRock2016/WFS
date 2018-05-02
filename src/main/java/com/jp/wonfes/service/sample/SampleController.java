@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,6 +32,18 @@ public class SampleController {
 			e.printStackTrace();
 		}
 		model.addAttribute("message", "HelloSample!" + l.get(0).getName());
+		
+		String pas="password";
+		byte[] hexString = DigestUtils.md5Digest(pas.getBytes());
+		System.out.println("md5Digest:");
+		for(byte b : hexString) {
+			System.out.print(b & 0xff);
+		}
+		String hexString2 = DigestUtils.md5DigestAsHex(pas.getBytes());
+			System.out.println("md5DigestAsHex:");
+			System.out.print(hexString2);
+
+		
 		return "sample";
 	}
 	

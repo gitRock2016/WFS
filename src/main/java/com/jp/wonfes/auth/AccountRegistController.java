@@ -3,6 +3,7 @@ package com.jp.wonfes.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,7 @@ public class AccountRegistController {
 		String err = "";
 		boolean isEr = false;
 		if (Strings.isNullOrEmpty(userid) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(username)) {
-			isEr=true;
+			isEr = true;
 			err = err + "エラー：入力されていません";
 			model.addAttribute("message", err);
 			return "accountregist";
@@ -55,7 +56,7 @@ public class AccountRegistController {
 		// アカウント登録処理
 		Usr usr = new Usr();
 		usr.setUid(userid);
-		usr.setPasswd(password);
+		usr.setPasswd(DigestUtils.md5DigestAsHex(password.getBytes()));
 		usr.setUnam(username);
 		usrmapper.insert(usr);
 		

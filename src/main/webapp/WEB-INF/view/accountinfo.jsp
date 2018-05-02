@@ -13,6 +13,7 @@
 </head>
 
 <body>
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 	<h2>アカウント情報画面</h2>
 	TODO 作成中
 	<h4>お気に入り</h4>

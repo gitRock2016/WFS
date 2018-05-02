@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,8 @@ import com.jp.wonfes.service.dao.product.DealerSampleDao;
 
 /**
  * TODO 認証処理の作成だけしているが、権限制御も実装するようにする
+ * TODO せっっしょんごとのユーザー情報を管理するクラスを作成しそこからユーザー名、パスワードの取得、認証チェックなどを行いたい
+ * このクラスはシングルトンなのでできないかつ、検索処理が２回しているので非効率なため
  * @author rock
  *
  */
@@ -49,10 +52,14 @@ public class AuthenticateController {
 		String userid=form.getUserid();
 		String password=form.getUserpassword();
 
-		// TODO 権限テーブルにアクセスできるようにする
 		if(this.isAuth(userid, password)) {
 			// 認証OKの場合
 			session.setAttribute("login", "OK");
+
+			Usr u = usrmapper.selectByPrimaryKey(userid);
+			session.setAttribute("s_loginId", u.getUid());
+			session.setAttribute("s_loginName", u.getUnam());
+			
 			String target = (String) session.getAttribute("target");
 			System.out.println("SampleLoginのloginCheck（POST）、session:" + target);
 			String redirectsaki = target.substring("/WonFesSys".length());
@@ -68,36 +75,24 @@ public class AuthenticateController {
 	public String logout(HttpSession session, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		session.invalidate();
-//		try {
-//			// TODO WEB-INF直下のindex.jspへの指定が不明だったので、サーブレットを利用している
-//			//　よくよく考えるとmvc-configでview配下を指定しているのでresponseを利用したこの遷移はルール破り。
-//			//　最終的にviewフォルダ配下にtop画面など作成すること
-//			//
-////			response.sendRedirect("/WonFesSys/");
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return "logout";
 		
 	}
 	
 	// TODO USRテーブルのpasswordカラムを見直す
-//	・NOT NULL属性を追加
+	//	・NOT NULL属性を追加
 	private boolean isAuth(String userid, String password) {
 		Usr u = usrmapper.selectByPrimaryKey(userid);
 		if (u == null) {
 			return false;
 		}
-		String pwd = CharMatcher.WHITESPACE.trimTrailingFrom(u.getPasswd());
-		if (!Objects.equal(password, pwd)) {
+		String dbpwd = CharMatcher.WHITESPACE.trimTrailingFrom(u.getPasswd());
+		String rqpwd = DigestUtils.md5DigestAsHex(password.getBytes());
+		if (!Objects.equal(dbpwd, rqpwd)) {
 			return false;
 		}
 		
 		return true;
 	}
-	
-	
 	
 }

@@ -11,7 +11,7 @@
 		<title>登録画面</title>
 	</head> 
 	<body>
-
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 		<h2>登録画面</h2>
 		<div><font color="red">${message}</font></div>
 		TODO　Pre版

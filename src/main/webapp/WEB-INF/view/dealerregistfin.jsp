@@ -11,6 +11,7 @@
 		<title>登録完了画面</title>
 	</head> 
 	<body>
+	<jsp:include page="header.jsp" flush="true"></jsp:include>
 		<h2>登録完了画面</h2>
 
 		<div>登録が完了しました。</div>
