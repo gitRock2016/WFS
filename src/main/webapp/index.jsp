@@ -17,4 +17,6 @@
 	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
 	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>
 	
+	<c:url value="/tiles/init" var="tiles1" /><a href="${tiles1}">tilesの画面、サンプル</a><br/>
+	
 </html>

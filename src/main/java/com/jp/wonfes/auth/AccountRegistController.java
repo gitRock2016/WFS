@@ -1,9 +1,14 @@
 package com.jp.wonfes.auth;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,24 +33,36 @@ public class AccountRegistController {
 	}
 
 	@RequestMapping(value="/g02/regist", method=RequestMethod.POST)
-	public String regist(@ModelAttribute AccountRegistForm01 form, Model model) {
+	public String regist(@ModelAttribute
+			@Validated AccountRegistForm01 form, BindingResult results,Model model) {
 		
 		final String userid=form.getUserid();
 		final String username=form.getUsername();
 		final String password=form.getPassword();
 
-		// TODO 暫定チェック、JSなど活用してきちんととくること
+		// TODO 暫定チェック、BeadnValidation、JSなど活用してきちんとしてものにすること
 		// チェック
 		String err = "";
 		boolean isEr = false;
-		if (Strings.isNullOrEmpty(userid) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(username)) {
+//		if (Strings.isNullOrEmpty(userid) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(username)) {
+//			isEr = true;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    　
+//			err = err + "エラー：入力されていません";
+//			model.addAttribute("message", err);
+//			return "accountregist";
+//		}
+		// TODO BeanValidationを利用した処理
+		if(results.hasErrors()) {
+//			results.reject("aaa", "errormessage!");
 			isEr = true;
-			err = err + "エラー：入力されていません";
-			model.addAttribute("message", err);
+			err = err + "エラー：入力値が不正です、TODO　BeanValidationによるエラーメッセージが出ないので、代わりにこのメッセージを手動で出力している";
+//			model.addAttribute("message", err);
+//			model.addAttribute("message", "TODO 一旦つかわない");
+			model.addAttribute("acform", form);
+//			errors.reject("", "errordayo!");
+//			errors.rejectValue("userid", "aaa", "errordayo");
 			return "accountregist";
 		}
 		
-		// TODO md5暗号化処理に変更
 		if (usrmapper.selectByPrimaryKey(userid) != null) {
 			isEr=true;
 			err = err + "エラー：すでに登録されています";
