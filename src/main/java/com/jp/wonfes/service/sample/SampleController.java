@@ -55,5 +55,14 @@ public class SampleController {
 		return arrayList;
 	}
 	
+	/**
+	 * 画面表示のお試しコントローラー
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sample/s1", method=RequestMethod.GET)
+	public String sample1(Model model) {
+		return "sample_tempate1";
+	}
 	
 }

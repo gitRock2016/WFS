@@ -101,6 +101,7 @@
 		<url-pattern>/g07/*</url-pattern>
 	</filter-mapping>
 
+<!-- TODO jspページディレクテブが他と重なってエラーがでたのでいったん削除、tilesで発生
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
@@ -109,7 +110,7 @@
 			<scripting-invalid>false</scripting-invalid>
 			<include-prelude>/WEB-INF/view/sample_include.jsp</include-prelude>
 		</jsp-property-group>
-	</jsp-config>
+	</jsp-config> -->
   
 	
 </web-app> 

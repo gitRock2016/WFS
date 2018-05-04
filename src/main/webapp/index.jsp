@@ -18,5 +18,8 @@
 	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>
 	
 	<c:url value="/tiles/init" var="tiles1" /><a href="${tiles1}">tilesの画面、サンプル</a><br/>
+
+	<c:url value="/sample/s1" var="sample1" /><a href="${sample1}">sample1</a><br/>
+
 	
 </html>
