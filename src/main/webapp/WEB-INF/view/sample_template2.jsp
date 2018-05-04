@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html lang="ja">
-<head>
-	<meta charset="utf-8">
-	<title>sample_template1</title>
-<%-- 	<link rel="stylesheet" href="<c:url value="/css/sample/sora.css"/>" > --%>
-	<link rel="stylesheet" href="<c:url value="/css/sample/sora.css"/>" >
-</head>
+<!DOCTYPE html>
 <body>
 	<!-- design fts013  Last Modified 2007/06/16 -->
 	<div id="wrapper">
@@ -65,7 +56,7 @@
 				<div id="main-contents-inner">
 					<dl class="main-contents-image-left">
 						<dt>
-							<img src="<c:url value="/img/sample/contents_top_img.jpg"/>" alt="180x120のイメージ"
+							<img src="<c:url value="/img/sample/contents_top_img.jpg"/>" alt="180x120のイメージ"/>
 						</dt>
 						<dd>
 							<h3>sample&lt;P&gt;</h3>
@@ -124,4 +115,3 @@
 
 	</div>
 </body>
-</html>

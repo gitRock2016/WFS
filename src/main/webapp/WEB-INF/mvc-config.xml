@@ -103,7 +103,6 @@
 	<bean id="tilesViewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
-		<!-- todo tiesおためしのため -->
 		<property name="order" value="1"/>
 	</bean>
 	<bean id="tilesConfigurer"

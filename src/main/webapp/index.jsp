@@ -20,6 +20,8 @@
 	<c:url value="/tiles/init" var="tiles1" /><a href="${tiles1}">tilesの画面、サンプル</a><br/>
 
 	<c:url value="/sample/s1" var="sample1" /><a href="${sample1}">sample1</a><br/>
+	
+	<c:url value="/sample/s2" var="sample2" /><a href="${sample2}">sample2,tilesを利用してsample1を表現</a><br/>
 
 	
 </html>

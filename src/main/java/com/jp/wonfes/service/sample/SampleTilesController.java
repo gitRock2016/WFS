@@ -10,8 +10,27 @@ public class SampleTilesController {
 	
 	@RequestMapping(value="/tiles/init", method=RequestMethod.GET)
 	public String init(Model model) {
-		
 		return "samplehome";
 	}
+	/**
+	 * 画面表示のお試しコントローラー
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sample/s1", method=RequestMethod.GET)
+	public String sample1(Model model) {
+		return "sample_template1";
+	}
+	
+	/**
+	 * 画面表示のお試しコントローラー
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sample/s2", method=RequestMethod.GET)
+	public String sample2(Model model) {
+		return "sampleTemplate";
+	}
+	
 	
 }
