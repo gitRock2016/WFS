@@ -7,7 +7,7 @@
 <c:url value="/g00/logout" var="g00_logout" />
 <c:url value="/g03/init" var="g03_init" />
 <c:url value="/g04/init" var="g04_init" />
-<c:url value="/g06/init" var="g06_init" />
+<c:url value="/g0	6/init" var="g06_init" />
 <c:url value="/sample/init" var="sample_init" />
 <c:url value="/g00/logout" var="g00_logout" />
 

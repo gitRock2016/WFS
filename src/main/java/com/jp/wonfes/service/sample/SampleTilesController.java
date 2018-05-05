@@ -32,5 +32,20 @@ public class SampleTilesController {
 		return "sampleTemplate";
 	}
 	
+	/**
+	 * 画面表示のお試しコントローラー
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sample/s3", method=RequestMethod.GET)
+	public String sample3(Model model) {
+		return "sampleTemplateBootStrap";
+	}
+	
+	
+	@RequestMapping(value="/sample/s4", method=RequestMethod.GET)
+	public String sample4(Model model) {
+		return "mainContents.sample";
+	}
 	
 }

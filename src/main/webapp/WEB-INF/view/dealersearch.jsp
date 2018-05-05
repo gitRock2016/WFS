@@ -1,73 +1,90 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-<meta charset="utf-8">
-<title>æ¤ç´¢ç»é¢</title>
-</head>
+
+<!-- 宣言 -->
+<c:url value="/" var="top" />
+<c:url value="/g00/logout" var="g00_logout" />
+<c:url value="/g03/init" var="g03_init" />
+<c:url value="/g04/init" var="g04_init" />
+<c:url value="/g06/init" var="g06_init" />
+<c:url value="/sample/init" var="sample_init" />
+<c:url value="/g00/logout" var="g00_logout" />
 
 <body>
-	<jsp:include page="header.jsp" flush="true"></jsp:include>
-	<h2>æ¤ç´¢ç»é¢</h2>
-	TODO Preç
-	<div>${message}</div>
+<div class="container">
+	<div class="page-header">
+		<h1>検索画面</h1>
+	</div>
 	
-	<h4>æ¤ç´¢æ¡ä»¶</h4>
+	<div class="page-header">
+		<h4>検索条件</h4>
+	</div>
+	
+	<div class="panel panel-default">
+	<div class="panel-body">
 	<form:form modelAttribute="fm" method="get" action="/WonFesSys/g04/search">
-	<table border="1">
-		<tr>
-			<td>ãã£ã¼ã©ã¼å</td>
-			<td><form:input path="dealerName" /></td>
-		</tr>
-		<tr>
-			<td>ã¸ã£ã³ã«</td>
-			<td><form:checkboxes path="product_fields" items="${field}" /></td>
-			</tr>
-	</table>
-	<input type="submit" value="æ¤ç´¢">
-	<c:url value="/g06/init" var="toreg"></c:url><a href="${toreg}">ãã£ã¼ã©ã¼ç»é²ç»é¢</a>
+		<div class="form-group">
+			<label for="dealerName">ディーラー名</label>
+			<div>
+				<form:input path="dealerName" id="dealerName"/>
+			</div>
+		</div>
+		<label>ジャンル</label>
+		<div class="form-group">
+				<form:checkboxes path="product_fields" items="${field}"/>
+		</div>
+		<div class="form-group">
+			<button type="reset" class="btn btn-default">キャンセル</button>
+			<button type="submit" class="btn btn-primary">検索</button>
+		</div>
 	</form:form>
-
-	<h4>æ¤ç´¢çµæ</h4>
-	<table border=1>
-		<tr>
-			<th>No</th>
-			<th>ãã£ã¼ã©ã¼å</th>
-			<th>åçª</th>
-			<th>è©³ç´°</th>
-			<th>HP</th>
-			<th>TW</th>
-		</tr>
-		<c:if test="${data !=null}">
+	</div>
+	</div>
+	
+	<div class="page-header">
+		<h4>検索結果</h4>
+	</div>
+	<div class="text-danger">${message}</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>ディーラー名</th>
+				<th>卓番</th>
+				<th>詳細</th>
+				<th>HP</th>
+				<th>TW</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:if test="${data !=null}">
 			<c:forEach var="obj" items="${data}" varStatus="obj_status">
 				<tr>
-					<td><c:out value="${obj_status.count}" /><br/>
-					</td>
+					<td><c:out value="${obj_status.count}" /><br /></td>
 					<td>
-<!-- TODO
- 						urlã¿ã°ãå©ç¨ãã¦ã¨ã³ã³ã¼ãããå¤ã§ã¯é·ç§»ã§ããªã
-						ã¨ã³ã³ã¼ãããå¤ãSrpingããã¾ãè§£éã§ãã¦ããªãã®ãã
-						æ«å®ã§ãurlã¿ã°ã¯å©ç¨ããªã
- -->
-<%--  					<c:url value="/g11/init/${obj.id}" var="url"/> --%>
+						<!-- TODO
+						urlタグを利用してエンコードした値では遷移できない
+					エンコードした値をSrpingがうまく解釈できていないのかも
+					暫定で、urlタグは利用しない
+--> <%--  					<c:url value="/g11/init/${obj.id}" var="url"/> --%> <!-- 						c:urlを使わないと、コンテキストを自動設定してくれない -->
+						<%-- 						<a href="WonFesSys/g11/init/${obj.id}"><c:out value="${obj.dealerName}" /></a> --%>
 
-<!-- 						c:urlãä½¿ããªãã¨ãã³ã³ãã­ã¹ããèªåè¨­å®ãã¦ãããªã -->
-<%-- 						<a href="WonFesSys/g11/init/${obj.id}"><c:out value="${obj.dealerName}" /></a> --%>
-
-	 					<c:url value="/g11/init" var="bUrl"/>
-						<a href="${bUrl}/${obj.id}"><c:out value="${obj.dealerName}" /></a>
-						<br/>
+						<c:url value="/g11/init" var="bUrl" /> <a
+						href="${bUrl}/${obj.id}"><c:out value="${obj.dealerName}" /></a>
+						<br />
 					</td>
 					<td><c:out value="${obj.takuban}" /></td>
-					<td><a href="">TODO ãã£ã¼ã©ã¼è©³ç´°ç»é¢ã¸é·ç§»ããäºå®</a></td>
-					<td><a href="${obj.hpUrl}">HP</a></td>
-					<td><a href="${obj.twUrl}">twitter</a></td>
+					<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td>
+					<td><a href="${obj.hpUrl}" class="btn btn-info">HP</a></td>
+					<td><a href="${obj.twUrl}" class="btn btn-info">twitter</a></td>
 				</tr>
 			</c:forEach>
-		</c:if>
+			</c:if>
+		</tbody>
 	</table>
+</div>
 </body>
-
-</html>

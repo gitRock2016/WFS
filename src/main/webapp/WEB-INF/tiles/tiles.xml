@@ -18,7 +18,7 @@
 <!--
 	テンプレートサイト
  	http://sora.a-jp.net/fts/fts013/index.html
- -->
+-->
  
 	<!-- base,各機能画面 -->
  	<definition name="baseLayoutTemplate1" template="/WEB-INF/tiles/common/template1/layout_template1.jsp">
@@ -38,6 +38,29 @@
  		<put-attribute name="titleName" value="アカウント情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
 	</definition>
+	
+<!--
+	honoka
+ 	http://honokak.osaka/bootstrap-ja.html
+-->
+	<!-- base -->
+ 	<definition name="mainContents.baseLayout" template="/WEB-INF/tiles/common/mainContents/layout_template1.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
+	</definition>
+	
+	<!-- sample画面 -->
+	<definition name="mainContents.sample" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="mainContentsSample画面"/>
+		<put-attribute name="body" value="/WEB-INF/view/sample_template3.jsp" />
+	</definition>
+	
+	<!-- ディーラー検索画面 -->
+	<definition name="dealersearch" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー検索"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
+	</definition>
+	
 	
 	
 </tiles-definitions>

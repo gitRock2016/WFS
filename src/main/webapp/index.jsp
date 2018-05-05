@@ -23,5 +23,8 @@
 	
 	<c:url value="/sample/s2" var="sample2" /><a href="${sample2}">sample2,tilesを利用してsample1を表現</a><br/>
 
+	<c:url value="/sample/s3" var="sample3" /><a href="${sample3}">sample3,bootStrap</a><br/>
+	<c:url value="/sample/s4" var="sample4" /><a href="${sample4}">sample4,tilesを利用してsample3を表現</a><br/>
+
 	
 </html>
