@@ -33,12 +33,6 @@
 		<put-attribute name="body" value="/WEB-INF/view/sample_template2.jsp" />
 	</definition>
 	
-	<!-- アカウント情報画面 -->
-	<definition name="accountinfo" extends="baseLayoutTemplate1">
- 		<put-attribute name="titleName" value="アカウント情報"/>
-		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
-	</definition>
-	
 <!--
 	honoka
  	http://honokak.osaka/bootstrap-ja.html
@@ -55,12 +49,34 @@
 		<put-attribute name="body" value="/WEB-INF/view/sample_template3.jsp" />
 	</definition>
 	
+	<!-- アカウント情報画面 -->
+	<definition name="accountinfo" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="アカウント情報"/>
+		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
+	</definition>
+
+	<!-- アカウント登録画面 -->
+	<definition name="accountregist" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="アカウント登録"/>
+		<put-attribute name="body" value="/WEB-INF/view/accountregist.jsp" />
+	</definition>
+
 	<!-- ディーラー検索画面 -->
 	<definition name="dealersearch" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー検索"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
 	</definition>
 	
+	<!-- アカウント登録完了画面 -->
+	<!-- TODO　別途作成 -->
 	
+	<!-- ディーラー情報登録画面 -->
+	<definition name="dealerregist" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー情報登録"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerregist.jsp" />
+	</definition>
+
+	<!-- ディーラー情報編集画面 -->
+	<!-- TODO　JSでディーラ情報の編集、削除処理を切り替える実装ああるので、併せて修正が必要、後で対応 -->
 	
 </tiles-definitions>

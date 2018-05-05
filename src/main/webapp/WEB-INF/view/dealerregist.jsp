@@ -4,42 +4,46 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>登録画面</title>
-	</head> 
-	<body>
-	<jsp:include page="header.jsp" flush="true"></jsp:include>
-		<h2>登録画面</h2>
-		<div><font color="red">${message}</font></div>
-		TODO　Pre版
-		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
-			TODO　画像アイコン、アップボタン<br>
-			<table border=1>
-				<tr>
-					<th bgcolor="#CCFF99">ディーラー名</th>
-					<td><form:input path="dealerName" /></td>
-				</tr>
-				<tr>
-					<th bgcolor="#CCFF99">卓番号</th>
-				<td><form:input path="takuban" maxlength="6" pattern="^[0-9A-Za-z]+$" /></td>
-			</tr>
-				<tr>
-					<th bgcolor="#CCFF99">HP</th>
-					<td><form:input path="hpLink" /></td>
-				</tr>
-				<tr>
-					<th bgcolor="#CCFF99">tweet</th>
-					<td><form:input path="twLink" /></td>
-				</tr>
-			</table>
-			※JSで4桁半角数字に保管（1234⇒12-34）
-			<br>
-			<input type="submit" value="登録ボタン">
-		</form:form>
-	<c:url value="/g04/init" var="tosch"></c:url><a href="${tosch }">ディーラー検索画面</a><br/>
-	</body>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1>ディーラー情報登録画面</h1>
+	</div>
 	
-</html>
+	<div class="text-danger"><font color="red">${message}</font></div>
+	
+	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
+		<div class="form-group">
+			TODO　画像アイコン、アップボタン
+		</div>
+		<div class="form-group">
+			<label for="dealerName">ディーラー名</label>
+			<div>
+				<form:input path="dealerName" id="dealerName"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="takuban">卓番号</label>
+			<div>
+				<form:input path="takuban" maxlength="6" pattern="^[0-9A-Za-z]+$" id="takuban"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="hp">HP</label>
+			<div>
+				<form:input path="hpLink" id="hp"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="tweet">tweet</label>
+			<div>
+				<form:input path="hpLink" id="tweet"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<button type="reset" class="btn btn-default">キャンセル</button>
+			<button type="submit" class="btn btn-primary">登録</button>
+		</div>
+	</form:form>
+</div>
+</body>
