@@ -27,9 +27,18 @@
 	<context:component-scan base-package="com.jp.wonfes.*" />
 <!-- 	<context:component-scan base-package="com.jp.wonfes.service.*" />
  -->
-	<!-- マッパーxml -->
- 	<context:property-placeholder location="classpath:db/*.properties"/>
-	
+	<!-- JDBC設定ファイル（プロパティファイル） -->
+ 	<context:property-placeholder location="classpath:db/jdbc.properties"/>
+
+	<!-- プロパティファイルからメッセージを取得 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<!-- 完全修飾クラス名で指定する、拡張子propertiesは不要 -->
+			<list><value>db/messages_ja</value></list>
+		</property>
+	</bean>
+
 	<!-- ViewResolver -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
