@@ -15,6 +15,7 @@
 		<h2>sample画面</h2>
 		<div>${message}</div>
 		TODO 実装の実験を行う
+		<spring:message code="welcome.message" />
 	</body>
 	
 </html>
