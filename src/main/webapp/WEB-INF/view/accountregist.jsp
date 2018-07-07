@@ -7,8 +7,9 @@
 	<%-- <form:errors path="acform.userid"/> --%>
 	<c:if test="${acform !=null}">
 	<spring:bind path="acform.userid" htmlEscape="true">
-		${status.expression }<br>
-		${status.value}<br>
+		status.expression:${status.expression }<br>
+		status.value:${status.value}<br>
+		status.errorMessages<br>
 		<c:forEach items="${status.errorMessages}" var="msg">
 			${msg }<br>
 		</c:forEach>

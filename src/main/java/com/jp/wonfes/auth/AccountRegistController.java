@@ -33,8 +33,8 @@ public class AccountRegistController {
 	}
 
 	@RequestMapping(value="/g02/regist", method=RequestMethod.POST)
-	public String regist(@ModelAttribute
-			@Validated AccountRegistForm01 form, BindingResult results,Model model) {
+	public String regist(@ModelAttribute("acform") @Valid AccountRegistForm01 form, BindingResult results,
+			Model model) {
 		
 		final String userid=form.getUserid();
 		final String username=form.getUsername();
@@ -56,8 +56,8 @@ public class AccountRegistController {
 			isEr = true;
 			err = err + "エラー：入力値が不正です、TODO　BeanValidationによるエラーメッセージが出ないので、代わりにこのメッセージを手動で出力している";
 //			model.addAttribute("message", err);
-//			model.addAttribute("acform", results);
-//			model.addAttribute("acform", form);
+			model.addAttribute("acform2", form);
+//			model.addAttribute(form);
 //			model.addAttribute("message", "TODO 一旦つかわない");
 //			errors.reject("", "errordayo!");
 //			errors.rejectValue("userid", "aaa", "errordayo");

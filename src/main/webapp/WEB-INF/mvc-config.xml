@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/security/spring-security.xsd
 		">
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven validator="validator"/>
 
 	<!-- 静的ファイル -->
 	<mvc:resources mapping="/js/**"  location="/WEB-INF/js/"/>
@@ -48,6 +48,15 @@
 		<property name="order" value="2"/>
 	</bean>
 	
+	<!-- BeanValidator -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+	
+
+
+
 	<!-- データソース -->
 	<bean id ="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}"/>

@@ -4,6 +4,7 @@ import javax.validation.constraints.Max;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class AccountRegistForm01 {
 
@@ -11,7 +12,8 @@ public class AccountRegistForm01 {
 	 * TODO BeanValidationを活用したチェック チェックはされるが、エラーメッセージがなぜか表示されない。
 	 * チェック自体はされるため、とりあえず動作させる
 	 */
-	@NotBlank(message = "useridは未入力はだめ")
+//	@NotBlank(message = "{errsmg001}")
+	@NotEmpty(message = "{errsmg001}")
 	@Length(max = 10, message = "useridは最大10文字までしか入力できません。")
 	private String userid;
 
