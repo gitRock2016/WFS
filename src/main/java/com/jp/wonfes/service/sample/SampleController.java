@@ -14,15 +14,20 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
 
 @Controller
 public class SampleController {
-
+	
+	// 代わりにWfsMessageを利用するためコメントアウト
+	//	@Autowired
+	//	private MessageSource messageResource;
+	
 	@Autowired
-	private MessageSource messageResource;
+	private WfsMessage msg;
 
 	@Autowired
 	private DealerSampleDao dao;
@@ -33,14 +38,12 @@ public class SampleController {
 	@RequestMapping(value = "/sample/init", method = RequestMethod.GET)
 	public String init(Model model) {
 
-		 String s = messageResource.getMessage("welcome.message", new String[] {""},
-		 Locale.JAPANESE);
+		 String s= msg.getMessage("welcome.message");
 		 System.out.println("MessageSoucre:"+s);
 
-		String messageSucceed = messageResource.getMessage("cmessage.result.suceed", new String[] { "ディーラ検索" },
-				Locale.JAPANESE);
+		String messageSucceed = msg.getMessage("cmessage.result.suceed", new String[] { "ディーラ検索" });
 		System.out.println("MessageSoucre:" + messageSucceed);
-
+		
 		List<DealerInfoQo> l = null;
 		try {
 			l = dao.searchDealerInfo();
