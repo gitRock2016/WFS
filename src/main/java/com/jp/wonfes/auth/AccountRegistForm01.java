@@ -8,20 +8,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AccountRegistForm01 {
 
-	/*
-	 * TODO BeanValidationを活用したチェック チェックはされるが、エラーメッセージがなぜか表示されない。
-	 * チェック自体はされるため、とりあえず動作させる
-	 */
-//	@NotBlank(message = "{errsmg001}")
-	@NotEmpty(message = "{errsmg001}")
-	@Length(max = 10, message = "useridは最大10文字までしか入力できません。")
+	@NotEmpty
+	@Length(max = 10)
 	private String userid;
 
-	@Length(max = 50, message = "usernamaeは最大50文字までしか入力できません。")
+	@Length(max = 50)
 	private String username;
 
 	@NotBlank
-	@Length(max = 32, message = "passwordは最大32文字までしか入力できません。")
+	@Length(max = 32)
 	private String password;
 
 	public String getUserid() {
