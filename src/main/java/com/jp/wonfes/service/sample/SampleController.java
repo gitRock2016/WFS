@@ -36,33 +36,11 @@ public class SampleController {
 	protected ResourceLoader resourceLoader;
 
 	@RequestMapping(value = "/sample/init", method = RequestMethod.GET)
-	public String init(Model model) {
-
-		 String s= msg.getMessage("welcome.message");
-		 System.out.println("MessageSoucre:"+s);
-
-		String messageSucceed = msg.getMessage("cmessage.result.suceed", new String[] { "ディーラ検索" });
-		System.out.println("MessageSoucre:" + messageSucceed);
-		
-		List<DealerInfoQo> l = null;
-		try {
-			l = dao.searchDealerInfo();
-
-		} catch (WfsDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		model.addAttribute("message", "HelloSample!" + l.get(0).getName());
-	
-		// classpath:配下のファイル名を取得する
-		String dataFile = "db/mapper/messages_ja.properties";
-		Resource rce = resourceLoader.getResource("classpath:" + dataFile);
-		System.out.println(rce.getFilename());
+	public String init() {
 
 		return "sample";
 	}
 
-	// TODO お試し
 	private List<DealerRegistSampleRadio> getRadio() {
 		List<DealerRegistSampleRadio> arrayList = new ArrayList<DealerRegistSampleRadio>();
 		arrayList.add(new DealerRegistSampleRadio("aaaaaaaaaaaaaaa女", "female"));
@@ -71,9 +49,9 @@ public class SampleController {
 	}
 	
 	/**
-	 * initメソッドに記載してあったdigestのお試し処理を移動
+	 * md5ダイジェスト変更処理の動作確認
 	 */
-	private void try_digest() {
+	private void try1() {
 		String pas = "password";
 		byte[] hexString = DigestUtils.md5Digest(pas.getBytes());
 		System.out.println("md5Digest:");
@@ -84,5 +62,41 @@ public class SampleController {
 		System.out.println("md5DigestAsHex:");
 		System.out.print(hexString2);
 	}
+	
+	/**
+	 * propertyファイルからメッセージ情報を取得する
+	 */
+	private void try2() {
+		 String s= msg.getMessage("welcome.message");
+		 System.out.println("MessageSoucre:"+s);
 
+		String messageSucceed = msg.getMessage("cmessage.result.suceed", new String[] { "ディーラ検索" });
+		System.out.println("MessageSoucre:" + messageSucceed);
+	}
+	
+	/**
+	 *  classpath:配下のファイル名を取得する
+	 */
+	private void try3() {
+		// classpath:配下のファイル名を取得する
+		String dataFile = "db/mapper/messages_ja.properties";
+		Resource rce = resourceLoader.getResource("classpath:" + dataFile);
+		System.out.println(rce.getFilename());
+	}
+	
+	/**
+	 * 個別の作成のDaoを用いてデータを取得
+	 */
+	private void try4() {
+
+		List<DealerInfoQo> l = null;
+		try {
+			l = dao.searchDealerInfo();
+
+		} catch (WfsDataException e) {
+			e.printStackTrace();
+		}
+//		model.addAttribute("message", "HelloSample!" + l.get(0).getName());
+
+	}
 }

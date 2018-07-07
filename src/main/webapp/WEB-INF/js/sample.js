@@ -1,9 +1,14 @@
 
-// alert("外部ファイルのJSの呼び出し");
+$(function() {
+	$("#btn1").click(function() {
+		var v1  = $('#age').val();
+		alert("age:"+v1);
+	});
+});
 
 function ohayou() {
-	  window.alert("Hello!");
-	}
+	  window.alert("外部JS：sample.jsファイル中の関数呼び出し");
+}
 
 function sample(){
 	
@@ -33,9 +38,5 @@ function sample(){
 	 * editformのformをサブミットする
 	 */
 	// document.editform.submit();
-
-	
-
-	
 }
 
