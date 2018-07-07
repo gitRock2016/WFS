@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<body>
 <div class="container">
 	<div class="page-header">
 		<h1>アカウント情報画面</h1>
@@ -29,4 +28,3 @@
 		</table>
 	</div>
 </div>
-</body>

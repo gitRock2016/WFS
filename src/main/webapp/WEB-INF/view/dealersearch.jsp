@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-
-<c:url value="/" var="top" />
-<c:url value="/g00/logout" var="g00_logout" />
-<c:url value="/g03/init" var="g03_init" />
-<c:url value="/g04/init" var="g04_init" />
-<c:url value="/g06/init" var="g06_init" />
-<c:url value="/sample/init" var="sample_init" />
-<c:url value="/g00/logout" var="g00_logout" />
-
-<body>
 <div class="container">
 	<div class="page-header">
 		<h1>ディーラー情報検索画面</h1>
@@ -74,4 +64,3 @@
 		</tbody>
 	</table>
 </div>
-</body>

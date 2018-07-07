@@ -37,8 +37,11 @@
 		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
 	</definition>
 	
-	<!-- アカウント登録完了画面 -->
-	<!-- TODO　別途作成 -->
+	<!-- アカウント登録完了画面☆ -->
+	<definition name="accountregistfin" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー登録完了"/>
+		<put-attribute name="body" value="/WEB-INF/view/accountregistfin.jsp" />
+	</definition>	
 	
 	<!-- ディーラー情報登録画面 -->
 	<definition name="dealerregist" extends="mainContents.baseLayout">
@@ -49,4 +52,16 @@
 	<!-- ディーラー情報編集画面 -->
 	<!-- TODO　JSでディーラ情報の編集、削除処理を切り替える実装ああるので、併せて修正が必要、後で対応 -->
 	
+	<!-- ディーラー情報登録編集完了 -->
+	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="登録編集完了（編集）"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealereditfindel.jsp" />
+	</definition>
+	
+		<!-- 登録編集完了（削除） -->
+	<definition name="dealereditfindel" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="登録完了画面"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerregistfin.jsp" />
+	</definition>
+
 </tiles-definitions>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<body>
 <div class="container">
 	<div class="page-header">
 		<h1>ディーラー情報登録画面</h1>
@@ -41,4 +40,3 @@
 		</div>
 	</form:form>
 </div>
-</body>
