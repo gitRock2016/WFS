@@ -14,17 +14,8 @@
 	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
 	<c:url value="/g04/init" var="g04_init" /><a href="${g04_init}">ディーラー検索画面</a><br/>
 	<c:url value="/g06/init" var="g06_init" /><a href="${g06_init}">ディーラー登録画面</a><br/>
-	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
 	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>
-	
-	<c:url value="/tiles/init" var="tiles1" /><a href="${tiles1}">tilesの画面、サンプル</a><br/>
-
-	<c:url value="/sample/s1" var="sample1" /><a href="${sample1}">sample1</a><br/>
-	
-	<c:url value="/sample/s2" var="sample2" /><a href="${sample2}">sample2,tilesを利用してsample1を表現</a><br/>
-
-	<c:url value="/sample/s3" var="sample3" /><a href="${sample3}">sample3,bootStrap</a><br/>
-	<c:url value="/sample/s4" var="sample4" /><a href="${sample4}">sample4,tilesを利用してsample3を表現</a><br/>
-
+	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
+	<c:url value="/sample/showHonoka" var="sample_showHonoka" /><a href="${sample_showHonoka}">bootStrapのHonoka画面</a><br/>
 	
 </html>

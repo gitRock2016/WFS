@@ -3,52 +3,22 @@
  "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
  "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-<!--
- 	Note!!
-	definitionで定義した名前をControllerが返却するように作成すること
- -->
- 	<definition name="baseLayout" template="/WEB-INF/tiles/common/layout.jsp">
-		<put-attribute name="header" value="/WEB-INF/tiles/common/header.jsp" />
-	</definition>
-	<definition name="samplehome" extends="baseLayout">
-		<put-attribute name="titleName" value="テスト" />
-		<put-attribute name="body" value="/WEB-INF/tiles/samplehome.jsp" />
-	</definition>
 	
 <!--
-	テンプレートサイト
- 	http://sora.a-jp.net/fts/fts013/index.html
--->
- 
-	<!-- base,各機能画面 -->
- 	<definition name="baseLayoutTemplate1" template="/WEB-INF/tiles/common/template1/layout_template1.jsp">
-		<put-attribute name="header" value="/WEB-INF/tiles/common/template1/header_template1.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/common/template1/footer_template1.jsp" />
-	</definition>
-	
-	<!-- sampleTemplate1画面 -->
-	<definition name="sampleTemplate" extends="baseLayoutTemplate1">
- 		<put-attribute name="titleName" value="sampleTemplate1画面"/>
-		<put-attribute name="head" value="/WEB-INF/view/head_template1.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/sample_template2.jsp" />
-	</definition>
-	
-<!--
-	honoka
+	BootStrap＞honokaをベースに利用する
  	http://honokak.osaka/bootstrap-ja.html
 -->
+
 	<!-- base -->
  	<definition name="mainContents.baseLayout" template="/WEB-INF/tiles/common/mainContents/layout_template1.jsp">
 		<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
 	</definition>
 	
-	<!-- sample画面 -->
-	<definition name="mainContents.sample" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="mainContentsSample画面"/>
-		<put-attribute name="body" value="/WEB-INF/view/sample_template3.jsp" />
-	</definition>
-	
+<!--
+	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
+-->
+	<!-- contents -->
 	<!-- アカウント情報画面 -->
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>

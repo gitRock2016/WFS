@@ -19,6 +19,15 @@ import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
 
+
+/**
+ * クラスの目的<br/>
+ * <ul>
+ * <li>WFSでの実装検討、Spring機能の確認などのため自由にスクラッチできる</li>
+ * <li>W各機能に提供する前のサンプル実装をここで作成する</li>
+ * </ul>
+ * @return
+ */
 @Controller
 public class SampleController {
 	
@@ -34,13 +43,30 @@ public class SampleController {
 
 	@Autowired
 	protected ResourceLoader resourceLoader;
-
+	
+	
+	/**
+	 * 自由にスクラッチ
+	 * @return
+	 */
 	@RequestMapping(value = "/sample/init", method = RequestMethod.GET)
 	public String init() {
 
 		return "sample";
 	}
-
+	
+	
+	/**
+	 * Honoka画面をJSPでそのまま表示する
+	 * 画面デザインの作成をする際に、参考に利用する
+	 * @return
+	 */
+	@RequestMapping(value = "/sample/showHonoka", method = RequestMethod.GET)
+	public String showTemplateDisplayHonoka() {
+		return "sampleTemplateBootStrap";
+	}
+	
+	// private
 	private List<DealerRegistSampleRadio> getRadio() {
 		List<DealerRegistSampleRadio> arrayList = new ArrayList<DealerRegistSampleRadio>();
 		arrayList.add(new DealerRegistSampleRadio("aaaaaaaaaaaaaaa女", "female"));
