@@ -1,65 +1,50 @@
 <!DOCTYPE html>
+</head>
+
 <body>
-<div class="container">
-	<div class="page-header">
-		<h1>アカウント登録画面</h1>
-	</div>
-	
-	<!-- TODO BeanValidationによるエラーメッセージ表示、エラーメッセージが取得できない -->
+	<h2>アカウント登録画面</h2>
+	<div>${message}</div>
+	<%-- <form:errors path="acform.userid"/> --%>
 	<c:if test="${acform !=null}">
-<%-- 	<form:errors path="acform.userid" /> --%>
-	userid:<br>
 	<spring:bind path="acform.userid" htmlEscape="true">
-		プロパティのリクエストパラメータ名:${status.expression }<br>
-		プロパティの値:${status.value}<br>
-		<!-- TODOアノテーションで直接メッセージを指定しているが出力されない -->
-		エラーメッセージ<br>
-		<c:forEach items="${status.errorMessages }" var="abc">
-			${abc }<br>
+		${status.expression }<br>
+		${status.value}<br>
+		<c:forEach items="${status.errorMessages}" var="msg">
+			${msg }<br>
 		</c:forEach>
 	</spring:bind>
-	password:<br>
-	<spring:bind path="acform.password" htmlEscape="true">
-		プロパティのリクエストパラメータ名:${status.expression }<br>
-		プロパティの値:${status.value}<br>
-		エラーメッセージ<br>
-		<c:forEach items="${status.errorMessages }" var="abc">
-			${abc }<br>
-		</c:forEach>
-	</spring:bind>
- 	</c:if>
+	</c:if>
 	
-	下記にアカウント情報を入力し、アカウント情報を登録してください。
-	<div class="text-danger">${message}</div>
+	<form:errors path="acform.userid"/>
+	
 	<form:form action="/WonFesSys/g02/regist" id="registForm" modelAttribute="accountRegistForm01">
-		<div class="form-group">
-			<label for="userid">ユーザーID</label>
-			<div>
-				<input type="text" id="userid" name="userid" maxlength="19" pattern="^[0-9A-Za-z]+$">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="username">ユーザー名</label>
-			<div>
-				<input type="text" id="username" name="username" maxlength="10">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="password">パスワード</label>
-			<div>
-				<input type="password" id="password" name="password"maxlength="10" pattern="^[0-9A-Za-z]+$" placeholder="パスワード">
-			</div>
-		</div>
-<!-- TODO 確認パスワードを実装する、値チェックをJS利用して作成する
- 			<tr>
+		<table border=1>
+			<tr>
+				<th>id</th>
+				<td><input type="text" id="userid" name="userid" maxlength="10" pattern="^[0-9A-Za-z]+$"></td>
+			</tr>
+			<tr>
+				<th>userName</th>
+				<td><input type="text" id="username" name="username" maxlength="50"></td>
+			</tr>
+			<tr>
+				<th>パスワード</th>
+				<td><input type="password" id="password" name="password"maxlength="32" pattern="^[0-9A-Za-z]+$"></td>
+			</tr>
+<!-- 			<tr>
 				<th>パスワード(確認用)</th>
 				<td><input type="password" id="passwordConfirm" name="passwordConfirm"></td>
 			</tr>
  -->
-		<div class="form-group">
-			<button type="reset" class="btn btn-default">キャンセル</button>
-			<button type="submit" class="btn btn-primary">登録</button>
-		</div>
+ 		</table>
+		<input type="submit"/>
 	</form:form>
-</div>
+
+
+	<c:url value="/" var="top" />
+	<a href="${top}">TOPへ</a>
+	<br />
+
 </body>
+
+</html>

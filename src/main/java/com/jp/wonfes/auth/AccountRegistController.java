@@ -56,8 +56,9 @@ public class AccountRegistController {
 			isEr = true;
 			err = err + "エラー：入力値が不正です、TODO　BeanValidationによるエラーメッセージが出ないので、代わりにこのメッセージを手動で出力している";
 //			model.addAttribute("message", err);
+//			model.addAttribute("acform", results);
+//			model.addAttribute("acform", form);
 //			model.addAttribute("message", "TODO 一旦つかわない");
-			model.addAttribute("acform", form);
 //			errors.reject("", "errordayo!");
 //			errors.rejectValue("userid", "aaa", "errordayo");
 			return "accountregist";
