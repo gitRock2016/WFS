@@ -44,6 +44,9 @@ public class SampleController {
 	@Autowired
 	protected ResourceLoader resourceLoader;
 	
+	@Autowired
+	private SampleLogic lg1;
+	
 	
 	/**
 	 * 自由にスクラッチ
@@ -63,6 +66,8 @@ public class SampleController {
 	 */
 	@RequestMapping(value = "/sample/showHonoka", method = RequestMethod.GET)
 	public String showTemplateDisplayHonoka() {
+		// TODO JUnit試すためにとりあえず呼び出す処理をいれてみる
+		lg1.dosomething("iwatakhr");
 		return "sampleTemplateBootStrap";
 	}
 	

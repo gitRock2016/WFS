@@ -27,11 +27,29 @@ public class SampleValidatorUtility_Test {
 	}
 
 	@Test
-	public void test() {
+	public void test1() {
 		System.out.println("Test Call");
 		String val = "";
 		assertTrue(SampleValidatorUtility.isBlank(val));
 		;
 	}
+	
+	@Test
+	public void test2() {
+		System.out.println("Test Call");
+		String val = "";
+		assertTrue(SampleValidatorUtility.isBlank(val));
+		;
+	}
+	
+	@Test
+	public void test3() {
+		System.out.println("Test Call");
+		String val = "";
+		assertTrue(SampleValidatorUtility.isBlank(val));
+		;
+	}
+	
+	
 
 }
