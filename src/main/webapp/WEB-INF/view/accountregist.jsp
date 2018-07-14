@@ -10,7 +10,6 @@
 		</c:forEach>
 	</spring:bind>
 --%>
-<body>
 	<div class="container">
 		<div class="page-header">
 			<h1>アカウント登録画面</h1>
@@ -60,5 +59,3 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
