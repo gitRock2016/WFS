@@ -22,8 +22,8 @@
 				<form:checkboxes path="product_fields" items="${field}"/>
 		</div>
 		<div class="form-group">
-			<button type="reset" class="btn btn-default">キャンセル</button>
-			<button type="submit" class="btn btn-primary">検索</button>
+			<button type="reset" class="btn btn-default" id="cancelBtn">キャンセル</button>
+			<button type="submit" class="btn btn-primary" id="searchBtn">検索</button>
 		</div>
 	</form:form>
 	</div>

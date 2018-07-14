@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+<c:set var="titleName"><tiles:getAsString name='titleName' /></c:set>
+<%-- <c:set var="jsfileName"><tiles:getAsString name='jsfileName' /></c:set> --%>
 <html>
 <head>
 	<meta charset="utf-8" />
-	<c:set var="titleName"><tiles:getAsString name='titleName' /></c:set>
 	<title>${titleName }</title>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/honoka/bootstrap.css" />">
+	<tiles:insertAttribute name="headerJs" />
+	
 	<style type="text/css">
 	body {
 		padding-top: 80px;

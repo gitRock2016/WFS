@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC 
+<!-- <!DOCTYPE tiles-definitions PUBLIC 
  "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
  "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+  -->
+  <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
 <tiles-definitions>
 	
 <!--
@@ -10,11 +13,20 @@
 -->
 
 	<!-- base -->
- 	<definition name="mainContents.baseLayout" template="/WEB-INF/tiles/common/mainContents/layout_template1.jsp">
-		<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
+	<!-- JavaScript -->
+ 	<definition name="mainContents.baseLayoutJs" template="/WEB-INF/tiles/common/mainContents/layout_template1_js.jsp">
+		<put-list-attribute name="jsfiles">
+			<add-attribute value="jquery-3.3.1.js" />
+		</put-list-attribute>
 	</definition>
 	
+	<!-- JSP -->
+	 <definition name="mainContents.baseLayout" template="/WEB-INF/tiles/common/mainContents/layout_template1.jsp">
+			<put-attribute name="headerJs" value="mainContents.baseLayoutJs" />
+			<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
+	</definition>
+
 <!--
 	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
 -->
@@ -35,6 +47,13 @@
 	<definition name="dealersearch" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー検索"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealersearch.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 	
 	<!-- アカウント登録完了画面☆ -->
