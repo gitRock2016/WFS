@@ -16,6 +16,15 @@
 		<div>${message}</div>
 		TODO 実装の実験を行う
 		<spring:message code="welcome.message" />
+		
+		<br>
+		<input type="button" value="js1" onclick="ohayou()" id="js1"/>
+		
+		<br>
+		<input type="button" value="ajax1" id="ajax1"/>
+
+		<br>
+		<span id="outputdata">initial data</span>
 	</body>
 	
 </html>
