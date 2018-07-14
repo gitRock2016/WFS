@@ -98,7 +98,6 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-		
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -121,6 +120,7 @@
 			<version>r05</version>
 		</dependency>
 	
+		<!-- jdbc, spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -128,13 +128,15 @@
 			<version>${spring-framework.version}</version>
 <!-- 			<version>5.0.4.RELEASE</version> -->
 		</dependency>
+		
+		<!-- jdbc, postgres -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.3-1102-jdbc4</version>
 		</dependency>
 
-		<!-- mybatis導入お試し 　0402-->
+		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -150,6 +152,7 @@
 		下記でUsageが一番多いversionを利用している
 		 https://mvnrepository.com/search?q=org.springframework.security
 -->
+		<!-- セキュリティ -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -186,61 +189,56 @@
 		</dependency>
 		
 		<!-- tiles -->
-<!-- 		<dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>2.2.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jcl-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
 			<version>2.2.2</version>
-		</dependency> -->
-		<!-- todo 0503追加 -->
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-api</artifactId>
-		<version>2.2.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-core</artifactId>
-		<version>2.2.2</version>
-		<exclusions>
-			<exclusion>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<groupId>org.slf4j</groupId>
-			</exclusion>
-		</exclusions>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-jsp</artifactId>
-		<version>2.2.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-servlet</artifactId>
-		<version>2.2.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-template</artifactId>
-		<version>2.2.2</version>
-	</dependency>
-	<dependency>
-		<groupId>taglibs</groupId>
-		<artifactId>standard</artifactId>
-		<version>1.1.2</version>
-	</dependency>
-
-	<!-- slf4j -->
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>1.7.5</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-databind</artifactId>
-		<version>2.4.4</version>
-	</dependency>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-template</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		
+		<!-- json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.4</version>
+		</dependency>
 		
 	</dependencies>
 	
