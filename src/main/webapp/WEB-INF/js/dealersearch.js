@@ -1,6 +1,21 @@
+if(typeof wfs.dealersearch === "undefined"){
+	wfs.dealersearch={}
+}
+
+//--------------------------------------------------------------------------v
+//個別関数定義
+//--------------------------------------------------------------------------v
+
+wfs.dealersearch.searchBtn = function(){
+	wfs.do_ajax("dealerSearchのデータ:");
+}
+
 $(function(){
-	// sampleで実装
-	$("#searchBtn").click(function(){
-		alert("ディーラ検索ボタンが押下された")
+	
+	// 検索ボタン押下時
+	$("#searchBtn").bind("click", function(){
+//		wfs.do_ajax("dealerSearchのデータ:");
+		wfs.dealersearch.searchBtn();
 	});
+	
 })

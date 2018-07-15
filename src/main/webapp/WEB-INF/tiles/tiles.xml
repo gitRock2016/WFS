@@ -17,6 +17,7 @@
  	<definition name="mainContents.baseLayoutJs" template="/WEB-INF/tiles/common/mainContents/layout_template1_js.jsp">
 		<put-list-attribute name="jsfiles">
 			<add-attribute value="jquery-3.3.1.js" />
+			<add-attribute value="wfs-common.js" />
 		</put-list-attribute>
 	</definition>
 	
