@@ -24,6 +24,7 @@
 		<div class="form-group">
 			<button type="reset" class="btn btn-default" id="cancelBtn">キャンセル</button>
 			<button type="submit" class="btn btn-primary" id="searchBtn">検索</button>
+			<button type="button" class="btn btn-primary" id="ajax-searchBtn">ajax検索</button>
 		</div>
 	</form:form>
 	</div>
@@ -32,7 +33,7 @@
 	<div class="page-header">
 		<h4>検索結果</h4>
 	</div>
-	<div class="text-danger">${message}</div>
+	<div class="text-danger" id="search-result-messages">${message}</div>
 	<table class="table table-striped table-hover table-bordered">
 		<thead>
 			<tr>
@@ -44,7 +45,7 @@
 				<th>TW</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="dealer-search-result-tbody">
 			<c:if test="${data !=null}">
 				<c:forEach var="obj" items="${data}" varStatus="obj_status">
 					<tr>

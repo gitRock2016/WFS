@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
 import com.jp.wonfes.service.dao.WfsDataException;
@@ -97,6 +98,38 @@ public class DealerSearchController {
 		
 		return "dealersearch";
 	}
+	
+	/**
+	 * DBから取得したDealer情報をJSon形式で返却する
+	 * memo
+	 * ListをもつJavaBeanでないとResponseBodyが返却できないと勘違いしていた
+	 * @param _dealername ディーラ名
+	 * @return Dealer情報(JSon形式)
+	 */
+	@RequestMapping(value = "/g04/search/ajax/{_dealername}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<DelaerSearchResultForm> searchAjaxCondition(@PathVariable String _dealername) {
+		List<Dealer> list = null;
+		DealerExample de1 = new DealerExample();
+		if (!Strings.isNullOrEmpty(_dealername)) {
+			de1.createCriteria().andNameLike(_dealername + "%");
+		}
+		list = dmm.selectByExample(de1);
+		
+		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
+		return delaerSearchResultFormList;
+	}
+	
+	@RequestMapping(value = "/g04/search/ajax", method = RequestMethod.GET)
+	@ResponseBody
+	public List<DelaerSearchResultForm> searchAjax() {
+		return this.searchAjaxCondition("");
+	}
+//	@RequestMapping(value = "/g04/search/ajax", method = RequestMethod.GET)
+//	public String searchAjax() {
+//		return "forward:/g04/search/ajax/";
+//	}
+	
 	
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealer> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
