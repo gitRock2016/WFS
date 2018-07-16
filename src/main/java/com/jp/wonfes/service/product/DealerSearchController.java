@@ -101,8 +101,7 @@ public class DealerSearchController {
 	
 	/**
 	 * DBから取得したDealer情報をJSon形式で返却する
-	 * memo
-	 * ListをもつJavaBeanでないとResponseBodyが返却できないと勘違いしていた
+	 * 検索条件の指定あり
 	 * @param _dealername ディーラ名
 	 * @return Dealer情報(JSon形式)
 	 */
@@ -120,16 +119,16 @@ public class DealerSearchController {
 		return delaerSearchResultFormList;
 	}
 	
+	/**
+	 * DBから取得したDealer情報をJSon形式で返却する
+	 * 検索条件の指定なし
+	 * @return
+	 */
 	@RequestMapping(value = "/g04/search/ajax", method = RequestMethod.GET)
 	@ResponseBody
 	public List<DelaerSearchResultForm> searchAjax() {
 		return this.searchAjaxCondition("");
 	}
-//	@RequestMapping(value = "/g04/search/ajax", method = RequestMethod.GET)
-//	public String searchAjax() {
-//		return "forward:/g04/search/ajax/";
-//	}
-	
 	
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealer> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
