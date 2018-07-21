@@ -143,9 +143,10 @@ public class SampleController {
 		    System.err.println(ex);
 		  }
 		//git branch fileupload
+		//git branch fileupload NotePC
+		
 		
 // 		multipartFile.transferTo(rce.getFile());
-		  
 		return "sample";
 	}
 	
