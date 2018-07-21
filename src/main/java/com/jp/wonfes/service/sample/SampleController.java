@@ -11,6 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +36,8 @@ import com.jp.wonfes.service.dao.common.Usr;
 import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
+import com.jp.wonfes.service.product.form.DelaerRegistForm;
+import com.jp.wonfes.service.sample.form.SampleRegistForm;
 
 @Controller
 public class SampleController {
@@ -77,8 +81,20 @@ public class SampleController {
 		String dataFile = "db/mapper/messages_ja.properties";
 		Resource rce = resourceLoader.getResource("classpath:" + dataFile);
 		System.out.println(rce.getFilename());
-
+		
 		return "sample";
+	}
+	
+	// 引数がModelだけだと落ちるので、model.addAttributeでJSPにマッピングするインスタンスを設定する必要がある
+//	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET)
+//	public String init2(Model model) {
+//		model.addAttribute("sampleRegistForm", new SampleRegistForm());
+//		return "sample2";
+//	}
+	
+	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET)
+	public String init2(@ModelAttribute SampleRegistForm f, Model model) {
+		return "sample2";
 	}
 	
 	/**
@@ -120,13 +136,13 @@ public class SampleController {
 	}
 	
 	/**
-	 * 
+	 * 非推奨
 	 * @return
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	@RequestMapping(value = "/sample/fileupload", method = RequestMethod.POST)
-	public String uploadSampleFile(@RequestParam("fileUploadSample") MultipartFile multipartFile ) throws IllegalStateException, IOException {
+	@RequestMapping(value = "/sample/fileuploadOld", method = RequestMethod.POST)
+	public String uploadSampleFileOld(@RequestParam("fileUploadSample") MultipartFile multipartFile ) throws IllegalStateException, IOException {
 		String filename=multipartFile.getOriginalFilename();
 		// Path uploadfile = Paths.get("/WEB-INF/uploadfile/"+filename);
 
@@ -150,6 +166,29 @@ public class SampleController {
 		return "sample";
 	}
 	
+	/**
+	 * 画像保存処理アップロード
+	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@RequestMapping(value = "/sample/iconregist", method = RequestMethod.POST)
+	public String uploadSampleFile(@ModelAttribute SampleRegistForm sampleRegistForm,Model model ) throws IllegalStateException, IOException {
+
+		MultipartFile dealericon = sampleRegistForm.getDealerIcon();
+		String iconName=dealericon.getOriginalFilename();
+		
+		String savePlaceTemp="C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img";
+//		File tosaveFile = new File(savePlaceTemp+"\\"+iconName);
+		
+		// コンテキストで指定して保存できるか確認
+		File tosaveFile = new File("http://localhost:8080/WonFesSys/img/"+iconName);
+		
+		dealericon.transferTo(tosaveFile);
+		
+
+		return "sample2";
+	}
 	
 //	/**
 //	 * Httpレスポンスに文字列を設定して返却する
