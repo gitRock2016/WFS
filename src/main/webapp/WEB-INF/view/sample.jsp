@@ -25,6 +25,12 @@
 
 		<br>
 		<span id="outputdata">initial data</span>
+		
+		<h3>fileUpload</h3>
+		<br>
+		<form method="post" enctype="multipart/form-data" action="/WonFesSys/sample/fileupload">
+			<input type="file" name="fileUploadSample" id="fileUpload" />
+			<button type="submit" id="fileUploadBtn">ファイルアップロード</button>
+		</form>
 	</body>
-	
 </html>

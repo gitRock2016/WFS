@@ -1,6 +1,13 @@
 package com.jp.wonfes.service.sample;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +24,9 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
@@ -109,6 +118,37 @@ public class SampleController {
 		Usr u = usrMapper.selectByPrimaryKey(_uid);
 		return u;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@RequestMapping(value = "/sample/fileupload", method = RequestMethod.POST)
+	public String uploadSampleFile(@RequestParam("fileUploadSample") MultipartFile multipartFile ) throws IllegalStateException, IOException {
+		String filename=multipartFile.getOriginalFilename();
+		// Path uploadfile = Paths.get("/WEB-INF/uploadfile/"+filename);
+
+		// src.main.resources配下にファイルを格納する
+		Resource rce = resourceLoader.getResource("classpath:" + "uploadfiles/"+filename);
+//		Path uploadfile = Paths 
+//			      .get("uploadfiles/" + filename);
+		Path uploadfile = Paths.get(rce.getURI());
+		
+		try (OutputStream os = Files.newOutputStream(uploadfile, StandardOpenOption.CREATE)) {
+		    byte[] bytes = multipartFile.getBytes();
+		    os.write(bytes);
+		  } catch (IOException ex) {
+		    System.err.println(ex);
+		  }
+		
+		
+// 		multipartFile.transferTo(rce.getFile());
+		  
+		return "sample";
+	}
+	
 	
 //	/**
 //	 * Httpレスポンスに文字列を設定して返却する
