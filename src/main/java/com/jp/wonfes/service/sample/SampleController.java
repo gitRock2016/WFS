@@ -92,8 +92,21 @@ public class SampleController {
 //		return "sample2";
 //	}
 	
+	/**
+	 * Sample画面の表示
+	 * アイコンを表示する
+	 * @param 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET)
 	public String init2(@ModelAttribute SampleRegistForm f, Model model) {
+		// 本来はテーブルから取得する
+		String imgPath="/1234566890/18nomachi-01.jpg";
+
+		// アイコンのパス
+		model.addAttribute("iconPath", imgPath);
+		
 		return "sample2";
 	}
 	
@@ -136,7 +149,7 @@ public class SampleController {
 	}
 	
 	/**
-	 * 非推奨
+	 * MultipartFileを引数に受け取る
 	 * @return
 	 * @throws IOException 
 	 * @throws IllegalStateException 
@@ -167,6 +180,20 @@ public class SampleController {
 	}
 	
 	/**
+	 * 格納先のフォルダパス
+	 * <ul>
+	 * <li>
+	 * 	notepc:
+	 * 	"C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img"
+	 * </li>
+	 * <li>
+	 * 	deskpc
+	 * 	"C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img";
+	 * </li>
+	 */
+	private static final String save_windows="D:\\MyEdocument\\MyPG\\workspace-sts\\WonFesSys2\\src\\main\\webapp\\WEB-INF\\img";
+	
+	/**
 	 * 画像保存処理アップロード
 	 * @return
 	 * @throws IOException 
@@ -174,16 +201,17 @@ public class SampleController {
 	 */
 	@RequestMapping(value = "/sample/iconregist", method = RequestMethod.POST)
 	public String uploadSampleFile(@ModelAttribute SampleRegistForm sampleRegistForm,Model model ) throws IllegalStateException, IOException {
-
+		
+		String dealerid = Integer.toString(sampleRegistForm.getDealerId());
+		String dealeridFoldPath=save_windows+"\\"+dealerid;
+		Path imgPath = Paths.get(dealeridFoldPath);
+		if(!Files.isDirectory(imgPath)) {
+			Files.createDirectory(imgPath);
+		}
+		
 		MultipartFile dealericon = sampleRegistForm.getDealerIcon();
 		String iconName=dealericon.getOriginalFilename();
-		
-		String savePlaceTemp="C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img";
-//		File tosaveFile = new File(savePlaceTemp+"\\"+iconName);
-		
-		// コンテキストで指定して保存できるか確認
-		File tosaveFile = new File("http://localhost:8080/WonFesSys/img/"+iconName);
-		
+		File tosaveFile = new File(dealeridFoldPath + "\\" + iconName);
 		dealericon.transferTo(tosaveFile);
 		
 

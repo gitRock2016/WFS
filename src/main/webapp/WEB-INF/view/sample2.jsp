@@ -13,22 +13,21 @@
 </head>
 <body>
 	<h2>sample画面</h2>
+	
+	<h3>アイコン画像</h3>
+	<!-- プロジェクトがimgファイルを読み込んでいないと表示されない -->
+	<c:url value="/img" var="img" /><img src="${img }${iconPath}"/>
+	
 	<h3>fileUpload</h3>
-<!-- 	<form method="post" enctype="multipart/form-data"
-		action="/WonFesSys/sample/iconregist">
-		<input type="text" name="dealerid" id="dealerid" />
-		<input type="text" name="dealername" id="dealername" />
-		<input type="file" name="fileUploadSample" id="fileUpload" />
-		<button type="submit" id="fileUploadBtn">ファイルアップロード</button>
-	</form>
- -->
 	<form:form method="post" enctype="multipart/form-data"
 		action="/WonFesSys/sample/iconregist"
 		modelAttribute="sampleRegistForm">
-		<form:input name="dealerid" id="dealerid" path="dealerId" maxlength="6" pattern="^[0-9]+$" />
-		<form:input name="dealername" id="dealername" path="dealerName" maxlength="6" />
-		<form:input type="file" name="fileUploadSample" id="fileUpload" path="dealerIcon"/>
-		<button type="submit" id="fileUploadBtn">ファイルアップロード</button>
+		dealerId:
+		<form:input name="dealerid" id="dealerid" path="dealerId" maxlength="10" pattern="^[0-9]+$" /><br>
+		dealerName:
+		<form:input name="dealername" id="dealername" path="dealerName" maxlength="10" /><br>
+		<form:input type="file" name="fileUploadSample" id="fileUpload" path="dealerIcon"/><br>
+		<button type="submit" id="fileUploadBtn">ファイルアップロード</button><br>
 	</form:form>
 
 </body>
