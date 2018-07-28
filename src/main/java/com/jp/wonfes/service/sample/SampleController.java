@@ -30,9 +30,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.Usr;
+import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
@@ -57,6 +60,12 @@ public class SampleController {
 
 	@Autowired
 	private UsrMapper usrMapper;
+
+	@Autowired
+	private DealerMapper dealerMapper;
+	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf; 
 
 	@RequestMapping(value = "/sample/init", method = RequestMethod.GET)
 	public String init(Model model) {
@@ -99,10 +108,17 @@ public class SampleController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET)
+	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET) 
 	public String init2(@ModelAttribute SampleRegistForm f, Model model) {
 		// 本来はテーブルから取得する
-		String imgPath="/1234566890/18nomachi-01.jpg";
+//		String imgPath="/1234566890/18nomachi-01.jpg";
+		
+		// テーブルから取得する
+		Integer userid = 7;
+		Dealer dealer = dealerMapper.selectByPrimaryKey(userid);
+		String dealer_icon_cd = null;
+		dealer_icon_cd = dealer.getDealerIconCd();
+		String imgPath = "/" + String.valueOf(userid) + "/" + dealer_icon_cd;
 
 		// アイコンのパス
 		model.addAttribute("iconPath", imgPath);
@@ -179,6 +195,34 @@ public class SampleController {
 		return "sample";
 	}
 	
+	// 以下URLから取得できること
+	// http://www.iwatakhr69.net/wfs/img/icon/default_1.jpg
+	@RequestMapping(value = "/sample/show/icon", method = RequestMethod.GET)
+	public String showIconImg(@RequestParam("dealerid") int  dealerid,@ModelAttribute SampleRegistForm f1 ,Model model) {
+		
+		// テーブルから取得する
+		Dealer dealer = null;
+		dealer	= dealerMapper.selectByPrimaryKey(dealerid);
+		if(dealer == null ) {
+			return "sample2";
+		}
+		String dealer_icon_cd = null;
+		dealer_icon_cd = dealer.getDealerIconCd();
+		String imgPath = this.getImgPath(dealerid, dealer_icon_cd);
+
+		// アイコンのパス
+		model.addAttribute("iconPath", imgPath);
+		
+		return "sample2";
+	}
+	
+	private String getImgPath(int userid, String dealer_icon_cd) {
+		if("".equals(dealer_icon_cd) || dealer_icon_cd==null ) {
+			return "/" + "default" + "/" + "default_1.jpg";
+		}
+		return "/" + String.valueOf(userid) + "/" + dealer_icon_cd;
+	}
+	
 	/**
 	 * 格納先のフォルダパス
 	 * <ul>
@@ -203,7 +247,9 @@ public class SampleController {
 	public String uploadSampleFile(@ModelAttribute SampleRegistForm sampleRegistForm,Model model ) throws IllegalStateException, IOException {
 		
 		String dealerid = Integer.toString(sampleRegistForm.getDealerId());
-		String dealeridFoldPath=save_windows+"\\"+dealerid;
+//		String dealeridFoldPath=save_windows+"\\"+dealerid;
+		String windowsPath =wfsApplicationConf.getWfsImgPath();
+		String dealeridFoldPath=windowsPath+"\\"+dealerid;
 		Path imgPath = Paths.get(dealeridFoldPath);
 		if(!Files.isDirectory(imgPath)) {
 			Files.createDirectory(imgPath);
@@ -214,6 +260,7 @@ public class SampleController {
 		File tosaveFile = new File(dealeridFoldPath + "\\" + iconName);
 		dealericon.transferTo(tosaveFile);
 		
+		System.out.println(wfsApplicationConf.getWfsImgPath());
 
 		return "sample2";
 	}
