@@ -53,10 +53,13 @@ public class SampleController {
 	private WfsMessage msg;
 
 	@Autowired
-	private DealerSampleDao dao;
-
-	@Autowired
 	protected ResourceLoader resourceLoader;
+	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf; 
+	
+	@Autowired
+	private DealerSampleDao dao;
 
 	@Autowired
 	private UsrMapper usrMapper;
@@ -64,9 +67,11 @@ public class SampleController {
 	@Autowired
 	private DealerMapper dealerMapper;
 	
-	@Autowired
-	private WfsApplicationConf wfsApplicationConf; 
-
+	/**
+	 * 初期表示
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/sample/init", method = RequestMethod.GET)
 	public String init(Model model) {
 
@@ -86,7 +91,7 @@ public class SampleController {
 		}
 		model.addAttribute("message", "HelloSample!" + l.get(0).getName());
 	
-		// classpath:配下のファイル名を取得する
+		// ResourceLoaderを利用してclasspath:配下のファイル名を取得することができる
 		String dataFile = "db/mapper/messages_ja.properties";
 		Resource rce = resourceLoader.getResource("classpath:" + dataFile);
 		System.out.println(rce.getFilename());
@@ -94,7 +99,9 @@ public class SampleController {
 		return "sample";
 	}
 	
-	// 引数がModelだけだと落ちるので、model.addAttributeでJSPにマッピングするインスタンスを設定する必要がある
+	// 引数がModelだけだと落ちる。対応は以下がある。
+	//・引数にModelAddAttributeのものを設定する
+	//・model.addAttributeでJSPにマッピングするインスタンスを設定する
 //	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET)
 //	public String init2(Model model) {
 //		model.addAttribute("sampleRegistForm", new SampleRegistForm());
@@ -102,7 +109,7 @@ public class SampleController {
 //	}
 	
 	/**
-	 * Sample画面の表示
+	 * 初期表示
 	 * アイコンを表示する
 	 * @param 
 	 * @param model
@@ -110,8 +117,6 @@ public class SampleController {
 	 */
 	@RequestMapping(value = "/sample/init2", method = RequestMethod.GET) 
 	public String init2(@ModelAttribute SampleRegistForm f, Model model) {
-		// 本来はテーブルから取得する
-//		String imgPath="/1234566890/18nomachi-01.jpg";
 		
 		// テーブルから取得する
 		Integer userid = 7;
@@ -129,7 +134,7 @@ public class SampleController {
 	/**
 	 * Jqueryのajaxのurl指定は
 	 * 表示ページのurlに依存する。sample画面から利用するので、urlに「sample」を含めている
-	 * @return
+	 * @return String配列
 	 */
 	@RequestMapping(value = "/sample/ajax/show", method = RequestMethod.GET)
 	@ResponseBody
@@ -143,7 +148,7 @@ public class SampleController {
 	 * 
 	 * urlに直接打ち込むと返却されるJSONを画面表示で確認できる
 	 * 
-	 * @return
+	 * @return JavaBeanオブジェクト
 	 */
 	@RequestMapping(value = "/sample/ajax/show2", method = RequestMethod.GET)
 	@ResponseBody
@@ -165,42 +170,15 @@ public class SampleController {
 	}
 	
 	/**
-	 * MultipartFileを引数に受け取る
+	 * ディーラIDをもとにアイコン画像を表示する
+	 * @param dealerid
+	 * @param f1
+	 * @param model
 	 * @return
-	 * @throws IOException 
-	 * @throws IllegalStateException 
 	 */
-	@RequestMapping(value = "/sample/fileuploadOld", method = RequestMethod.POST)
-	public String uploadSampleFileOld(@RequestParam("fileUploadSample") MultipartFile multipartFile ) throws IllegalStateException, IOException {
-		String filename=multipartFile.getOriginalFilename();
-		// Path uploadfile = Paths.get("/WEB-INF/uploadfile/"+filename);
-
-		// src.main.resources配下にファイルを格納する
-		Resource rce = resourceLoader.getResource("classpath:" + "uploadfiles/"+filename);
-//		Path uploadfile = Paths 
-//			      .get("uploadfiles/" + filename);
-		Path uploadfile = Paths.get(rce.getURI());
-		
-		try (OutputStream os = Files.newOutputStream(uploadfile, StandardOpenOption.CREATE)) {
-		    byte[] bytes = multipartFile.getBytes();
-		    os.write(bytes);
-		  } catch (IOException ex) {
-		    System.err.println(ex);
-		  }
-		//git branch fileupload
-		//git branch fileupload NotePC
-		
-		
-// 		multipartFile.transferTo(rce.getFile());
-		return "sample";
-	}
-	
-	// 以下URLから取得できること
-	// http://www.iwatakhr69.net/wfs/img/icon/default_1.jpg
 	@RequestMapping(value = "/sample/show/icon", method = RequestMethod.GET)
 	public String showIconImg(@RequestParam("dealerid") int  dealerid,@ModelAttribute SampleRegistForm f1 ,Model model) {
 		
-		// テーブルから取得する
 		Dealer dealer = null;
 		dealer	= dealerMapper.selectByPrimaryKey(dealerid);
 		if(dealer == null ) {
@@ -211,12 +189,19 @@ public class SampleController {
 		dealer_icon_cd = dealer.getDealerIconCd();
 		String imgPath = this.getImgPath(dealerid, dealer_icon_cd);
 
-		// アイコンのパス
 		model.addAttribute("iconPath", imgPath);
 		
 		return "sample2";
 	}
 	
+	/**
+	 * アイコン画像の表示パスを返却する
+	 * 例:userid:1, icon:xxx.jpgの場合、「/1/xxx.jpg」を返却する
+	 * 例:icon:xxx.jpgが空文字もしくはnullの場合、「/default/default1.jpg」を返却する
+	 * @param userid
+	 * @param dealer_icon_cd
+	 * @return
+	 */
 	private String getImgPath(int userid, String dealer_icon_cd) {
 		if("".equals(dealer_icon_cd) || dealer_icon_cd==null ) {
 			return "/" + "default" + "/" + "default_1.jpg";
@@ -224,19 +209,6 @@ public class SampleController {
 		return "/" + String.valueOf(userid) + "/" + dealer_icon_cd;
 	}
 	
-	/**
-	 * 格納先のフォルダパス
-	 * <ul>
-	 * <li>
-	 * 	notepc:
-	 * 	"C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img"
-	 * </li>
-	 * <li>
-	 * 	deskpc
-	 * 	"C:\\work\\tool\\webapl\\WonFesSys\\project\\WonFesSys\\src\\main\\webapp\\WEB-INF\\img";
-	 * </li>
-	 */
-	private static final String save_windows="D:\\MyEdocument\\MyPG\\workspace-sts\\WonFesSys2\\src\\main\\webapp\\WEB-INF\\img";
 	
 	/**
 	 * 画像保存処理アップロード
@@ -302,22 +274,12 @@ public class SampleController {
 		return _fileName + extention;
 	}
 
-//	/**
-//	 * Httpレスポンスに文字列を設定して返却する
-//	 * @param res
-//	 */
-//	@RequestMapping(value = "/ajax/show", method = RequestMethod.GET)
-//	public void show(HttpServletResponse res) {
-//		try {
-//			res.getWriter().write("text");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	// モックデータ
 	
-	
-	// TODO お試し
+	/**
+	 * ラジオボタンに表示する値
+	 * @return
+	 */
 	private List<DealerRegistSampleRadio> getRadio() {
 		List<DealerRegistSampleRadio> arrayList = new ArrayList<DealerRegistSampleRadio>();
 		arrayList.add(new DealerRegistSampleRadio("aaaaaaaaaaaaaaa女", "female"));
@@ -325,9 +287,10 @@ public class SampleController {
 		return arrayList;
 	}
 	
+	// お試し処理
+	
 	/**
-	 * お試し処理
-	 * initメソッドに記載してあったdigestのお試し処理を移動
+	 * initメソッドに記載してあったdigestの処理を移動
 	 */
 	private void try_digest() {
 		String pas = "password";

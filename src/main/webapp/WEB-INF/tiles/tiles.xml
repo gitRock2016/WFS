@@ -70,18 +70,28 @@
 	</definition>
 
 	<!-- ディーラー情報編集画面 -->
-	<!-- TODO　JSでディーラ情報の編集、削除処理を切り替える実装ああるので、併せて修正が必要、後で対応 -->
+	<definition name="dealeredit" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー情報編集"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealeredit.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealeredit.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
 	
 	<!-- ディーラー情報登録編集完了 -->
 	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="登録編集完了（編集）"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealereditfindel.jsp" />
+ 		<put-attribute name="titleName" value="ディーラ情報登録編集完了"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealereditfinreg.jsp" />
 	</definition>
 	
-		<!-- 登録編集完了（削除） -->
+	<!-- ディーラー情報削除完了 -->
 	<definition name="dealereditfindel" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="登録完了画面"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealerregistfin.jsp" />
+ 		<put-attribute name="titleName" value="ディーラ情報削除完了画面"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealereditfindel.jsp" />
 	</definition>
 
 </tiles-definitions>

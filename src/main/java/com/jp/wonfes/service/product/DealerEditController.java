@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerDetail;
@@ -32,12 +33,9 @@ public class DealerEditController {
 	@Autowired
 	private DealerDetailMapper dldMapper;
 
-	/**
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
+	@Autowired
+	private WfsMessage msg;
+	
 	@RequestMapping(value="/g11/init/{id}", method=RequestMethod.GET)
 	// @PathVariable("id") int id, 引数名と｛変数名｝が同じなら("id")は省略できる
 	public String init(@PathVariable int id,Model model) {
@@ -46,15 +44,28 @@ public class DealerEditController {
 		
 		/*初期値*/
 		DelaerRegistForm drf = new DelaerRegistForm();
-		drf.setId(d.getDealerId());
-		drf.setDealerName(d.getName()); // ディーラ名
-		drf.setTakuban(d.getTakuban()); // 卓番
-		drf.setHpLink(d.getHpLink());
-		drf.setTwLink(d.getTwLink());
+		if (isEditDealerData(d)) {
+			drf.setId(d.getDealerId());
+			drf.setDealerName(d.getName()); // ディーラ名
+			drf.setTakuban(d.getTakuban()); // 卓番
+			drf.setHpLink(d.getHpLink());
+			drf.setTwLink(d.getTwLink());
+		}else {
+			model.addAttribute("danger_message", "ディーラ情報が存在しません");
+		}
 		
 		model.addAttribute("delaerRegistForm", drf);
-		model.addAttribute("message", "");
 		return "dealeredit";
+	}
+	
+	private boolean isEditDealerData(Dealer dealer) {
+		if(dealer==null) {
+			return false;
+		}
+		if(dealer.getDealerId()==null) {
+			return false;
+		}
+		return true;
 	}
 	
 	@RequestMapping(value="/g11/edit", method=RequestMethod.POST)
@@ -74,9 +85,9 @@ public class DealerEditController {
 			isEr=true;
 			err = err + "<br/>" + "エラー：卓盤は6桁まで入力できます";
 		}
-		// TODO 編集対象データ存在するかどうかのチェックを入れる
+		
 		if(isEr) {
-			model.addAttribute("message", err);
+			model.addAttribute("danger_message", err);
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealerregist";
 		}
@@ -92,36 +103,16 @@ public class DealerEditController {
 
 		if (dlMapper.updateByPrimaryKeySelective(dl1) == 0) {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
-			model.addAttribute("message", "情報：更新対象がありません。");
+			model.addAttribute("danger_message", "情報：更新対象がありません。");
 			return "dealerregist";
 		}
-		return "redirect:/g12/init";
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報登録処理" });
+		model.addAttribute("success_message", messageSucceed);
+
+		return "dealeredit";
+//		return "redirect:/g12/init";
 	}
 	
-	// TODO お試し 　↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-	// GETでパラメータによりコントーラのメソッドを分岐する⇒動作確認OK
-	//登録、削除処理でGET通信を行うと、URLで機能を制御できるので良くない
-	//GETでも引数のFormから値がとれていれば、更新系処理を行ってもいいが、結局できなかったので却下。
-	//
-	@RequestMapping(value="/g11/edit", method=RequestMethod.GET, params="action=edit")
-	public String ed2(@ModelAttribute DelaerRegistForm form, Model model) {
-		
-		// GETでも引数にFormをもているが、画面の値がバインドされることはない
-		System.out.println(form.getDealerName());
-		System.out.println(form.getHpLink());
-		System.out.println(form.getTakuban());
-		System.out.println(form.getId());
-		
-		model.addAttribute("message", "TODO, 登録編集画面より、登録処理:"+form.getDealerName());
-		return "sample";
-	}
-	@RequestMapping(value="/g11/edit", method=RequestMethod.GET, params="action=del")
-	public String dl2(@ModelAttribute DelaerRegistForm form, Model model) {
-		System.out.println(form.getDealerName());
-		model.addAttribute("message", "TODO, 登録編集画面より、削除処理"+form.getDealerName());
-		return "sample";
-	}
-	// TODO お試し 　↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 	
 	@RequestMapping(value="/g11/del", method=RequestMethod.POST)
@@ -140,7 +131,7 @@ public class DealerEditController {
 		// if there is else error check write here ...
 		// エラー処理
 		if(isEr) {
-			model.addAttribute("message", erm);
+			model.addAttribute("danger_message", erm);
 			return "dealeredit";
 		}
 		
@@ -158,8 +149,14 @@ public class DealerEditController {
 		}
 		
 		model.addAttribute("delaerRegistForm", form);
-
-		return "redirect:/g13/init";
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });
+		model.addAttribute("success_message", messageSucceed);
+		
+		return "dealereditfindel";
+//		return "redirect:/g13/init";
 	}
+	
+	
+	
 
 }
