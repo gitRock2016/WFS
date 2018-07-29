@@ -204,6 +204,7 @@ public class SampleController {
 		Dealer dealer = null;
 		dealer	= dealerMapper.selectByPrimaryKey(dealerid);
 		if(dealer == null ) {
+			model.addAttribute("iconPath", this.getImgPath(0, "")); // default画像を固定で取得する
 			return "sample2";
 		}
 		String dealer_icon_cd = null;
@@ -244,27 +245,63 @@ public class SampleController {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(value = "/sample/iconregist", method = RequestMethod.POST)
-	public String uploadSampleFile(@ModelAttribute SampleRegistForm sampleRegistForm,Model model ) throws IllegalStateException, IOException {
+	public String uploadSampleFile(@ModelAttribute SampleRegistForm sampleRegistForm, Model model)
+			throws IllegalStateException, IOException {
 		
-		String dealerid = Integer.toString(sampleRegistForm.getDealerId());
-//		String dealeridFoldPath=save_windows+"\\"+dealerid;
-		String windowsPath =wfsApplicationConf.getWfsImgPath();
-		String dealeridFoldPath=windowsPath+"\\"+dealerid;
-		Path imgPath = Paths.get(dealeridFoldPath);
-		if(!Files.isDirectory(imgPath)) {
+		// ディーラIDに対応するimg保存先フォルダの確認と作成
+		String dealerid = Integer.toString(sampleRegistForm.getDealerId()); // ディーラID
+		String imgIconPath = wfsApplicationConf.getWfsImgPath();
+		String imgIconPathByDealerId = imgIconPath + "\\" + dealerid; // 保存先フォルダ（ディーラID）
+		Path imgPath = Paths.get(imgIconPathByDealerId);
+		if (!Files.isDirectory(imgPath)) {
 			Files.createDirectory(imgPath);
 		}
-		
+
+		//　画像ファイルの整形
 		MultipartFile dealericon = sampleRegistForm.getDealerIcon();
-		String iconName=dealericon.getOriginalFilename();
-		File tosaveFile = new File(dealeridFoldPath + "\\" + iconName);
+		String iconName = this.getFormatIconName(dealericon.getOriginalFilename()); // 画像ファイル名（整形）
+//		String iconName = dealericon.getOriginalFilename();
+		File tosaveFile = new File(imgIconPathByDealerId + "\\" + iconName);
+
+		// 画像ファイルの保存
 		dealericon.transferTo(tosaveFile);
-		
-		System.out.println(wfsApplicationConf.getWfsImgPath());
+
+		// 画像ファイル名のDBへの登録
+		Dealer dealer = new Dealer();
+		dealer.setDealerId(sampleRegistForm.getDealerId());
+		dealer.setDealerIconCd(iconName);
+		dealerMapper.updateByPrimaryKeySelective(dealer);
 
 		return "sample2";
 	}
 	
+	private static final int iconFileNameMaxLength=10;
+	/**
+	 * 以下のように整形する
+	 * 例１：1234567890.jpg, 14桁→123456.jpg, 10桁
+	 * 例２：12345.JPEG, 10桁→12345.JPEG, 10桁
+	 * 例３：1234567890.KOJ→123.JPEG
+	 * 拡張子の桁数（例なら４桁）を除き最大桁数（１０桁）に収まるよう名前を整形する
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private String getFormatIconName(String iconName) {
+		
+		boolean isExtention = iconName.lastIndexOf(".") != -1 ? true : false;
+		
+		int _fileNameMax = iconFileNameMaxLength;
+		String extention="";
+		if(isExtention) {
+			int startExtention = iconName.lastIndexOf(".");
+			extention = iconName.substring(startExtention, iconName.length());
+			_fileNameMax = iconFileNameMaxLength - extention.length();
+		}
+		
+		String _fileName = iconName.substring(0, _fileNameMax);
+		return _fileName + extention;
+	}
+
 //	/**
 //	 * Httpレスポンスに文字列を設定して返却する
 //	 * @param res
@@ -289,6 +326,7 @@ public class SampleController {
 	}
 	
 	/**
+	 * お試し処理
 	 * initメソッドに記載してあったdigestのお試し処理を移動
 	 */
 	private void try_digest() {
