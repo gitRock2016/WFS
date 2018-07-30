@@ -97,7 +97,7 @@ public class DealerRegistController {
 		model.addAttribute("delaerRegistForm", dealerRegistForm);
 		model.addAttribute("success_message", "情報：登録完了しました");
 
-		return "dealerregist";
+		return "dealerregistfin";
 	}
 	
 	/**

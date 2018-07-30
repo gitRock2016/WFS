@@ -1,5 +1,6 @@
 package com.jp.wonfes.service.product;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.ImgIcon;
+import com.jp.wonfes.common.ImgIconUrl;
+import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
@@ -26,8 +30,8 @@ import com.jp.wonfes.service.product.form.DelaerRegistForm;
 
 @Controller
 public class DealerEditController {
+
 	@Autowired
-	
 	private DealerMapper dlMapper;
 	
 	@Autowired
@@ -36,6 +40,9 @@ public class DealerEditController {
 	@Autowired
 	private WfsMessage msg;
 	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf; 
+
 	@RequestMapping(value="/g11/init/{id}", method=RequestMethod.GET)
 	// @PathVariable("id") int id, 引数名と｛変数名｝が同じなら("id")は省略できる
 	public String init(@PathVariable int id,Model model) {
@@ -98,27 +105,49 @@ public class DealerEditController {
 		if(isEr) {
 			model.addAttribute("danger_message", err);
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
-			return "dealerregist";
+			return "dealeredit";
 		}
 		
 		// 更新
 		// nullは空文字に変換する
-		Dealer dl1 =new Dealer();
-		dl1.setDealerId(dealerRegistForm.getId()); //Id
+		Dealer dl1 = dlMapper.selectByPrimaryKey(dealerRegistForm.getId());
+		String bef_DealerIconCd=dl1.getDealerIconCd();
+//		Dealer dl1 =new Dealer();
+//		dl1.setDealerId(dealerRegistForm.getId()); //Id
 		dl1.setName(name); //名前
+		
+		if (dealerRegistForm.getDealerIconImg().getSize() != 0) {
+			ImgIcon icon = new ImgIcon(Integer.toString(dealerRegistForm.getId()), dealerRegistForm.getDealerIconImg(),
+					wfsApplicationConf.getWfsImgPath());
+			dl1.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
+		} else {
+			dl1.setDealerIconCd(""); // ディーラーアイコンコード
+		}
 		dl1.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
 		dl1.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dl1.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-
+		
+		// ディーラテーブルの更新
 		if (dlMapper.updateByPrimaryKeySelective(dl1) == 0) {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			model.addAttribute("danger_message", "情報：更新対象がありません。");
-			return "dealerregist";
+			return "dealeredit";
 		}
-		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報登録処理" });
+		
+		// ファイルの削除
+		if (dl1.getDealerIconCd() == "") {
+			// TODO windowsでのパス
+			String delFileName = wfsApplicationConf.getWfsImgPath() + "\\" + Integer.toString(dealerRegistForm.getId()) + "\\" + bef_DealerIconCd;
+			File delfile = new File(delFileName);
+			if (delfile.exists()) {
+				delfile.delete();
+			}
+		}
+		
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
 		model.addAttribute("success_message", messageSucceed);
 
-		return "dealeredit";
+		return "dealereditfinreg";
 //		return "redirect:/g12/init";
 	}
 	
@@ -151,11 +180,23 @@ public class DealerEditController {
 		ddle.createCriteria().andDealerIdEqualTo(_id);
 		dldMapper.deleteByExample(ddle) ;
 		
-		// Dealerテーブル
+		Dealer dealer = dlMapper.selectByPrimaryKey(_id);
+		
+		// ファイルの削除
+		// TODO windowsでのパス
+		String delFileName = wfsApplicationConf.getWfsImgPath() + "\\" + dealer.getDealerId() + "\\"
+				+ dealer.getDealerIconCd();
+		File delfile = new File(delFileName);
+		if (delfile.exists()) {
+			delfile.delete();
+		}
+		
+		// Dealerテーブルからの削除
 		if (dlMapper.deleteByPrimaryKey(_id) == 0) {
 			// 警告メッセージの格納
 			erm = erm + "削除対象のデータありません";
 		}
+		
 		
 		model.addAttribute("delaerRegistForm", form);
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });

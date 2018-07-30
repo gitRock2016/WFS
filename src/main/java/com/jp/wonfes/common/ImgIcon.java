@@ -74,7 +74,7 @@ public class ImgIcon {
 	// private
 	// ---------------------------------------------------------------------------------------
 	private String getExtention(String fileName) {
-		int index = fileName.lastIndexOf(",");
+		int index = fileName.lastIndexOf(".");
 		if(index == -1) {
 			// 拡張子なし
 			return "";
@@ -92,20 +92,34 @@ public class ImgIcon {
 	 * @param name
 	 * @return
 	 */
-	private String getFormatIconName(String iconName) {
-		
-		boolean isExtention = iconName.lastIndexOf(".") != -1 ? true : false;
-		
-		int _fileNameMax = iconFileNameMaxLength;
-		String extention="";
-		if(isExtention) {
-			int startExtention = iconName.lastIndexOf(".");
-			extention = iconName.substring(startExtention, iconName.length());
-			_fileNameMax = iconFileNameMaxLength - extention.length();
+//	private String getFormatIconName(String iconName) {
+//		
+//		boolean isExtention = iconName.lastIndexOf(".") != -1 ? true : false;
+//		
+//		int _fileNameMax = iconFileNameMaxLength;
+//		String extention="";
+//		if(isExtention) {
+//			int startExtention = iconName.lastIndexOf(".");
+//			extention = iconName.substring(startExtention, iconName.length());
+//			_fileNameMax = iconFileNameMaxLength - extention.length();
+//		}
+//		
+//		String _fileName = iconName.substring(0, _fileNameMax);
+//		return _fileName + extention;
+//	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	private String getFormatIconName(String dealerOriginalName) {
+		String extention = getExtention(dealerOriginalName);
+		String iconName = "i_" + dealerId + extention;
+		if(iconName.length()>10) {
+			throw new IllegalStateException("登録するアイコン名が10桁をこえています");
 		}
-		
-		String _fileName = iconName.substring(0, _fileNameMax);
-		return _fileName + extention;
+		return iconName;
 	}
+	
 	
 }

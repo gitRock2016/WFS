@@ -97,6 +97,12 @@
 		</put-attribute>
 	</definition>
 	
+	<!-- ディーラー情報登録完了 -->
+	<definition name="dealerregistfin" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラ情報登録完了"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerregistfin.jsp" />
+	</definition>
+	
 	<!-- ディーラー情報登録編集完了 -->
 	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報登録編集完了"/>

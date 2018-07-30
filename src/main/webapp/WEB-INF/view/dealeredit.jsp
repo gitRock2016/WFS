@@ -8,7 +8,7 @@
 	<div class="alert-success">${success_message}</div>
 	<div class="alert-danger">${danger_message}</div>
 
-	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g11/edit" name="editform">
+	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g11/edit" name="editform" enctype="multipart/form-data">
 		<!-- 	hidden -->
 		<form:hidden path="id" /><!-- 	dealerId -->
 		
