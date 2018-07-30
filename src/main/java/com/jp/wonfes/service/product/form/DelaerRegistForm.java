@@ -1,9 +1,12 @@
 	package com.jp.wonfes.service.product.form;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DelaerRegistForm {
 	private Integer id;
 	private String dealerName;
 	private String takuban;
+	private MultipartFile dealerIconImg;
 	private String hpLink;
 	private String twLink;
 	  
@@ -39,6 +42,13 @@ public class DelaerRegistForm {
 	public void setTwLink(String twLink) {
 		this.twLink = twLink;
 	}
-	
+	public MultipartFile getDealerIconImg() {
+		return dealerIconImg;
+	}
+	public void setDealerIconImg(MultipartFile dealerIconImg) {
+		this.dealerIconImg = dealerIconImg;
+	}
+
+
 
 }

@@ -26,8 +26,8 @@ import com.jp.wonfes.service.product.form.DelaerRegistForm;
 
 @Controller
 public class DealerEditController {
-
 	@Autowired
+	
 	private DealerMapper dlMapper;
 	
 	@Autowired
@@ -50,6 +50,15 @@ public class DealerEditController {
 			drf.setTakuban(d.getTakuban()); // 卓番
 			drf.setHpLink(d.getHpLink());
 			drf.setTwLink(d.getTwLink());
+			
+			String url = "http://localhost:8080/WonFesSys/img/";
+			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
+				url = url + "default/default_1.jpg";
+			}else {
+				url = url +Integer.toString(d.getDealerId()) + "/" + d.getDealerIconCd();
+			}
+			model.addAttribute("iconUrl", url);
+
 		}else {
 			model.addAttribute("danger_message", "ディーラ情報が存在しません");
 		}

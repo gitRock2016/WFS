@@ -9,10 +9,15 @@
 	<div class="alert-danger">${danger_message}</div>
 
 	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g11/edit" name="editform">
+		<!-- 	hidden -->
+		<form:hidden path="id" /><!-- 	dealerId -->
+		
 		<div class="form-group">
-			TODO　画像アイコン、アップボタン
-			<form:hidden path="id" />
-			<input type="hidden" id="regkbn" name="hdn" value="edit">
+			<label for="imgIcon">アイコン画像</label>
+			<div class="icon-image">
+				<img src="${iconUrl}" id="iconImgDisp"/>
+			</div>
+			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/><br>
 		</div>
 		<div class="form-group">
 			<label for="dealerName">ディーラー名</label>

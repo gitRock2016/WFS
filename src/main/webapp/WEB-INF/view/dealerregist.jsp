@@ -4,11 +4,15 @@
 		<h1>ディーラー情報登録画面</h1>
 	</div>
 	
-	<div class="text-danger"><font color="red">${message}</font></div>
+	<div class="alert-success">${success_message}</div>
+	<div class="alert-danger">${danger_message}</div>
 	
-	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
+	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist" enctype="multipart/form-data">
 		<div class="form-group">
-			TODO　画像アイコン、アップボタン
+			<label for="imgIcon">アイコン画像</label>
+			<div>
+				<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/><br>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="dealerName">ディーラー名</label>

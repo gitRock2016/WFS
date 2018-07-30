@@ -18,7 +18,7 @@
 	<!-- プロジェクトがimgファイルを読み込んでいないと表示されない -->
 	
 	<c:url value="/img" var="img" /><img src="${img }${iconPath}"/>
-	<form:form method="get" action="/WonFesSys/sample/show/icon">
+	<form:form method="get" action="/WonFesSys/sample/show/icon">	
 		アイコンを表示するdealerIdを入力してください<br/>
 		dealerId:<input type="text" name="dealerid" id="dealerid" maxlength="10" pattern="^[0-9]+$" />
 		<input type="submit"/>

@@ -1,5 +1,6 @@
 package com.jp.wonfes.service.product;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.ImgIcon;
+import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
@@ -24,7 +27,9 @@ public class DealerRegistController {
 
 	@Autowired
 	private DealerMapper dlMapper;
-//	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf; 
+
 	@RequestMapping(value="/g06/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		
@@ -65,20 +70,32 @@ public class DealerRegistController {
 		// nullは空文字に変換する
 		DealerExample e1 = new DealerExample();
 		List<Dealer> dlist =dlMapper.selectByExample(e1);
-		Integer maxid = this.getDlistMax(dlist); // Id
+		Integer nextId = this.getDlistMax(dlist)+1; // Id
 		
 		Dealer dealer = new Dealer();
-		dealer.setDealerId(maxid+1); //Id
+		dealer.setDealerId(nextId); //Id
 		dealer.setName(name); //名前
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		// TODO　画像登録を後にするため固定値とする
-		dealer.setDealerIconCd("XXX"); // ディーラーアイコンコード
+		ImgIcon icon = new ImgIcon(
+				Integer.toString(nextId),
+				dealerRegistForm.getDealerIconImg(),
+				wfsApplicationConf.getWfsImgPath());
+		dealer.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 		dlMapper.insert(dealer);
 		
+		try {
+			icon.saveIcon();
+		} catch (IOException e) {
+			e.printStackTrace();
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("dangetr_message", "画像の保存処理に失敗しました。");
+			return "dealerregist";
+		}
+		
 		model.addAttribute("delaerRegistForm", dealerRegistForm);
-		model.addAttribute("message", "情報：登録完了しました");
+		model.addAttribute("success_message", "情報：登録完了しました");
 
 		return "dealerregist";
 	}

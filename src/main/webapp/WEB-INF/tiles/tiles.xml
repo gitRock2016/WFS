@@ -21,11 +21,19 @@
 		</put-list-attribute>
 	</definition>
 	
+	<!-- CSS -->
+ 	<definition name="mainContents.baseLayoutCss" template="/WEB-INF/tiles/common/mainContents/layout_template1_css.jsp">
+		<put-list-attribute name="cssfiles">
+			<add-attribute value="honoka/bootstrap.css" />
+		</put-list-attribute>
+	</definition>
+	
 	<!-- JSP -->
 	 <definition name="mainContents.baseLayout" template="/WEB-INF/tiles/common/mainContents/layout_template1.jsp">
 			<put-attribute name="headerJs" value="mainContents.baseLayoutJs" />
+			<put-attribute name="headerCss" value="mainContents.baseLayoutCss" />
 			<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
+			<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
 	</definition>
 
 <!--
@@ -77,6 +85,13 @@
 			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealeredit.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.dealerSearch" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="dealeredit.css" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
