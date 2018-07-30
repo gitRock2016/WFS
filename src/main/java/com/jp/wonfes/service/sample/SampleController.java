@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -223,7 +224,9 @@ public class SampleController {
 		// ディーラIDに対応するimg保存先フォルダの確認と作成
 		String dealerid = Integer.toString(sampleRegistForm.getDealerId()); // ディーラID
 		String imgIconPath = wfsApplicationConf.getWfsImgPath();
-		String imgIconPathByDealerId = imgIconPath + "\\" + dealerid; // 保存先フォルダ（ディーラID）
+//		String imgIconPathByDealerId = imgIconPath + "\\" + dealerid; // 保存先フォルダ（ディーラID）
+		// Unix
+		String imgIconPathByDealerId = imgIconPath + File.separator + dealerid; // 保存先フォルダ（ディーラID）
 		Path imgPath = Paths.get(imgIconPathByDealerId);
 		if (!Files.isDirectory(imgPath)) {
 			Files.createDirectory(imgPath);
@@ -233,7 +236,9 @@ public class SampleController {
 		MultipartFile dealericon = sampleRegistForm.getDealerIcon();
 		String iconName = this.getFormatIconName(dealericon.getOriginalFilename()); // 画像ファイル名（整形）
 //		String iconName = dealericon.getOriginalFilename();
-		File tosaveFile = new File(imgIconPathByDealerId + "\\" + iconName);
+		String t=File.separator;
+		File tosaveFile = new File(imgIconPathByDealerId + File.separator + iconName);
+//		File tosaveFile = new File(imgIconPathByDealerId + "\\" + iconName);
 
 		// 画像ファイルの保存
 		dealericon.transferTo(tosaveFile);
