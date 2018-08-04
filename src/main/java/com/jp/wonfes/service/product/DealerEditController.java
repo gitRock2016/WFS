@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.common.base.Strings;
 import com.jp.wonfes.common.ImgIcon;
 import com.jp.wonfes.common.ImgIconUrl;
+import com.jp.wonfes.common.ImgIconUrlBK;
 import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
@@ -43,6 +44,9 @@ public class DealerEditController {
 	@Autowired
 	private WfsApplicationConf wfsApplicationConf; 
 
+	@Autowired
+	private ImgIconUrl imgIconUrl;
+
 	@RequestMapping(value="/g11/init/{id}", method=RequestMethod.GET)
 	// @PathVariable("id") int id, 引数名と｛変数名｝が同じなら("id")は省略できる
 	public String init(@PathVariable int id,Model model) {
@@ -58,12 +62,18 @@ public class DealerEditController {
 			drf.setHpLink(d.getHpLink());
 			drf.setTwLink(d.getTwLink());
 			
-			String url = "http://localhost:8080/WonFesSys/img/";
+//			String url = "http://localhost:8080/WonFesSys/img/";
+//			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
+//				url = url + "default/default_1.jpg";
+//			}else {
+//				url = url +Integer.toString(d.getDealerId()) + "/" + d.getDealerIconCd();
+//			}
+			String url=null;
 			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
-				url = url + "default/default_1.jpg";
-			}else {
-				url = url +Integer.toString(d.getDealerId()) + "/" + d.getDealerIconCd();
-			}
+				url = imgIconUrl.getDefaultImgIconFilePath();
+			} else {
+				url = imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd());
+			}			
 			model.addAttribute("iconUrl", url);
 
 		}else {
