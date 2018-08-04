@@ -6,7 +6,7 @@ $(function() {
 	
 	// 登録ボタン押下
 	$("#editBtn").bind("click", function() {
-		//wfs.dealeredit.editBtn();
+		wfs.dealeredit.editBtn();
 	});
 	
 	// 削除ボタン押下

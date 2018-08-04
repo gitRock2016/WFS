@@ -10,6 +10,11 @@ public class ImgIconUrlImpl implements ImgIconUrl {
 	private WfsApplicationConf wfsApplicationConf; 
 	
 	@Override
+	public String getImgFilePath() {
+		return wfsApplicationConf.getWfsImgPath();
+	}
+	
+	@Override
 	public String getImgIconFilePath(Integer userId, String fileName) {
 		return wfsApplicationConf.getWfsImgUrl() + String.valueOf(userId) + "/" + fileName;
 	}
@@ -18,5 +23,6 @@ public class ImgIconUrlImpl implements ImgIconUrl {
 	public String getDefaultImgIconFilePath() {
 		return wfsApplicationConf.getWfsImgUrl() + wfsApplicationConf.getWfsImgDefaultFolder() +"/" +wfsApplicationConf.getWfsImgDefaultFile();
 	}
+
 
 }

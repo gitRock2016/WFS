@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.common.base.Strings;
 import com.jp.wonfes.common.ImgIcon;
 import com.jp.wonfes.common.WfsApplicationConf;
+import com.jp.wonfes.common.WfsImgIcon;
+import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
@@ -29,7 +31,10 @@ public class DealerRegistController {
 	private DealerMapper dlMapper;
 	@Autowired
 	private WfsApplicationConf wfsApplicationConf; 
+	@Autowired
+	private WfsImgLogic wfsImgLogic;
 
+	
 	@RequestMapping(value="/g06/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		
@@ -76,17 +81,23 @@ public class DealerRegistController {
 		dealer.setDealerId(nextId); //Id
 		dealer.setName(name); //名前
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		ImgIcon icon = new ImgIcon(
-				Integer.toString(nextId),
-				dealerRegistForm.getDealerIconImg(),
-				wfsApplicationConf.getWfsImgPath());
-		dealer.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
+		// TODO 0804登録処理の変更
+//		ImgIcon icon = new ImgIcon(
+//				Integer.toString(nextId),
+//				dealerRegistForm.getDealerIconImg(),
+//				wfsApplicationConf.getWfsImgPath());
+		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
+//		dealer.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
+		dealer.setDealerIconCd(imgIcon.getWfsImgIconName()); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 		dlMapper.insert(dealer);
 		
 		try {
-			icon.saveIcon();
+			// TODO 0804登録処理の変更
+//			icon.saveIcon();
+			wfsImgLogic.save(imgIcon);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("delaerRegistForm", dealerRegistForm);

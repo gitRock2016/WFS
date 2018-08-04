@@ -70,6 +70,10 @@ public class ImgIcon {
 		return l.contains(this.getExtention());
 	}
 	
+	public String getImg() {
+		return this.getExtention(this.imgIconName);
+	}
+	
 	// ---------------------------------------------------------------------------------------
 	// private
 	// ---------------------------------------------------------------------------------------
