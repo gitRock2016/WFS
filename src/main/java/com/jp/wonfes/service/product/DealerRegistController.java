@@ -101,7 +101,7 @@ public class DealerRegistController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
-			model.addAttribute("dangetr_message", "画像の保存処理に失敗しました。");
+			model.addAttribute("danger_message", "画像の保存処理に失敗しました。");
 			return "dealerregist";
 		}
 		
