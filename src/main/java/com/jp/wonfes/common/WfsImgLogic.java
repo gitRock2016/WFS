@@ -11,6 +11,14 @@ public interface WfsImgLogic {
 	void save(WfsImgIcon imgIcon) throws IOException;
 	
 	/**
+	 * アイコン画像を削除する
+	 * @param imgIcon
+	 * @throws IOException 
+	 * @throws WfsLogicException 
+	 */
+	void del(WfsImgIcon imgIcon) throws IOException, WfsLogicException;
+	
+	/**
 	 * 商品画像を保存する
 	 * TODO いづれ作りたい
 	 * @param imgIcon
