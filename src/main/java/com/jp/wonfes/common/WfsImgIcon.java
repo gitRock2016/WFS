@@ -29,7 +29,7 @@ public class WfsImgIcon extends WfsAbstractFile {
 	/**
 	 * TODO
 	 * ファイルが存在していればTRUEを返却する
-	 * ファイルのバイト数が0バイト
+	 * ファイルのバイト数が0バイトの場合、ファイルが存在していないと判定する
 	 * @return
 	 */
 	public boolean exists() {
@@ -40,13 +40,17 @@ public class WfsImgIcon extends WfsAbstractFile {
 		return img_icon_prefix + this.dealerId + this.extention;
 	}
 	
+	//拡張子がない場合はエラーにせず空文字を設定する
 	private String getWfsExtention() {
-		String _name = this.imgIcon.getOriginalFilename();
-		int index = _name.lastIndexOf(".");
-		if(index == -1) {
-			throw new IllegalStateException("アイコン画像に拡張子がありません");
+		if(this.exists()) {
+			String _name = this.imgIcon.getOriginalFilename();
+			int index = _name.lastIndexOf(".");
+			if(index == -1) {
+				throw new IllegalStateException("アイコン画像に拡張子がありません");
+			}
+			return _name.substring(index, _name.length());
 		}
-		return _name.substring(index, _name.length());
+		return "";
 	}
 	
 	public boolean isImgIcon() {

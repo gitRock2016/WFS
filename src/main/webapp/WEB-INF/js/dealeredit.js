@@ -6,12 +6,22 @@ $(function() {
 	
 	// 登録ボタン押下
 	$("#editBtn").bind("click", function() {
+		
+		const isDealerIconImgDelCheck = $("#dealerIconImgDelCheckId").prop('checked');
+		if(isDealerIconImgDelCheck===true){
+			$("#dealerIconImgDelFlg").val("1");
+		}
+
 		wfs.dealeredit.editBtn();
 	});
 	
 	// 削除ボタン押下
 	$("#delBtn").bind("click", function() {
 		wfs.dealeredit.delBtn();
+	});
+	
+	$("#dealerIconImgDelCheckId").bind("click", function(){
+		
 	});
 	
 })

@@ -32,7 +32,8 @@
 	<!-- JDBC設定ファイル -->
  	<context:property-placeholder location="classpath:db/jdbc.properties" order="1" ignore-unresolvable="true" />
 	<!-- wfs共通設定ファイル -->
- 	<context:property-placeholder location="classpath:spring/application-conf.properties" order="2" ignore-unresolvable="true"/>
+ 	<context:property-placeholder location="classpath:spring/application-conf-dev.properties" order="2" ignore-unresolvable="true"/>
+<!--  	<context:property-placeholder location="classpath:spring/application-conf.properties" order="2" ignore-unresolvable="true"/> -->
 
 	<!-- プロパティファイルからメッセージを取得 -->
 	<bean id="messageSource"

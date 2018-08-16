@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
 import com.jp.wonfes.common.ImgIcon;
+import com.jp.wonfes.common.ImgIconOperation;
 import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.common.ImgIconUrlBK;
 import com.jp.wonfes.common.WfsApplicationConf;
@@ -49,8 +50,11 @@ public class DealerEditController {
 
 	@Autowired
 	private ImgIconUrl imgIconUrl;
+
 	@Autowired
 	private WfsImgLogic wfsImgLogic;
+	
+	private static final String imgIconDel = "";
 	
 	@RequestMapping(value = "/g11/init/{id}", method = RequestMethod.GET)
 	// @PathVariable("id") int id, 引数名と｛変数名｝が同じなら("id")は省略できる
@@ -102,10 +106,10 @@ public class DealerEditController {
 	@RequestMapping(value = "/g11/edit", method = RequestMethod.POST)
 	public String edit(@ModelAttribute DelaerRegistForm dealerRegistForm, Model model) {
 
-		String name = dealerRegistForm.getDealerName();
-		String takuban = dealerRegistForm.getTakuban();
+		String name = dealerRegistForm.getDealerName(); // ディーラ名
+		String takuban = dealerRegistForm.getTakuban();// 卓番
 
-		// チェック
+		// チェック処理
 		String err = "";
 		boolean isEr = false;
 		if (Strings.isNullOrEmpty(name)) {
@@ -116,75 +120,45 @@ public class DealerEditController {
 			isEr = true;
 			err = err + "<br/>" + "エラー：卓盤は6桁まで入力できます";
 		}
-
 		if (isEr) {
 			model.addAttribute("danger_message", err);
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealeredit";
 		}
 
-		// 更新
-		// nullは空文字に変換する
-		Dealer dl1 = dlMapper.selectByPrimaryKey(dealerRegistForm.getId());
-		String bef_DealerIconCd = dl1.getDealerIconCd();
-		// Dealer dl1 =new Dealer();
-		// dl1.setDealerId(dealerRegistForm.getId()); //Id
-		dl1.setName(name); // 名前
-
-		// TODO 0804登録処理の変更
-		// if (dealerRegistForm.getDealerIconImg().getSize() != 0) {
-		// ImgIcon icon = new ImgIcon(Integer.toString(dealerRegistForm.getId()),
-		// dealerRegistForm.getDealerIconImg(),
-		// wfsApplicationConf.getWfsImgPath());
-		// dl1.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
-		// } else {
-		// dl1.setDealerIconCd(""); // ディーラーアイコンコード
-		// }
-		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dl1.getDealerId());
-		if (imgIcon.exists()) {
-			// TODO 0804登録処理の変更
-//			ImgIcon icon = new ImgIcon(Integer.toString(dealerRegistForm.getId()), dealerRegistForm.getDealerIconImg(),
-//					wfsApplicationConf.getWfsImgPath());
-//			dl1.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
-			dl1.setDealerIconCd(imgIcon.getWfsImgIconName()); // ディーラーアイコンコード
-			try {
-				wfsImgLogic.save(imgIcon);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			dl1.setDealerIconCd(""); // ディーラーアイコンコード
+		// 更新処理(テーブル）
+		Dealer dealer = dlMapper.selectByPrimaryKey(dealerRegistForm.getId());
+		dealer.setName(name); // ディーラ名
+		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
+		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
+		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
+		if(ImgIconOperation.DELETED.getValue().equals(dealerRegistForm.getDealerIconImgDelFlg())){
+			// アイコン画像を削除する場合、テーブル上のアイコン画像へのパスを空文字にする
+			dealer.setDealerIconCd(imgIconDel);
 		}
-
-		dl1.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		dl1.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
-		dl1.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-
-		// ディーラテーブルの更新
-		if (dlMapper.updateByPrimaryKeySelective(dl1) == 0) {
+		if (dlMapper.updateByPrimaryKeySelective(dealer) == 0) {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			model.addAttribute("danger_message", "情報：更新対象がありません。");
 			return "dealeredit";
 		}
-
-		// TODO 0804登録処理の変更
-		// ファイルの削除
-//		if (dl1.getDealerIconCd() == "") {
-//			// TODO windowsでのパス
-//			String delFileName = wfsApplicationConf.getWfsImgPath() + "\\" + Integer.toString(dealerRegistForm.getId())
-//					+ "\\" + bef_DealerIconCd;
-//			File delfile = new File(delFileName);
-//			if (delfile.exists()) {
-//				delfile.delete();
-//			}
-//		}
+		
+		// 更新処理(アイコン画像ファイル自体）
+		if(! ImgIconOperation.DELETED.getValue().equals(dealerRegistForm.getDealerIconImgDelFlg())){
+			WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealer.getDealerId());
+			// アイコン画像を更新しない場合は、画像データがこないので何もしない
+			if (imgIcon.exists()) {
+				try {
+					wfsImgLogic.save(imgIcon);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
 		model.addAttribute("success_message", messageSucceed);
 
 		return "dealereditfinreg";
-		// return "redirect:/g12/init";
 	}
 
 	@RequestMapping(value = "/g11/del", method = RequestMethod.POST)
