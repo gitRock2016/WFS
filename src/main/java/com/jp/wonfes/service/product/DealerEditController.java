@@ -24,6 +24,7 @@ import com.jp.wonfes.common.ImgIconUrlBK;
 import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsImgIcon;
 import com.jp.wonfes.common.WfsImgLogic;
+import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
@@ -68,23 +69,19 @@ public class DealerEditController {
 		if (isEditDealerData(d)) {
 			drf.setId(d.getDealerId());
 			drf.setDealerName(d.getName()); // ディーラ名
+			drf.setDealerIconCd(d.getDealerIconCd()); // ディーラアイコンコード
 			drf.setTakuban(d.getTakuban()); // 卓番
 			drf.setHpLink(d.getHpLink());
 			drf.setTwLink(d.getTwLink());
 
-			// String url = "http://localhost:8080/WonFesSys/img/";
-			// if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
-			// url = url + "default/default_1.jpg";
-			// }else {
-			// url = url +Integer.toString(d.getDealerId()) + "/" + d.getDealerIconCd();
-			// }
-			String url = null;
-			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
-				url = imgIconUrl.getDefaultImgIconFilePath();
-			} else {
-				url = imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd());
-			}
-			model.addAttribute("iconUrl", url);
+//			String url = null;
+//			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
+//				url = imgIconUrl.getDefaultImgIconFilePath();
+//			} else {
+//				url = imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd());
+//			}
+//			model.addAttribute("iconUrl", url);
+			drf.setDealerIconUrl(imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd()));
 
 		} else {
 			model.addAttribute("danger_message", "ディーラ情報が存在しません");
@@ -126,6 +123,13 @@ public class DealerEditController {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealeredit";
 		}
+		try {
+			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
+		} catch (WfsLogicException e) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealeredit";
+		}
 
 		// 更新処理(テーブル）
 		Dealer dealer = dlMapper.selectByPrimaryKey(dealerRegistForm.getId());
@@ -154,7 +158,13 @@ public class DealerEditController {
 				try {
 					wfsImgLogic.save(imgIcon);
 				} catch (IOException e) {
-					e.printStackTrace();
+					model.addAttribute("delaerRegistForm", dealerRegistForm);
+					model.addAttribute("danger_message", "IO例外だよ");
+					return "dealeredit";
+				} catch (WfsLogicException e) {
+					model.addAttribute("delaerRegistForm", dealerRegistForm);
+					model.addAttribute("danger_message", e.getMessage());
+					return "dealeredit";
 				}
 			}
 		}

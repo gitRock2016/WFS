@@ -20,10 +20,18 @@ $(function() {
 		wfs.dealeredit.delBtn();
 	});
 	
-	$("#dealerIconImgDelCheckId").bind("click", function(){
-		
+	// ファイル選択時
+/*	let inputFileObj = $("#iconImg");
+	let previewObj = $("#iconImgDisp");
+	inputFileObj.change(function(){
+		wfs.imgPreview(inputFileObj, previewObj);
 	});
-	
+*/
+	// アイコン画像を選択時
+	$("#iconImg").change(function(){
+		wfs.imgPreview("iconImg", "iconImgDisp");
+	});
+
 })
 
 // --------------------------------------------------------------------------v

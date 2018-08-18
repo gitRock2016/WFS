@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DelaerRegistForm {
 	private Integer id;
 	private String dealerName;
+	private String dealerIconCd;
+	private String dealerIconUrl;
 	private String takuban;
 	private MultipartFile dealerIconImg;
 	private String hpLink;
@@ -55,7 +57,19 @@ public class DelaerRegistForm {
 	public void setDealerIconImgDelFlg(String dealerIconImgDelFlg) {
 		this.dealerIconImgDelFlg = dealerIconImgDelFlg;
 	}
-
+	public String getDealerIconCd() {
+		return dealerIconCd;
+	}
+	public void setDealerIconCd(String dealerIconCd) {
+		this.dealerIconCd = dealerIconCd;
+	}
+	public String getDealerIconUrl() {
+		return dealerIconUrl;
+	}
+	public void setDealerIconUrl(String dealerIconUrl) {
+		this.dealerIconUrl = dealerIconUrl;
+	}
+	
 
 
 }

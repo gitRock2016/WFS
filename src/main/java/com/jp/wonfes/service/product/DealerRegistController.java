@@ -18,6 +18,7 @@ import com.jp.wonfes.common.ImgIcon;
 import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsImgIcon;
 import com.jp.wonfes.common.WfsImgLogic;
+import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
@@ -95,6 +96,9 @@ public class DealerRegistController {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			model.addAttribute("danger_message", "画像の保存処理に失敗しました。");
 			return "dealerregist";
+		} catch (WfsLogicException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		model.addAttribute("success_message", "情報：登録完了しました");

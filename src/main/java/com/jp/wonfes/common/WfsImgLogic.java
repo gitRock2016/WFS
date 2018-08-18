@@ -2,13 +2,15 @@ package com.jp.wonfes.common;
 
 import java.io.IOException;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface WfsImgLogic {
 	/**
 	 * アイコン画像を保存する
 	 * @param imgIcon
 	 * @throws IOException 
 	 */
-	void save(WfsImgIcon imgIcon) throws IOException;
+	void save(WfsImgIcon imgIcon) throws IOException, WfsLogicException;
 	
 	/**
 	 * アイコン画像を削除する
@@ -24,5 +26,13 @@ public interface WfsImgLogic {
 	 * @param imgIcon
 	 */
 //	void save(WfsImgProduct imgProduct);
+	
+	/**
+	 * アイコン画像ファイルに対するチェックを行う
+	 * @param imgIcon
+	 * @throws IOException
+	 */
+	void checkFile(WfsImgIcon imgIcon) throws WfsLogicException;
 
+	
 }

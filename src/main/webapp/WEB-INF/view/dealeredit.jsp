@@ -15,7 +15,9 @@
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
 			<div class="icon-image">
-				<img src="${iconUrl}" id="iconImgDisp"/>
+<%-- 				<form:hidden path ="dealerIconUrl" /> --%>
+<%-- 				<img src="${delaerRegistForm.dealerIconUrl}" id="iconImgDisp"/> --%>
+<%-- 				<img src="${iconUrl}" id="iconImgDisp"/> --%>
 			</div>
 			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/>
 			<label for="dealerIconImgDelCheckId" >アイコン削除

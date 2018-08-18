@@ -20,13 +20,21 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 	private final String permmisions ="rwxrwxr-x";
 
 	@Autowired
+	private WfsMessage msg;
+	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf;
+
+	@Autowired
 	ImgIconUrl ImgIconUrl;
 	
 	@Autowired
 	DealerMapper dealerMapper;
 	
 	@Override
-	public void save(WfsImgIcon imgIcon) throws IOException {
+	public void save(WfsImgIcon imgIcon) throws IOException, WfsLogicException {
+		// チェック処理
+		checkFile(imgIcon);
 		
 		// dealerId毎のフォルダ作成
 		final String iconFolderByDealerId = this.ImgIconUrl.getImgFilePath() + File.separator + imgIcon.getDealerId();
@@ -55,6 +63,26 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 		}
 		dealer.setDealerIconCd("");
 		dealerMapper.updateByPrimaryKey(dealer);
+		
+	}
+
+	@Override
+	public void checkFile(WfsImgIcon imgIcon) throws WfsLogicException {
+		/** ファイルサイズが0バイトであるかどうか*/
+		String errMsg=null;
+		if(imgIcon.getSize()==0) {
+			errMsg = msg.getMessage("wfs.msg.e.cmmn4");
+			throw new WfsLogicException(errMsg);
+		}
+		
+		final long fileMaxSize = Long.parseLong(wfsApplicationConf.getWfsImgMaxsize()) ;
+		/** ファイルサイズが最大サイズ未満であるかどうか*/
+		long fileSize = imgIcon.getSize();
+		if(fileSize > fileMaxSize) {
+			errMsg = msg.getMessage("wfs.msg.e.comm3", new String[] {wfsApplicationConf.getWfsImgMaxsize()});
+//			errMsg = msg.getMessage("wfs.msg.e.cmmn3", new String[] {Long.toString(fileSizeMB)});
+			throw new WfsLogicException(errMsg);
+		}
 		
 	}
 
