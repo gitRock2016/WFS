@@ -6,7 +6,13 @@ $(function() {
 	
 	// 登録ボタン押下
 	$("#editBtn").bind("click", function() {
-		//wfs.dealeredit.editBtn();
+		
+		const isDealerIconImgDelCheck = $("#dealerIconImgDelCheckId").prop('checked');
+		if(isDealerIconImgDelCheck===true){
+			$("#dealerIconImgDelFlg").val("1");
+		}
+
+		wfs.dealeredit.editBtn();
 	});
 	
 	// 削除ボタン押下
@@ -14,6 +20,11 @@ $(function() {
 		wfs.dealeredit.delBtn();
 	});
 	
+	// アイコン画像を選択時
+	$("#iconImg").change(function(){
+		wfs.imgPreview("iconImg", "iconImgDisp");
+	});
+
 })
 
 // --------------------------------------------------------------------------v

@@ -15,9 +15,13 @@
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
 			<div class="icon-image">
-				<img src="${iconUrl}" id="iconImgDisp"/>
+				<img src="${delaerRegistForm.dealerIconUrl}" id="iconImgDisp"/>
 			</div>
-			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/><br>
+			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/>
+			<label for="dealerIconImgDelCheckId" >アイコン削除
+				<input type="checkbox" id="dealerIconImgDelCheckId" name="dealerIconImgDelCheck" value="1"/>
+			</label>
+			<input type="hidden" id="dealerIconImgDelFlg" name="dealerIconImgDelFlg"  value="0"/>
 		</div>
 		<div class="form-group">
 			<label for="dealerName">ディーラー名</label>
