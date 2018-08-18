@@ -139,6 +139,10 @@
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	</bean>
+ 	</bean>
+<!-- 	ファイルアップロード時のチェックにServlet3.0を利用する場合は以下を使う -->
+<!-- 	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</bean> -->
 	
 </beans>

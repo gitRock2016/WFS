@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class WfsImgIcon extends WfsAbstractFile {
 	private static final String img_icon_prefix = "i_";
+	private static final String period = ".";
 	private static final String[] extentionList = { "jpeg", "jpg", "png", "bmp" };
 
 	private final MultipartFile imgIcon;
@@ -37,7 +38,7 @@ public class WfsImgIcon extends WfsAbstractFile {
 	}
 	
 	public String getWfsImgIconName() {
-		return img_icon_prefix + this.dealerId + this.extention;
+		return img_icon_prefix + this.dealerId + period + this.extention;
 	}
 	
 	//拡張子がない場合はエラーにせず空文字を設定する
@@ -48,12 +49,13 @@ public class WfsImgIcon extends WfsAbstractFile {
 			if(index == -1) {
 				throw new IllegalStateException("アイコン画像に拡張子がありません");
 			}
-			return _name.substring(index, _name.length());
+			return _name.substring(index + 1, _name.length());
 		}
 		return "";
 	}
 	
 	public boolean isImgIcon() {
+		if(this.extention=="") {return false;}
 		for(String ext : extentionList) {
 			if(ext.equalsIgnoreCase(this.extention)) {
 				return true;

@@ -71,33 +71,25 @@ public class DealerRegistController {
 			return "dealerregist";
 		}
 		
-		// 登録
-		// nullは空文字に変換する
+		// 登録処理(テーブル）
 		DealerExample e1 = new DealerExample();
 		List<Dealer> dlist =dlMapper.selectByExample(e1);
 		Integer nextId = this.getDlistMax(dlist)+1; // Id
+		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
 		
 		Dealer dealer = new Dealer();
-		dealer.setDealerId(nextId); //Id
-		dealer.setName(name); //名前
+		dealer.setDealerId(nextId); //ディーラId
+		dealer.setName(name); //ディーラ名
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		// TODO 0804登録処理の変更
-//		ImgIcon icon = new ImgIcon(
-//				Integer.toString(nextId),
-//				dealerRegistForm.getDealerIconImg(),
-//				wfsApplicationConf.getWfsImgPath());
-		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
-//		dealer.setDealerIconCd(icon.getImgIconName()); // ディーラーアイコンコード
-		dealer.setDealerIconCd(imgIcon.getWfsImgIconName()); // ディーラーアイコンコード
+		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
+		dealer.setDealerIconCd(dealerIconCd); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 		dlMapper.insert(dealer);
 		
+		// 登録処理(アイコン画像ファイル自体）
 		try {
-			// TODO 0804登録処理の変更
-//			icon.saveIcon();
 			wfsImgLogic.save(imgIcon);
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
@@ -105,10 +97,15 @@ public class DealerRegistController {
 			return "dealerregist";
 		}
 		
-		model.addAttribute("delaerRegistForm", dealerRegistForm);
 		model.addAttribute("success_message", "情報：登録完了しました");
 
 		return "dealerregistfin";
+	}
+	
+	// ファイルアップロードエラー
+	@RequestMapping(value="/g06/error/fileupload", method=RequestMethod.POST)
+	public String registFileError(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
+		return "dealereditfinreg";
 	}
 	
 	/**

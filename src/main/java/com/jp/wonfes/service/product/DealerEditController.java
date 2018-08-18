@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.base.Strings;
 import com.jp.wonfes.common.ImgIcon;
@@ -132,9 +133,13 @@ public class DealerEditController {
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
+		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealer.getDealerId());
 		if(ImgIconOperation.DELETED.getValue().equals(dealerRegistForm.getDealerIconImgDelFlg())){
 			// アイコン画像を削除する場合、テーブル上のアイコン画像へのパスを空文字にする
 			dealer.setDealerIconCd(imgIconDel);
+		}else {
+			String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : imgIconDel;
+			dealer.setDealerIconCd(dealerIconCd);
 		}
 		if (dlMapper.updateByPrimaryKeySelective(dealer) == 0) {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
@@ -144,7 +149,6 @@ public class DealerEditController {
 		
 		// 更新処理(アイコン画像ファイル自体）
 		if(! ImgIconOperation.DELETED.getValue().equals(dealerRegistForm.getDealerIconImgDelFlg())){
-			WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealer.getDealerId());
 			// アイコン画像を更新しない場合は、画像データがこないので何もしない
 			if (imgIcon.exists()) {
 				try {
