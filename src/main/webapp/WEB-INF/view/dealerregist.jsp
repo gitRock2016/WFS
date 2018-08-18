@@ -10,10 +10,10 @@
 	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
-			<div>
-<%-- 				<img src="${delaerRegistForm.dealerIconUrl}" id="iconImgDisp"/> --%>
-				<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/><br>
+			<div class="icon-image">
+				<img src="${delaerRegistForm.dealerIconUrl}" id="iconImgDisp"/>
 			</div>
+			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"/><br>
 		</div>
 		<div class="form-group">
 			<label for="dealerName">ディーラー名</label>

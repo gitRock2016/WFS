@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class WfsImgIcon extends WfsAbstractFile {
 	private static final String img_icon_prefix = "i_";
 	private static final String period = ".";
-	private static final String[] extentionList = { "jpeg", "jpg", "png", "bmp" };
+//	private static final String[] extentionList = { "jpeg", "jpg", "png", "bmp" };
 
 	private final MultipartFile imgIcon;
 	private final Integer dealerId;
@@ -42,6 +42,7 @@ public class WfsImgIcon extends WfsAbstractFile {
 	}
 	
 	//拡張子がない場合はエラーにせず空文字を設定する
+	// TODO アイコン画像のチェックメソッドがあるので、Illegalでなく空文字を返すだけでいいかも
 	private String getWfsExtention() {
 		if(this.exists()) {
 			String _name = this.imgIcon.getOriginalFilename();
@@ -56,7 +57,7 @@ public class WfsImgIcon extends WfsAbstractFile {
 	
 	public boolean isImgIcon() {
 		if(this.extention=="") {return false;}
-		for(String ext : extentionList) {
+		for(String ext : super.extentionList) {
 			if(ext.equalsIgnoreCase(this.extention)) {
 				return true;
 			}

@@ -73,14 +73,6 @@ public class DealerEditController {
 			drf.setTakuban(d.getTakuban()); // 卓番
 			drf.setHpLink(d.getHpLink());
 			drf.setTwLink(d.getTwLink());
-
-//			String url = null;
-//			if (d.getDealerIconCd() == null || "".equals(d.getDealerIconCd())) {
-//				url = imgIconUrl.getDefaultImgIconFilePath();
-//			} else {
-//				url = imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd());
-//			}
-//			model.addAttribute("iconUrl", url);
 			drf.setDealerIconUrl(imgIconUrl.getImgIconFilePath(d.getDealerId(), d.getDealerIconCd()));
 
 		} else {

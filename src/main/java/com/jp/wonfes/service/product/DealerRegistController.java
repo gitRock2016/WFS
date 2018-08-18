@@ -71,7 +71,13 @@ public class DealerRegistController {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealerregist";
 		}
-		
+		try {
+			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
+		} catch (WfsLogicException e) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealerregist";
+		}		
 		// 登録処理(テーブル）
 		DealerExample e1 = new DealerExample();
 		List<Dealer> dlist =dlMapper.selectByExample(e1);
@@ -92,13 +98,13 @@ public class DealerRegistController {
 		try {
 			wfsImgLogic.save(imgIcon);
 		} catch (IOException e) {
-			e.printStackTrace();
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
-			model.addAttribute("danger_message", "画像の保存処理に失敗しました。");
+			model.addAttribute("danger_message", "IO例外だよ");
 			return "dealerregist";
 		} catch (WfsLogicException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealerregist";
 		}
 		
 		model.addAttribute("success_message", "情報：登録完了しました");
