@@ -40,7 +40,7 @@
 				<th>No</th>
 				<th>ディーラー名</th>
 				<th>卓番</th>
-				<th>詳細</th>
+<!-- 				<th>詳細</th> -->
 				<th>HP</th>
 				<th>TW</th>
 			</tr>
@@ -56,7 +56,7 @@
 							<br />
 						</td>
 						<td><c:out value="${obj.takuban}" /></td>
-						<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td>
+<!-- 						<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td> -->
 						<td><a href="${obj.hpUrl}" class="btn btn-info">HP</a></td>
 						<td><a href="${obj.twUrl}" class="btn btn-info">twitter</a></td>
 					</tr>

@@ -1,5 +1,6 @@
 package com.jp.wonfes.service.product;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.ImgIcon;
+import com.jp.wonfes.common.WfsApplicationConf;
+import com.jp.wonfes.common.WfsImgIcon;
+import com.jp.wonfes.common.WfsImgLogic;
+import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
@@ -24,7 +30,12 @@ public class DealerRegistController {
 
 	@Autowired
 	private DealerMapper dlMapper;
-//	
+	@Autowired
+	private WfsApplicationConf wfsApplicationConf; 
+	@Autowired
+	private WfsImgLogic wfsImgLogic;
+
+	
 	@RequestMapping(value="/g06/init", method=RequestMethod.GET)
 	public String init(Model model) {
 		
@@ -60,27 +71,51 @@ public class DealerRegistController {
 			model.addAttribute("delaerRegistForm", dealerRegistForm);
 			return "dealerregist";
 		}
-		
-		// 登録
-		// nullは空文字に変換する
+		try {
+			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
+		} catch (WfsLogicException e) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealerregist";
+		}		
+		// 登録処理(テーブル）
 		DealerExample e1 = new DealerExample();
 		List<Dealer> dlist =dlMapper.selectByExample(e1);
-		Integer maxid = this.getDlistMax(dlist); // Id
+		Integer nextId = this.getDlistMax(dlist)+1; // Id
+		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
 		
 		Dealer dealer = new Dealer();
-		dealer.setDealerId(maxid+1); //Id
-		dealer.setName(name); //名前
+		dealer.setDealerId(nextId); //ディーラId
+		dealer.setName(name); //ディーラ名
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		// TODO　画像登録を後にするため固定値とする
-		dealer.setDealerIconCd("XXX"); // ディーラーアイコンコード
+		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
+		dealer.setDealerIconCd(dealerIconCd); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 		dlMapper.insert(dealer);
 		
-		model.addAttribute("delaerRegistForm", dealerRegistForm);
-		model.addAttribute("message", "情報：登録完了しました");
+		// 登録処理(アイコン画像ファイル自体）
+		try {
+			wfsImgLogic.save(imgIcon);
+		} catch (IOException e) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", "IO例外だよ");
+			return "dealerregist";
+		} catch (WfsLogicException e) {
+			model.addAttribute("delaerRegistForm", dealerRegistForm);
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealerregist";
+		}
+		
+		model.addAttribute("success_message", "情報：登録完了しました");
 
-		return "dealerregist";
+		return "dealerregistfin";
+	}
+	
+	// ファイルアップロードエラー
+	@RequestMapping(value="/g06/error/fileupload", method=RequestMethod.POST)
+	public String registFileError(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
+		return "dealereditfinreg";
 	}
 	
 	/**

@@ -5,7 +5,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title>${titleName }</title>
-	<link rel="stylesheet" type="text/css" href="<c:url value="/css/honoka/bootstrap.css" />">
+<%-- 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/honoka/bootstrap.css" />"> --%>
+	<tiles:insertAttribute name="headerCss" />
 	<tiles:insertAttribute name="headerJs" />
 	
 	<style type="text/css">
