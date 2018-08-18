@@ -4,9 +4,9 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="
 				http://java.sun.com/xml/ns/javaee
-				http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+ 				http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	
+
 	<!-- git管理の都合により、プロジェクト名にあわせ変更。もともとは「WonFesSys」 -->
 	<display-name>WonFesSys2</display-name>
 
@@ -32,6 +32,17 @@
 			<param-value>/WEB-INF/mvc-config.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+<!-- 		アプリケーション側で制御するため対応しない -->
+<!--
+		アップロードする1ファイルの最大バイト数×同時アップロードの許容ファイル数+その他データサイズ
+		2000000*1+1000000
+ -->
+<!-- 		<multipart-config>
+			<max-file-size>2000000</max-file-size>
+			<max-request-size>3000000</max-request-size>
+			<file-size-threshold>0</file-size-threshold>
+		</multipart-config> -->
 	</servlet>
 
 	<servlet-mapping>
@@ -56,6 +67,18 @@
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- ファイルアップロード -->
+<!--　　アプリケーション側で制御するため不要
+ 	<filter>
+		<filter-name>MultiparFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MultiparFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	
 	<!-- 認証 -->
 	<!-- todo tilesのため -->
 	<filter>
@@ -110,6 +133,21 @@
 			<scripting-invalid>false</scripting-invalid>
 			<include-prelude>/WEB-INF/view/common/include.jsp</include-prelude>
 		</jsp-property-group>
-	</jsp-config> 
+	</jsp-config>
 	
+<!--
+ファイルアップロードエラーによるエラーをタグで制御したかったが、指定したlocationに遷移できない
+とりあえずアプリケーションで制御を行う
+ -->
+<!-- 	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/view/error.html</location>
+	</error-page>
+ --><!--  
+	<error-page>
+		<exception-type>org.springframework.web.multipart.MultipartException</exception-type>
+		<location>/g06/error/fileupload</location>
+	</error-page>
+ -->
+
 </web-app> 
