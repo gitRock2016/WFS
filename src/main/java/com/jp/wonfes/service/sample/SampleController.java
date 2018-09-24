@@ -252,6 +252,19 @@ public class SampleController {
 		return "sample2";
 	}
 	
+	
+	/**
+	 * 初期表示
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sample/showMap", method = RequestMethod.GET)
+	public String showMap(Model model) {
+
+		return "mapForDojin";
+	}
+	
+	
 	private static final int iconFileNameMaxLength=10;
 	/**
 	 * 以下のように整形する
