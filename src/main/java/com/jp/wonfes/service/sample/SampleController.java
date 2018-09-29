@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -258,12 +259,12 @@ public class SampleController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/sample/showMap", method = RequestMethod.GET)
-	public String showMap(Model model) {
-
+	@RequestMapping(value = "/sample/showMap/{showHole}", method = RequestMethod.GET)
+	public String showMap(@PathVariable("showHole") Integer showHole, Model model) {
+		model.addAttribute("showHole", showHole);
 		return "mapForDojin";
 	}
-	
+
 	
 	private static final int iconFileNameMaxLength=10;
 	/**

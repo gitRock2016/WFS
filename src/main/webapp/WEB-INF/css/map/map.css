@@ -1,12 +1,11 @@
 .m-hole-detail-content1{
-	width:1000px;
-	height:500px;
-	border:1px solid;
+	width:1600px;
+	height:1200px;
+ 	border:1px solid;
 	overflow:scroll;
 }
-.m-hole-detail-content2{
-	width:800px;
-	height:500px;
-	border:1px solid;
-	overflow:scroll;
+
+.m-hide-on{
+/* 	visibility:hidden; */
+	display:none;
 }
