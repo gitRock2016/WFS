@@ -254,16 +254,16 @@ public class SampleController {
 	}
 	
 	
-	/**
-	 * 初期表示
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/sample/showMap/{showHole}", method = RequestMethod.GET)
-	public String showMap(@PathVariable("showHole") Integer showHole, Model model) {
-		model.addAttribute("showHole", showHole);
-		return "mapForDojin";
-	}
+//	/**
+//	 * 初期表示
+//	 * @param model
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/sample/showMap/{showHole}", method = RequestMethod.GET)
+//	public String showMap(@PathVariable("showHole") Integer showHole, Model model) {
+//		model.addAttribute("showHole", showHole);
+//		return "mapForDojin";
+//	}
 
 	
 	private static final int iconFileNameMaxLength=10;

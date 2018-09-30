@@ -34,9 +34,18 @@ wfs.map.flashFavDealer = function(favAry){
  * 概要：引数jsonからお気に入りの卓番を格納したString型配列を返却する
  * 引数：jsonは、お気に入りディーラ情報をもつJSONオブジェクト
  */
-wfs.map.getFavArryFromJSON = function(json){
+wfs.map.getFavArryFromJSON = function(jsObj){
 	// JSONオブジェクト⇒JSオブジェクト
 	const jsObj = JSON.parse(json);
+	return wfs.map.getFavArryFromJSObj(jsObj);
+}
+
+/**
+ * 概要：引数jsObjからお気に入りの卓番を格納したString型配列を返却する
+ * 引数：JsObjは、favディーラJSONをparseしてJavaScriptオブジェクト
+ */
+wfs.map.getFavArryFromJSObj = function(jsObj){
+	// JSONオブジェクト⇒JSオブジェクト
 	let favTakuban =[];
 	for(let i=0;i<jsObj.fav.length;i++){
 		favTakuban.push(jsObj.fav[i].takuban);
@@ -45,36 +54,24 @@ wfs.map.getFavArryFromJSON = function(json){
 }
 
 /**
- * 概要：引数jsonからお気に入りの卓番を格納したString型配列を返却する
- * 引数：jsonは、お気に入りディーラ情報をもつJSONオブジェクト
+ * 概要：引数JsObjをもとに、お気に入りのディーラの属する卓マスを点滅させる
+ * 引数：JsObjは、favディーラJSONをparseしてJavaScriptオブジェクト
  */
-//初期表示処理を1メソッドにまとめるのは後で検討すればいいと判断しコメントアウト
-//wfs.map.init = function(json){
-//	// お気に入りディーラの卓番
-//	const favArry = wfs.map.getFavArryFromJSON(json);
-//	let takubanKoArry = [];
-//	for(let i=0;i<favArry.length;i++){
-//		const s = favArry[i].split('-');
-//		takubanKoArry.push(parseInt(s[0]));
-//	}
-//	wfs.map.flashFavDealer(favArry);
-//}
-
-$(function() {
-	
-	// 受け取る想定のJSON
-	// TODO HTMLのidが0埋でないので、一旦０削除した状態データを作成
-	const json= '{"fav":[{"name":"あかちょむ","takuban":"08-22-04"},{"name":"Piyopiyo堂","takuban":"07-30-07"}]}';
-//	var json= '{"fav":[{"name":"あかちょむ","takuban":"06-03-10"},{"name":"Piyopiyo堂","takuban":"07-08-10"}]}';
-	
-	// お気に入りディーラの卓マスを点滅表示
-	const favArry = wfs.map.getFavArryFromJSON(json);
+wfs.map.initFlashFavDealer = function(JsObj){
+	const favArry = wfs.map.getFavArryFromJSObj(JsObj);
 	let takubanKoArry = [];
 	for(let i=0;i<favArry.length;i++){
 		const s = favArry[i].split('-');
 		takubanKoArry.push(parseInt(s[0]));
 	}
 	wfs.map.flashFavDealer(favArry);
+}
+
+$(function() {
+	
+	// 受け取る想定のJSONをString型で定義する
+	// サーバーから受け取るためコメントアウト
+	// const json= '{"fav":[{"name":"あかちょむ","takuban":"08-22-04"},{"name":"Piyopiyo堂","takuban":"07-30-07"}]}';
 	
 	//　HTMLの横並びを統一
 	wfs.map.formatYokoHltk();

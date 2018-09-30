@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:url value="/sample/showMap" var="url_showMap" />
+<%-- <c:url value="/sample/showMap" var="url_showMap" /> --%>
+<c:url value="/mp/show" var="url_showMap" />
 <c:set var="showHole" value="${showHole}" />
+<c:set var="usrId" value="${usrId}" />
+<input type="hidden" value="${usrId}" id="usrId"/>
+
 
 <!DOCTYPE html>
 <head>
@@ -11,6 +15,7 @@
 	<script src="<c:url value="/js/jquery-3.3.1.js" />"></script>
 	<script src="<c:url value="/js/wfs-common.js" />"></script>
 	<script src="<c:url value="/js/map/map.js" />"></script>
+	<script src="<c:url value="/js/mapForDojin.js" />"></script>
 </head>
 
 <body>
