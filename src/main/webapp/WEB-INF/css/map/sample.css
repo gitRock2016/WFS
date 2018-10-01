@@ -169,11 +169,20 @@ span.takuGroup_serial{
   animation: Flash1 2s infinite;
 /*   -webkit-animation: Flash1 2s infinite; */
  }
-
+.flashFavTakuMasuSpecfied{
+  animation: Flash2 2s infinite;
+}
+ 
 /* アニメーション */
 @keyframes Flash1{
 	50%{
 		background-color:#4169E1;
+	}
+}
+
+@keyframes Flash2{
+	50%{
+		background-color:tomato;
 	}
 }
 

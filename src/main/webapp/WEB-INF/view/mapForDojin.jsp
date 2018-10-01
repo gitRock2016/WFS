@@ -3,7 +3,9 @@
 <c:url value="/mp/show" var="url_showMap" />
 <c:set var="showHole" value="${showHole}" />
 <c:set var="usrId" value="${usrId}" />
+<c:set var="takuban" value="${takuban}" />
 <input type="hidden" value="${usrId}" id="usrId"/>
+<input type="hidden" value="${takuban}" id="takuban"/>
 
 
 <!DOCTYPE html>

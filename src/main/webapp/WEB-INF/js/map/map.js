@@ -2,6 +2,14 @@ if (typeof wfs.map === "undefined") {
 	wfs.map= {}
 }
 
+wfs.map.flashFavDealerSpecfied = function(takuban){
+	// 形式チェックあったほうがいいかもだが、優先度下げ対応しない
+		const targetHole=$("#hole");
+		let targetId = "takuMasuId_"+ takuban;
+		const targetSpan = targetHole.find('span[takuId="' + targetId + '"]').closest('td');
+		targetSpan.addClass('flashFavTakuMasuSpecfied');
+}
+
 /**
  * 概要：横並びに整形する
  * 引数：なし

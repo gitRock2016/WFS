@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.junit.experimental.theories.Theories;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.Takuban;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
+import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 import com.jp.wonfes.service.product.form.MapSearchForm;
 import com.jp.wonfes.service.product.form.UsrDetailFavProducts;
@@ -24,8 +27,10 @@ import com.jp.wonfes.service.product.form.UsrFavProducts;
 
 @Controller
 public class MapSearchController {
-
 	
+	@Autowired
+	private DealerMapper dealerMapper;
+
 	/**
 	 * 初期表示
 	 * 別画面から遷移してきた場合に、当メソッドを呼び出す
@@ -38,9 +43,10 @@ public class MapSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/mp/show", method = RequestMethod.POST)
-	public String initMap(HttpSession session, Model model) {
+	public String initMap(@ModelAttribute MapSearchForm form, HttpSession session, Model model) {
 		
 		String usrId = (String) session.getAttribute("s_loginId");
+		String dealerId=form.getDealerId();
 		
 		/**
 		 * TDOO usrIdでusr_detail_fav_productsテーブルに検索し、取得した結果から
@@ -48,9 +54,42 @@ public class MapSearchController {
 		 * mockとして固定で8を設定
 		 */
 		model.addAttribute("usrId", usrId);
-		model.addAttribute("showHole", 6);
+		if(dealerId==null || dealerId.equals("")) {
+			// 最大のディーラを設定する
+			model.addAttribute("showHole", 6);
+		}else {
+			Dealer d = dealerMapper.selectByPrimaryKey(Integer.parseInt(dealerId));
+			String takuban=d.getTakuban();
+			Takuban t= new Takuban(takuban);
+			model.addAttribute("showHole", t.getKo());
+			model.addAttribute("takuban", t.getTakubanPadding());
+		}
 		return "mapForDojin";
 	}
+	
+//	/**
+//	 * 初期表示
+//	 * 別画面から遷移してきた場合に、当メソッドを呼び出す
+//	 * <p>遷移元画面
+//	 * <ul>
+//	 * <li>アカウント一覧画面
+//	 * <li>ディーラ情報画面
+//	 * </ul>
+//	 * @param model
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/mp/show/{ko:[0-9]}-{otu:[0-9]}-{hei:[0-9]}", method = RequestMethod.POST)
+//	public String initMap(@PathVariable String ko, @PathVariable String otu, @PathVariable String hei,
+//			HttpSession session, Model model) {
+//		String usrId = (String) session.getAttribute("s_loginId");
+//		model.addAttribute("usrId", usrId);
+//		if (Integer.parseInt(ko) < 4) {
+//			// TODO koが範囲以内でなければ、エラーとする処理を記載したい
+//		}
+//		model.addAttribute("showHole", ko);
+//		model.addAttribute("takuban", ko + "-" + otu + "-" + hei);
+//		return "mapForDojin";
+//	}
 	
 	/**
 	 * URLで指定したホールを表示する

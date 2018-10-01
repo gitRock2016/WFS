@@ -6,6 +6,11 @@ $(function() {
 	
 	// 初期表示時
 	
+	// 指定の卓番を色づける
+	const takubaPadding = $('#takuban').val();
+	if (takubaPadding !== null || takubaPadding !== undefined) {
+		wfs.map.flashFavDealerSpecfied(takubaPadding);
+	}
 	// サーバーからお気に入りディーラ情報を取得する
 	wfs.map4Djn.getFavDealerJson();
 
@@ -14,6 +19,11 @@ $(function() {
 // --------------------------------------------------------------------------v
 // 個別関数定義
 // --------------------------------------------------------------------------v
+
+wfs.map4Djn.zeroPadding= function zeroPadding(num,length){
+    return ('0000000000' + num).slice(-length);
+}
+
 
 /**
  * 概要：
