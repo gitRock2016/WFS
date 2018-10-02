@@ -18,5 +18,6 @@
 	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
 	<c:url value="/sample/init2" var="sample_init2" /><a href="${sample_init2}">sample2画面, ファイルアップ機能検証</a><br/>
 	<c:url value="/sample/showHonoka" var="sample_showHonoka" /><a href="${sample_showHonoka}">bootStrapのHonoka画面</a><br/>
+	<c:url value="/mp/show/8" var="sample_showMap" /><a href="${sample_showMap}">map</a><br/>
 <!-- 	<img src="http://www.iwatakhr69.net/wfs/img/icon/default_1.jpg" /> -->
 </html>

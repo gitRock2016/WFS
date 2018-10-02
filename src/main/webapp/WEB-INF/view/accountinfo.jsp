@@ -6,6 +6,13 @@
 	
 	<div class="page-header">
 		<h4>お気に入り</h4>
+		
+		<!-- sessionからユーザIDがとれるためmodelAttributeは使わない -->
+		<form:form method="post"
+			action="/WonFesSys/mp/show" name="mapSearchForm">
+			<button type="submit" class="btn btn-primary" id="showMapBtn">地図確認</button>
+		</form:form>
+		
 		<table class="table table-striped table-hover table-bordered">
 			<thead>
 				<tr>
@@ -26,5 +33,6 @@
 			</c:if>
 			</tbody>
 		</table>
+		
 	</div>
 </div>

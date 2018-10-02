@@ -24,6 +24,10 @@ $(function() {
 	$("#iconImg").change(function(){
 		wfs.imgPreview("iconImg", "iconImgDisp");
 	});
+	
+	$('#showMapBtn').on('click', function() {
+		$("#dealerId4map").val($('#id').val());
+	});
 
 })
 
