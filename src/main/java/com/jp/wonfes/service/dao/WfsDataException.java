@@ -1,5 +1,5 @@
 package com.jp.wonfes.service.dao;
-
+//
 /**
  * Daoクラス利用時のエラーに対応
  * TODO 暫定利用、
