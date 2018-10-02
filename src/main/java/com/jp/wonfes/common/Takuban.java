@@ -9,6 +9,7 @@ public class Takuban {
 
 	public Takuban(String tbn) {
 		if(tbn.length()!=6) {
+			// TODO エラー処理を実装すること
 			System.out.println("err:長さが6でない");
 		}
 		String ko = tbn.substring(0, 2);
@@ -78,18 +79,22 @@ public class Takuban {
 		this.hei = hei;
 	}
 
-
+	/**
+	 * @return 0埋めした卓番（甲-乙-丙）
+	 */
+	public String getTakubanPadding() {
+		return String.format("%02d", ko) + '-' + String.format("%02d", otu) + '-' + String.format("%02d", hei);
+	}
+	
+	/**
+	 * 甲に対するチェック
+	 * @param i
+	 */
 	private void checkKo(Integer i) {
 		if (i < 4 || i > 9) {
-			// TODO エラーチェック
+			// TODO エラー処理を実装すること
 			System.out.println("err:卓番の数値の範囲エラー");
 		}else {
 		}
 	}
-	
-	public String getTakubanPadding() {
-		return String.format("%02d", ko) + '-' + String.format("%02d", otu) + '-' + String.format("%02d", hei);
-	}
-
-	
 }

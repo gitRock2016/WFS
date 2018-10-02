@@ -67,30 +67,6 @@ public class MapSearchController {
 		return "mapForDojin";
 	}
 	
-//	/**
-//	 * 初期表示
-//	 * 別画面から遷移してきた場合に、当メソッドを呼び出す
-//	 * <p>遷移元画面
-//	 * <ul>
-//	 * <li>アカウント一覧画面
-//	 * <li>ディーラ情報画面
-//	 * </ul>
-//	 * @param model
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/mp/show/{ko:[0-9]}-{otu:[0-9]}-{hei:[0-9]}", method = RequestMethod.POST)
-//	public String initMap(@PathVariable String ko, @PathVariable String otu, @PathVariable String hei,
-//			HttpSession session, Model model) {
-//		String usrId = (String) session.getAttribute("s_loginId");
-//		model.addAttribute("usrId", usrId);
-//		if (Integer.parseInt(ko) < 4) {
-//			// TODO koが範囲以内でなければ、エラーとする処理を記載したい
-//		}
-//		model.addAttribute("showHole", ko);
-//		model.addAttribute("takuban", ko + "-" + otu + "-" + hei);
-//		return "mapForDojin";
-//	}
-	
 	/**
 	 * URLで指定したホールを表示する
 	 * 

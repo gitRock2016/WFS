@@ -20,11 +20,6 @@ $(function() {
 // 個別関数定義
 // --------------------------------------------------------------------------v
 
-wfs.map4Djn.zeroPadding= function zeroPadding(num,length){
-    return ('0000000000' + num).slice(-length);
-}
-
-
 /**
  * 概要：
  * ユーザーがお気に入りにしているディーラ情報を格納したfavディーラJSONをサーバーから取得する
