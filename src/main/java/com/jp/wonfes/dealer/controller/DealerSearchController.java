@@ -48,36 +48,42 @@ public class DealerSearchController {
 	@Autowired
 	private DealerMapper dmm;
 	
+	/*todo urlにハイフンを入れないようすべて見直すこと*/
 	/**
 	 * 初期表示
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/dlr/dlr-05/init", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/init", method = RequestMethod.GET)
 	public String init(Model model) {
 		
 		DealerSearchCondForm dealerSearchCondForm = new DealerSearchCondForm();
-		/*初期値*/
+		// ディーラ名
 		dealerSearchCondForm.setDealerName("");
+		// 事業区分
+		dealerSearchCondForm.setBusinessClassification("indiviual");
+		// ジャンル
+		dealerSearchCondForm.setProductFiled("");
 		// チェックボックスは下記設定しなくとも画面から落ちない
 		//	dealerSearchCondForm.setProduct_fields(new String[] {""});
-
+		
+		// 
 		model.addAttribute("fm", dealerSearchCondForm);
-		model.addAttribute("field", fm);
 		model.addAttribute("data", new ArrayList<DelaerSearchResultForm>());
 		
-		return "dealersearch";
+		return "dealersearch2";
 	}
 
 	
 	/**
+	 * TODO 非推奨　ajaxにする
 	 * 検索
 	 * 
 	 * @param form
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/dlr/dlr-05/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/search", method = RequestMethod.GET)
 	public String search(@ModelAttribute  DealerSearchCondForm form, Model model) {
 		
 		List<Dealer> list = null;
@@ -96,40 +102,53 @@ public class DealerSearchController {
 		model.addAttribute("field", fm);
 		model.addAttribute("data", this.mapperQotoForm(list));
 		
-		return "dealersearch";
+		return "dealersearch2";
 	}
 	
 	/**
-	 * DBから取得したDealer情報をJSon形式で返却する
+	 * DBから取得したDealer情報をJSON形式で返却する
 	 * 検索条件の指定あり
 	 * @param _dealername ディーラ名
-	 * @return Dealer情報(JSon形式)
+	 * @return Dealer情報(JSON形式)
 	 */
-	@RequestMapping(value = "/dlr/dlr-05/search-ax/{_dealername}", method = RequestMethod.GET)
+//	@RequestMapping(value = "/dlr/dlr_05/search-ax/{_dealername}/{businessClassification}/{productFiled}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/search_ax/{_dealername}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<DelaerSearchResultForm> searchAjaxCondition(@PathVariable String _dealername) {
+	public List<DelaerSearchResultForm> searchAjaxWhereDealeName(@PathVariable String _dealername) {
+		// TODO あとでLogicクラスにすること
 		List<Dealer> list = null;
 		DealerExample de1 = new DealerExample();
 		if (!Strings.isNullOrEmpty(_dealername)) {
 			de1.createCriteria().andNameLike(_dealername + "%");
 		}
 		list = dmm.selectByExample(de1);
-		
 		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
 		return delaerSearchResultFormList;
 	}
 	
 	/**
-	 * DBから取得したDealer情報をJSon形式で返却する
-	 * 検索条件の指定なし
-	 * @return
+	 * DBから取得したDealer情報をJSON形式で返却する
+	 * 検索条件の指定あり
+	 * @param _dealername ディーラ名
+	 * @return Dealer情報(JSON形式)
 	 */
-	@RequestMapping(value = "/dlr/dlr-05/search-ax", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/search_ax", method = RequestMethod.GET)
 	@ResponseBody
 	public List<DelaerSearchResultForm> searchAjax() {
-		return this.searchAjaxCondition("");
+		return this.searchAjaxWhereDealeName("");
 	}
 	
+//	/**
+//	 * DBから取得したDealer情報をJSon形式で返却する
+//	 * 検索条件の指定なし
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/dlr/dlr_05/search-ax", method = RequestMethod.GET)
+//	@ResponseBody
+//	public List<DelaerSearchResultForm> searchAjax() {
+//		return this.searchAjaxCondition("");
+//	}
+//	
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealer> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
 		for (Dealer q : list) {

@@ -2,35 +2,27 @@ if (typeof wfs.dealersearch === "undefined") {
 	wfs.dealersearch = {}
 }
 
+wfs.dealersearch.baseUrl = "/WonFesSys/dlr/dlr_05";
+
 $(function() {
 
-	$("#ajax-searchBtn").bind("click", function() {
+	$("#searchBtn").bind("click", function() {
 		wfs.dealersearch.searchDealerInfo();
 	});
+	
 
 })
 
 // --------------------------------------------------------------------------v
 // 個別関数定義
 // --------------------------------------------------------------------------v
-
-wfs.dealersearch.searchBtn = function() {
-	wfs.do_sample("dealerSearchのデータ:");
-}
-
-
 wfs.dealersearch.searchDealerInfo = function() {
-
+	let url = wfs.dealersearch.baseUrl + "/search_ax";
 	let _dealerName=$("#dealerName").val();
-	let url = "/WonFesSys/g04/search/ajax/"+_dealerName;
+	if (_dealerName) { // ! null, ! undeifined, ! "" の場合、Trueと判定したい
+		url = url + "/" + _dealerName;
+	}
 	
-	// callバック関数を利用した記述
-	// TODO 検索結果が表示されるが、successが2回なぜか呼ばれJSエラーが発生するので、作成保留とする
-//	wfs.ajaxGet(url, 
-//				wfs.dealersearch.searchDealerInfo.dosuccess,
-//				wfs.dealersearch.searchDealerInfo.dofail,
-//				wfs.dealersearch.searchDealerInfo.dosuccess);
-			
 	$.ajax({
 		type : "GET",
 		url : url,
@@ -38,20 +30,18 @@ wfs.dealersearch.searchDealerInfo = function() {
 	}).done(function(data){
 		console.log("success");
 		wfs.dealersearch.searchDealerInfo.expand(data);
-		
 	}).fail(function(){
 		console.log("fail");
-		
 	}).always(function(){
 		console.log("always");
-		
 	});
 
 }
 
 /**
- * List<DelaerRegistForm>のJSONオブジェクトを検索結果に展開する
- * 
+ * dataは、JSオブジェクト
+ * 形式は以下参照
+ * ・List<DelaerRegistForm>
  */
 wfs.dealersearch.searchDealerInfo.expand = function(data){
 	
@@ -78,17 +68,4 @@ wfs.dealersearch.searchDealerInfo.expand = function(data){
 	}
 	
 }
-
-// 作成保留
-//wfs.dealersearch.searchDealerInfo.dosuccess = function(data){
-//	console.log("success");
-//	wfs.dealersearch.searchDealerInfo.expand(data);
-//}
-//wfs.dealersearch.searchDealerInfo.dofail = function(){
-//	console.log("fail");
-//}
-//wfs.dealersearch.searchDealerInfo.doalways= function(){
-//	console.log("always");
-//}
-
 

@@ -24,7 +24,12 @@
 	<mvc:resources mapping="/img/**" location="/WEB-INF/img/" />
 	
 	<!-- コンポーネント -->
-	<context:component-scan base-package="com.jp.wonfes.*" />
+	<context:component-scan base-package="com.jp.wonfes.auth.*" />
+<!-- 	<context:component-scan base-package="com.jp.wonfes.common.*" /> -->
+	<context:component-scan base-package="com.jp.wonfes.dealer.*" />
+	<context:component-scan base-package="com.jp.wonfes.service.dao.*" />
+	<context:component-scan base-package="com.jp.wonfes.sample.*" />
+<!-- 	<context:component-scan base-package="com.jp.wonfes.*" /> -->
 <!-- 	<context:component-scan base-package="com.jp.wonfes.service.*" />
  -->
 
