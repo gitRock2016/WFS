@@ -15,6 +15,7 @@
 	<c:url value="/g04/init" var="g04_init" /><a href="${g04_init}">ディーラー検索画面</a><br/>
 	<c:url value="/dlr/dlr_05/init" var="dlr05_init" /><a href="${dlr05_init}">ディーラー検索画面2</a><br/>
 	<c:url value="/g06/init" var="g06_init" /><a href="${g06_init}">ディーラー登録画面</a><br/>
+	<c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" /><a href="${dlr_01_01_show}">ディーラー登録画面2</a><br/>
 	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>
 	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
 	<c:url value="/sample/init2" var="sample_init2" /><a href="${sample_init2}">sample2画面, ファイルアップ機能検証</a><br/>

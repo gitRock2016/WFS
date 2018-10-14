@@ -8,6 +8,7 @@ public class DelaerRegistForm {
 	private String dealerIconCd;
 	private String dealerIconUrl;
 	private String takuban;
+	private String businessClassification;
 	private MultipartFile dealerIconImg;
 	private String hpLink;
 	private String twLink;
@@ -68,6 +69,12 @@ public class DelaerRegistForm {
 	}
 	public void setDealerIconUrl(String dealerIconUrl) {
 		this.dealerIconUrl = dealerIconUrl;
+	}
+	public String getBusinessClassification() {
+		return businessClassification;
+	}
+	public void setBusinessClassification(String businessClassification) {
+		this.businessClassification = businessClassification;
 	}
 	
 
