@@ -7,7 +7,7 @@
 	<div class="alert-success">${success_message}</div>
 	<div class="alert-danger">${danger_message}</div>
 	
-	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist" enctype="multipart/form-data">
+	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/dlr/dlr_01_01/reigst" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
 			<div class="icon-image">

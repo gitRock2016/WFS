@@ -107,7 +107,7 @@
  		<put-attribute name="titleName" value="ディーラー情報登録"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealerregist2.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealerRegist2" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealerregist2.js" />
 				</put-list-attribute>
