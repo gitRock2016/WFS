@@ -1,6 +1,6 @@
 package com.jp.wonfes.dealer.controller.form;
 
-public class DelaerSearchResultForm {
+public class DealerSearchResultForm {
 	//でぃーらー
 	private Integer id;
 	private String dealerName;

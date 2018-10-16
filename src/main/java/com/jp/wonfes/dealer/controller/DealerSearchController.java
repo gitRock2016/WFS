@@ -20,9 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.common.ImgIconUrl;
+import com.jp.wonfes.dealer.controller.form.DealerInfoForm;
 import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.dao.common.Dealer;
+import com.jp.wonfes.service.dao.common.DealerDetail;
+import com.jp.wonfes.service.dao.common.DealerDetailExample;
 import com.jp.wonfes.service.dao.common.DealerExample;
+import com.jp.wonfes.service.dao.common.mapper.DealerDetailMapper;
 import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoDao;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
@@ -46,7 +51,12 @@ public class DealerSearchController {
 	}
 
 	@Autowired
-	private DealerMapper dmm;
+	private DealerMapper dealerMapper;
+	
+	@Autowired
+	private DealerDetailMapper dealerDetailMapper;
+	@Autowired
+	private ImgIconUrl imgIconUrl;
 	
 	/*todo urlにハイフンを入れないようすべて見直すこと*/
 	/**
@@ -55,7 +65,7 @@ public class DealerSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/dlr/dlr_05/init", method = RequestMethod.GET)
-	public String init(Model model) {
+	public String initDlr05(Model model) {
 		
 		DealerSearchCondForm dealerSearchCondForm = new DealerSearchCondForm();
 		// ディーラ名
@@ -95,7 +105,7 @@ public class DealerSearchController {
 		}
 		
 		// 検索
-		list = dmm.selectByExample(de1);
+		list = dealerMapper.selectByExample(de1);
 		
 		model.addAttribute("message", "検索結果："+list.size()+"件");
 		model.addAttribute("fm", form);
@@ -121,7 +131,7 @@ public class DealerSearchController {
 		if (!Strings.isNullOrEmpty(_dealername)) {
 			de1.createCriteria().andNameLike(_dealername + "%");
 		}
-		list = dmm.selectByExample(de1);
+		list = dealerMapper.selectByExample(de1);
 		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
 		return delaerSearchResultFormList;
 	}
@@ -138,7 +148,45 @@ public class DealerSearchController {
 		return this.searchAjaxWhereDealeName("");
 	}
 	
-//	/**
+	/**
+	 * ディーラ情報画面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/dlr/dlr_06/show/dealerId/{dealerId}", method = RequestMethod.GET)
+	public String initDlr06(@ModelAttribute DealerInfoForm form, Model model, @PathVariable("dealerId") Integer dealerId) {
+		
+		// ディーラ情報を検索
+		Dealer d = dealerMapper.selectByPrimaryKey(dealerId);
+		
+ 		if(d==null) {
+			// TODO 
+			System.out.println("ディーラ情報がありません的な、共通エラー画面に遷移させる");
+		}
+		
+		// ディーラのもつ作品情報を検索
+		DealerDetailExample dde = new DealerDetailExample();
+		dde.createCriteria().andDealerIdEqualTo(dealerId);
+		List<DealerDetail> ddlist= dealerDetailMapper.selectByExample(dde);
+		 
+		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getDealerIconCd());
+		form.setDealerIconUrl(imgUrl);
+		form.setId(dealerId);
+		form.setDealerName(d.getName());
+		form.setTakuban(d.getTakuban());
+		// TODO テーブルに事業区分をもっていないので固定でいれる
+		form.setBusinessClassification("1");
+//		form.setBusinessClassification(form.getBusinessClassification());
+		form.setProductsCategories(toProductCategories(ddlist));
+		form.setHpLink(form.getHpLink());
+		form.setTwLink(form.getTwLink());
+		
+		
+		
+		return "dealerInfo";
+	}
+
+	//	/**
 //	 * DBから取得したDealer情報をJSon形式で返却する
 //	 * 検索条件の指定なし
 //	 * @return
@@ -162,6 +210,14 @@ public class DealerSearchController {
 		}
 		return arlist;
 	}	
+	
+	private List<String> toProductCategories(List<DealerDetail> ddlist) {
+		ArrayList<String> l = new ArrayList<String>();
+		for (DealerDetail d : ddlist) {
+			l.add(d.getProductName());
+		}
+		return l;
+	}
 	
 	// ---------------------------------------------------------------------------------------------------------
 	// モック

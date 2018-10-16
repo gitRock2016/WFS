@@ -2,7 +2,7 @@
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class DelaerRegistForm {
+public class DealerRegistForm {
 	private Integer id;
 	private String dealerName;
 	private String dealerIconCd;

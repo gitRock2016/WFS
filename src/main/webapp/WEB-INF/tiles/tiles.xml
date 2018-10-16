@@ -142,6 +142,26 @@
 		</put-attribute>
 	</definition>
 	
+		<!-- ディーラー情報画面 -->
+	<definition name="dealerInfo" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー情報"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerInfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealerInfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.dealerInfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="dealerInfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	<!-- ディーラー情報登録完了 -->
 	<definition name="dealerregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報登録完了"/>

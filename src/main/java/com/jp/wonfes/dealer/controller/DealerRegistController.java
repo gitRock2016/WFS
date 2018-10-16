@@ -14,7 +14,7 @@ import com.google.common.base.Strings;
 import com.jp.wonfes.common.WfsImgIcon;
 import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.common.WfsLogicException;
-import com.jp.wonfes.dealer.controller.form.DelaerRegistForm;
+import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
 import com.jp.wonfes.service.dao.common.Dealer;
 import com.jp.wonfes.service.dao.common.DealerExample;
 import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
@@ -30,7 +30,7 @@ public class DealerRegistController {
 	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
 	public String init(Model model) {
 		
-		DelaerRegistForm delaerRegistForm = new DelaerRegistForm();
+		DealerRegistForm delaerRegistForm = new DealerRegistForm();
 		/*初期値*/
 		delaerRegistForm.setDealerName(""); // ディーラ名
 		delaerRegistForm.setTakuban(""); // 卓番
@@ -44,7 +44,7 @@ public class DealerRegistController {
 	
 	
 	@RequestMapping(value="/dlr/dlr_01_01/reigst", method=RequestMethod.POST)
-	public String regist(@ModelAttribute DelaerRegistForm dealerRegistForm,Model model) {
+	public String regist(@ModelAttribute DealerRegistForm dealerRegistForm,Model model) {
 		
 		String name = dealerRegistForm.getDealerName();
 		String takuban = dealerRegistForm.getTakuban();
