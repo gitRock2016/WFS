@@ -115,6 +115,10 @@ public class DealerSearchController {
 		return "dealersearch2";
 	}
 	
+	// TODO
+	// 他の検索条件でも検索できるようにすること
+	// 自動生成でなく独自DAOを作成した検索する
+	// URLに応じてメソッドはオーバーロードする
 	/**
 	 * DBから取得したDealer情報をJSON形式で返却する
 	 * 検索条件の指定あり
@@ -148,6 +152,7 @@ public class DealerSearchController {
 		return this.searchAjaxWhereDealeName("");
 	}
 	
+	// TODO urlに正規表現によるチェックをつけたい、全体的に
 	/**
 	 * ディーラ情報画面
 	 * @param model
@@ -184,6 +189,12 @@ public class DealerSearchController {
 		
 		
 		return "dealerInfo";
+	}
+
+	@RequestMapping(value = "/dlr/dlr_06/send/dlr_01_01", method = RequestMethod.GET)
+	public String sendDr0101(@ModelAttribute DealerInfoForm form, Model model) {
+		String id  = String.valueOf(form.getId());
+		return "forward:/dlr/dlr_01_01/show/dealerId"+"/" + id+"?reg=edit";
 	}
 
 	//	/**

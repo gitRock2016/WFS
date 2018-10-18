@@ -47,28 +47,11 @@
 				<th>No</th>
 				<th>ディーラー名</th>
 				<th>卓番</th>
-<!-- 				<th>詳細</th> -->
 				<th>HP</th>
 				<th>TW</th>
 			</tr>
 		</thead>
 		<tbody id="dealer-search-result-tbody">
-			<c:if test="${data !=null}">
-				<c:forEach var="obj" items="${data}" varStatus="obj_status">
-					<tr>
-						<td><c:out value="${obj_status.count}" /><br /></td>
-						<td>
-							<c:url value="/g11/init" var="bUrl" />
-							<a href="${bUrl}/${obj.id}"><c:out value="${obj.dealerName}" /></a>
-							<br />
-						</td>
-						<td><c:out value="${obj.takuban}" /></td>
-<!-- 						<td><a href="">TODO ディーラー詳細画面へ遷移する予定</a></td> -->
-						<td><a href="${obj.hpUrl}" class="btn btn-info">HP</a></td>
-						<td><a href="${obj.twUrl}" class="btn btn-info">twitter</a></td>
-					</tr>
-				</c:forEach>
-			</c:if>
 		</tbody>
 	</table>
 </div>
