@@ -226,7 +226,7 @@ public class DealerRegistController {
 
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
 		model.addAttribute("success_message", messageSucceed);
-		return "dealeredit2";
+		return "dealerregistfin";
 	}
 
 	
