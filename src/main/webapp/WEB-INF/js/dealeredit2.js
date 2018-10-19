@@ -10,8 +10,14 @@ $(function() {
 	});
 
 //	<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/dlr/dlr_01_01/reigst" enctype="multipart/form-data">
-
+	
 	$("#dealerRegistBtn").on("click",function(){
+		
+		const isDealerIconImgDelCheck = $("#dealerIconImgDelCheckId").prop('checked');
+		if(isDealerIconImgDelCheck===true){
+			$("#dealerIconImgDelFlg").val("1");
+		}
+		
 		const target = $(this).parents("form");
 		const action ="/WonFesSys/dlr/dlr_01_01/edit"
 		target.attr("action", action);

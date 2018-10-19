@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<c:set var="editFlg" value="${editFlg}"/>
+
 <div class="container">
 	<div class="page-header">
 		<h1>ディーラー情報登録画面</h1>
@@ -11,14 +13,26 @@
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
 			<div class="icon-image">
-				<img src="${delaerRegistForm.dealerIconUrl}" id="iconImgDisp"/>
+				<img src="${dealerRegistForm.dealerIconUrl}" id="iconImgDisp"/>
 			</div>
 			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"  value="アイコン登録"/><br>
-			<button type="button" class="btn btn-primary">アイコンクリア</button>
+			
+			<c:if test="${!editFlg}">
+				<button type="button" class="btn btn-primary">アイコンクリア</button>
+			</c:if>
+			<c:if test="${editFlg}">
+				<label for="dealerIconImgDelCheckId" >アイコン削除
+					<input type="checkbox" id="dealerIconImgDelCheckId" name="dealerIconImgDelCheck" value="1"/>
+				</label>
+					<input type="hidden" id="dealerIconImgDelFlg" name="dealerIconImgDelFlg"  value="0"/>
+			</c:if>
+			
+			
 		</div>
 		<div class="form-group">
 			<label for="dealerName">ディーラー名</label>
 			<div>
+				<form:hidden path="id" /><!-- 	dealerId -->
 				<form:input path="dealerName" id="dealerName"/>
 			</div>
 		</div>

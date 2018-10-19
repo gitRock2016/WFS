@@ -12,7 +12,6 @@ public class DealerRegistForm {
 	private MultipartFile dealerIconImg;
 	private String hpLink;
 	private String twLink;
-	private String dealerIconImgDelFlg;
 	  
 	
 	
@@ -51,12 +50,6 @@ public class DealerRegistForm {
 	}
 	public void setDealerIconImg(MultipartFile dealerIconImg) {
 		this.dealerIconImg = dealerIconImg;
-	}
-	public String getDealerIconImgDelFlg() {
-		return dealerIconImgDelFlg;
-	}
-	public void setDealerIconImgDelFlg(String dealerIconImgDelFlg) {
-		this.dealerIconImgDelFlg = dealerIconImgDelFlg;
 	}
 	public String getDealerIconCd() {
 		return dealerIconCd;
