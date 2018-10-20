@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
-import com.jp.wonfes.service.dao.common.Usr;
-import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
+import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
+import com.jp.wonfes.cmmn.dao.qo.Usr;
 
 @Controller
 public class AccountRegistController {
@@ -49,9 +49,9 @@ public class AccountRegistController {
 
 		// アカウント登録処理
 		Usr usr = new Usr();
-		usr.setUid(userid);
+		usr.setUsrId(userid);
 		usr.setPasswd(DigestUtils.md5DigestAsHex(password.getBytes()));
-		usr.setUnam(username);
+		usr.setUserName(username);
 		usrmapper.insert(usr);
 
 		return "accountregistfin";

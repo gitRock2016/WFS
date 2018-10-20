@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
+import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconOperation;
 import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.common.WfsImgIcon;
@@ -22,12 +26,6 @@ import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.dealer.controller.form.DealerEditForm;
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.DealerDetail;
-import com.jp.wonfes.service.dao.common.DealerDetailExample;
-import com.jp.wonfes.service.dao.common.DealerExample;
-import com.jp.wonfes.service.dao.common.mapper.DealerDetailMapper;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 
 @Controller
 public class DealerRegistController {
@@ -40,9 +38,7 @@ public class DealerRegistController {
 	private WfsMessage msg;
 	// mapper
 	@Autowired
-	private DealerMapper dealerMapper;
-	@Autowired
-	private DealerDetailMapper dealerDetailMapper;
+	private DealersMapper dealersMapper;
 
 	private static final String imgIconDel = "";
 	
@@ -92,20 +88,20 @@ public class DealerRegistController {
 			return "dealerregist2";
 		}		
 		// 登録処理(テーブル）
-		DealerExample e1 = new DealerExample();
-		List<Dealer> dlist =dealerMapper.selectByExample(e1);
+		DealersExample e1 = new DealersExample();
+		List<Dealers> dlist =dealersMapper.selectByExample(e1);
 		Integer nextId = this.getDlistMax(dlist)+1; // Id
 		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
 		
-		Dealer dealer = new Dealer();
+		Dealers dealer = new Dealers();
 		dealer.setDealerId(nextId); //ディーラId
-		dealer.setName(name); //ディーラ名
+		dealer.setDealerName(name); //ディーラ名
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
 		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
-		dealer.setDealerIconCd(dealerIconCd); // ディーラーアイコンコード
+		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-		dealerMapper.insert(dealer);
+		dealersMapper.insert(dealer);
 		
 		// 登録処理(アイコン画像ファイル自体）
 		try {
@@ -131,18 +127,18 @@ public class DealerRegistController {
 	public String initEdit(@PathVariable("dealerId") Integer dealerId, Model model) {
 
 		// ディーラ情報を検索
-		Dealer d = dealerMapper.selectByPrimaryKey(dealerId);
+		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
 		
  		if(d==null) {
 			// TODO 
 			System.out.println("ディーラ情報がありません的な、共通エラー画面に遷移させる");
 		}
 		
-		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getDealerIconCd());
+		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
 		DealerEditForm form = new DealerEditForm();
 		form.setDealerIconUrl(imgUrl);
 		form.setId(dealerId);
-		form.setDealerName(d.getName());
+		form.setDealerName(d.getDealerName());
 		// TODO テーブルに事業区分をもっていないので固定でいれる
 		form.setBusinessClassification("1");
 //		form.setBusinessClassification(form.getBusinessClassification());
@@ -202,23 +198,23 @@ public class DealerRegistController {
 		// TODO 拡張子がおかしい場合はエラーを出すこと、画像に対する仕様を整理しておく
 		
 		// 更新処理(テーブル）
-		Dealer dealer = dealerMapper.selectByPrimaryKey(dealerRegistForm.getId());
-		dealer.setName(name); // ディーラ名
+		Dealers dealer = dealersMapper.selectByPrimaryKey(dealerRegistForm.getId());
+		dealer.setDealerName(name); // ディーラ名
 		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
 		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
 		String dealerIconCd = imgIcon.getWfsImgIconName();
-		dealer.setDealerIconCd(dealerIconCd);
+		dealer.setImgIconFile(dealerIconCd);
 		if (ImgIconOperation.DELETED.getValue().equals(delflg)) {
 			// アイコン画像を削除する場合、テーブル上のアイコン画像へのパスを空文字にする
-			dealer.setDealerIconCd(imgIconDel);
+			dealer.setImgIconFile(imgIconDel);
 		}
 		if (!imgIcon.isImgIcon()) {
 			// 更新しない
-			dealer.setDealerIconCd(null);
+			dealer.setImgIconFile(null);
 		}
 		
-		if (dealerMapper.updateByPrimaryKeySelective(dealer) == 0) {
+		if (dealersMapper.updateByPrimaryKeySelective(dealer) == 0) {
 			model.addAttribute("dealerRegistForm", dealerRegistForm);
 			model.addAttribute("danger_message", "情報：更新対象がありません。");
 			return "dealeredit2";
@@ -236,9 +232,9 @@ public class DealerRegistController {
 	 * @param list
 	 * @return
 	 */
-	private int getDlistMax(List<Dealer> list) {
+	private int getDlistMax(List<Dealers> list) {
 		Integer id = new Integer(0);
-		for(Dealer d : list) {
+		for(Dealers d : list) {
 			Integer a = d.getDealerId();
 			if(a > id) { // idは0より大きいため、初回は必ずtrue
 				id = a;
