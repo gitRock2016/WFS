@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jp.wonfes.service.dao.WfsDataException;
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.DealerExample;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoDao;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.product.form.DealerSearchCondForm;

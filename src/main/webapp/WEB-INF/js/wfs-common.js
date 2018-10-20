@@ -4,9 +4,39 @@ if(typeof wfs === "undefined"){
 	var wfs = {}
 }
 
+// LOCAL,HONBAN
+wfs.mode="LOCAL"
 
+
+wfs.com={
+		host:{
+			vals:["localhost","www.iwatakhr69.net"],
+			get:function(){ 
+				if(wfs.mode==="LOCAL"){return this.vals[0]}
+				if(wfs.mode==="HONBAN"){return this.vals[1]}
+			}
+		},
+		port:"8080", 
+		cont:"WonFesSys",
+		getBaseUrl:function(){
+			return "http://"+this.host.get()+":"+this.port +"/"+this.cont;
+		},
+		baseUrl:"",
+		url:{
+			// usage
+			// wfs.com.url.get("/host")
+			get:function(childUrl){
+				const s = childUrl.substr(0,1);
+				// よく間違えそうな誤りだけチェック
+				if(s!=="/"){alert("URL指定誤り、先頭の/は不要です：");} 
+				return wfs.com.baseUrl+childUrl;
+			}
+		}
+}
+	
 $(function(){
 	// 必要に応じ作成
+	wfs.com.baseUrl=wfs.com.getBaseUrl();
 	
 })
 

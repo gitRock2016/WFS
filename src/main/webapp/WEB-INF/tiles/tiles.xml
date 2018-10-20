@@ -33,7 +33,7 @@
 			<put-attribute name="header" value="/WEB-INF/tiles/common/mainContents/header_template1.jsp" />
 			<put-attribute name="footer" value="/WEB-INF/tiles/common/mainContents/footer_template1.jsp" />
 	</definition>
-
+	
 <!--
 	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
 -->
@@ -55,14 +55,25 @@
  		<put-attribute name="titleName" value="ディーラー検索"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch1" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealersearch.js" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
 	</definition>
-	
+	<definition name="dealersearch2" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー検索"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealersearch2.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch2" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealersearch.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+		
 	<!-- アカウント登録完了画面☆ -->
 	<definition name="accountregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー登録完了"/>
@@ -90,6 +101,37 @@
 		</put-attribute>
 	</definition>
 
+	<definition name="dealerregist2" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー情報登録"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerregist2.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerRegist2" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealerregist2.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.dealerRegist2" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="dealerregist2.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	<!-- title以外はディーラ情報登録と同じ -->
+	<definition name="dealeredit2" extends="dealerregist2">
+		<put-attribute name="titleName" value="ディーラー情報編集"/>
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerEdit2" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealeredit2.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	<!-- ディーラー情報編集画面 -->
 	<definition name="dealeredit" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー情報編集"/>
@@ -110,6 +152,26 @@
 		</put-attribute>
 	</definition>
 	
+		<!-- ディーラー情報画面 -->
+	<definition name="dealerInfo" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="ディーラー情報"/>
+		<put-attribute name="body" value="/WEB-INF/view/dealerInfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="dealerInfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.dealerInfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="dealerInfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	<!-- ディーラー情報登録完了 -->
 	<definition name="dealerregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報登録完了"/>
@@ -117,6 +179,7 @@
 	</definition>
 	
 	<!-- ディーラー情報登録編集完了 -->
+	<!-- TODO 仕様にないので後で削除 -->
 	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報登録編集完了"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealereditfinreg.jsp" />

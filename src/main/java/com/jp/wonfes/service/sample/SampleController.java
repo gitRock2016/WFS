@@ -32,13 +32,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
+import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
+import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.service.dao.WfsDataException;
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.Usr;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
-import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
 import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.dao.product.DealerSampleDao;
 import com.jp.wonfes.service.product.form.DelaerRegistForm;
@@ -67,7 +67,7 @@ public class SampleController {
 	private UsrMapper usrMapper;
 
 	@Autowired
-	private DealerMapper dealerMapper;
+	private DealersMapper dealersMapper;
 	
 	/**
 	 * 初期表示
@@ -122,9 +122,9 @@ public class SampleController {
 		
 		// テーブルから取得する
 		Integer userid = 7;
-		Dealer dealer = dealerMapper.selectByPrimaryKey(userid);
+		Dealers dealer = dealersMapper.selectByPrimaryKey(userid);
 		String dealer_icon_cd = null;
-		dealer_icon_cd = dealer.getDealerIconCd();
+		dealer_icon_cd = dealer.getImgIconFile();
 		String imgPath = "/" + String.valueOf(userid) + "/" + dealer_icon_cd;
 
 		// アイコンのパス
@@ -181,14 +181,14 @@ public class SampleController {
 	@RequestMapping(value = "/sample/show/icon", method = RequestMethod.GET)
 	public String showIconImg(@RequestParam("dealerid") int  dealerid,@ModelAttribute SampleRegistForm f1 ,Model model) {
 		
-		Dealer dealer = null;
-		dealer	= dealerMapper.selectByPrimaryKey(dealerid);
+		Dealers dealer = null;
+		dealer	= dealersMapper.selectByPrimaryKey(dealerid);
 		if(dealer == null ) {
 			model.addAttribute("iconPath", this.getImgPath(0, "")); // default画像を固定で取得する
 			return "sample2";
 		}
 		String dealer_icon_cd = null;
-		dealer_icon_cd = dealer.getDealerIconCd();
+		dealer_icon_cd = dealer.getImgIconFile();
 		String imgPath = this.getImgPath(dealerid, dealer_icon_cd);
 
 		model.addAttribute("iconPath", imgPath);
@@ -245,10 +245,10 @@ public class SampleController {
 		dealericon.transferTo(tosaveFile);
 
 		// 画像ファイル名のDBへの登録
-		Dealer dealer = new Dealer();
+		Dealers dealer = new Dealers();
 		dealer.setDealerId(sampleRegistForm.getDealerId());
-		dealer.setDealerIconCd(iconName);
-		dealerMapper.updateByPrimaryKeySelective(dealer);
+		dealer.setImgIconFile(iconName);
+		dealersMapper.updateByPrimaryKeySelective(dealer);
 
 		return "sample2";
 	}

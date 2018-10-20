@@ -24,9 +24,13 @@
 	<mvc:resources mapping="/img/**" location="/WEB-INF/img/" />
 	
 	<!-- コンポーネント -->
-	<context:component-scan base-package="com.jp.wonfes.*" />
-<!-- 	<context:component-scan base-package="com.jp.wonfes.service.*" />
- -->
+	<context:component-scan base-package="com.jp.wonfes.auth" />
+	<context:component-scan base-package="com.jp.wonfes.common" />
+	<context:component-scan base-package="com.jp.wonfes.dealer.*" />
+	<context:component-scan base-package="com.jp.wonfes.service.dao.product" />
+<!-- 	<context:component-scan base-package="com.jp.wonfes.service.product" /> -->
+	<context:component-scan base-package="com.jp.wonfes.service.sample" />
+<!-- 	<context:component-scan base-package="com.jp.wonfes.*" /> -->
 
 	<!-- プロパティファイル -->
 	<!-- JDBC設定ファイル -->
@@ -77,41 +81,34 @@
 	<!-- springとmybatisの連携 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+<!-- 
 		<property name="mapperLocations">
 			<list>
-				<!-- xmlなどのリソースはsrc/main/rosources配下に格納すること -->
+				xmlなどのリソースはsrc/main/rosources配下に格納すること
 				<value>classpath:db/mapper/*.xml</value>
 				<value>classpath:db/mapper/common/*.xml</value>
 			</list>
 		</property>
-	</bean>
+ -->
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
 	<!-- マッパーのインジェクション -->
-	<!-- 自動生成Dao-->
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.DealerMapper"></property>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-	</bean>
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.DealerDetailMapper"></property>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-	</bean>
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.PrdFieldMasterMapper"></property>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-	</bean>
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.UsrMapper"></property>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-	</bean>
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.jp.wonfes.service.dao.common.mapper.UsrRoleMapper"></property>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-	</bean>
+	<!-- 自動生成Dao -->
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.CategoriesMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.DealersMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsSaledateMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.EventDatesMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.UsrMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.UsrDetailFavProductsMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.cmmn.dao.mapper.UsrRoleMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+
 	<!-- 自作Dao-->
 	<!-- なし-->
 	

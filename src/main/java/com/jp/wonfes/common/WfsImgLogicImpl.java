@@ -10,8 +10,9 @@ import java.nio.file.attribute.PosixFilePermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
+import com.jp.wonfes.cmmn.dao.qo.Dealers;
+
 
 @Service
 public class WfsImgLogicImpl implements WfsImgLogic {
@@ -29,7 +30,7 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 	ImgIconUrl ImgIconUrl;
 	
 	@Autowired
-	DealerMapper dealerMapper;
+	DealersMapper dealersMapper;
 	
 	@Override
 	public void save(WfsImgIcon imgIcon) throws IOException, WfsLogicException {
@@ -57,12 +58,12 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 	@Override
 	public void del(WfsImgIcon imgIcon) throws IOException, WfsLogicException {
 		Integer dealerid = imgIcon.getDealerId();
-		Dealer dealer = dealerMapper.selectByPrimaryKey(dealerid);
+		Dealers dealer = dealersMapper.selectByPrimaryKey(dealerid);
 		if(dealer  == null) {
 			throw new WfsLogicException();
 		}
-		dealer.setDealerIconCd("");
-		dealerMapper.updateByPrimaryKey(dealer);
+		dealer.setImgIconFile("");
+		dealersMapper.updateByPrimaryKey(dealer);
 		
 	}
 

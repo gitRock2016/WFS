@@ -2,35 +2,31 @@ if (typeof wfs.dealersearch === "undefined") {
 	wfs.dealersearch = {}
 }
 
-$(function() {
+wfs.dealersearch.baseUrl = "/WonFesSys/dlr/dlr_05";
 
-	$("#ajax-searchBtn").bind("click", function() {
+$(function() {
+	
+	// ジャンル
+	$("#productFiled").prop("readonly",true);
+	
+	// 検索ボタン
+	$("#searchBtn").bind("click", function() {
 		wfs.dealersearch.searchDealerInfo();
 	});
+	
 
 })
 
 // --------------------------------------------------------------------------v
 // 個別関数定義
 // --------------------------------------------------------------------------v
-
-wfs.dealersearch.searchBtn = function() {
-	wfs.do_sample("dealerSearchのデータ:");
-}
-
-
 wfs.dealersearch.searchDealerInfo = function() {
-
+	let url = wfs.dealersearch.baseUrl + "/search_ax";
 	let _dealerName=$("#dealerName").val();
-	let url = "/WonFesSys/g04/search/ajax/"+_dealerName;
+	if (_dealerName) { // ! null, ! undeifined, ! "" の場合、Trueと判定したい
+		url = url + "/" + _dealerName;
+	}
 	
-	// callバック関数を利用した記述
-	// TODO 検索結果が表示されるが、successが2回なぜか呼ばれJSエラーが発生するので、作成保留とする
-//	wfs.ajaxGet(url, 
-//				wfs.dealersearch.searchDealerInfo.dosuccess,
-//				wfs.dealersearch.searchDealerInfo.dofail,
-//				wfs.dealersearch.searchDealerInfo.dosuccess);
-			
 	$.ajax({
 		type : "GET",
 		url : url,
@@ -38,26 +34,25 @@ wfs.dealersearch.searchDealerInfo = function() {
 	}).done(function(data){
 		console.log("success");
 		wfs.dealersearch.searchDealerInfo.expand(data);
-		
 	}).fail(function(){
 		console.log("fail");
-		
 	}).always(function(){
 		console.log("always");
-		
 	});
 
 }
 
 /**
- * List<DelaerRegistForm>のJSONオブジェクトを検索結果に展開する
- * 
+ * dataは、JSオブジェクト
+ * 形式は以下参照
+ * ・List<DelaerRegistForm>
  */
 wfs.dealersearch.searchDealerInfo.expand = function(data){
 	
 	const dealerSearchResultObj = $("#dealer-search-result-tbody");
 	const searchResultMessagesObj = $("#search-result-messages");
 	const datacount = data.length;
+	const _dealernameUrl =  wfs.com.url.get("/dlr/dlr_06/show/dealerId");
 	
 	// 検索結果のクリア
 	dealerSearchResultObj.empty();
@@ -66,29 +61,16 @@ wfs.dealersearch.searchDealerInfo.expand = function(data){
 	// 検索結果件数
 	searchResultMessagesObj.text('検索結果：' + datacount + '件');
 	// 検索結果
+	// TODO ヘッダ部も含めJSで構成したい
 	for (let i = 0; i < datacount; i++) {
 		let no         = "<td>" + (i + 1) + "</td>";
-		let dealername = "<td>" + data[i].dealerName + "</td>";
+		let dealernameUrl = '<a href="' + _dealernameUrl + "/"+data[i].id+ '">' + data[i].dealerName + '</a>';
+		let dealername = "<td>" + dealernameUrl + "</td>";
 		let takuban    = "<td>" + data[i].takuban + "</td>";
-//		let syousai    = "<td>TODO ディーラー詳細画面へ遷移する予定</td>";
 		let hpurl      = "<td><a href=' " + data[i].hpUrl + " ' class='btn btn-info' >HP</a></td>";
 		let twurl      = "<td><a href=' " + data[i].twUrl + " ' class='btn btn-info' >TW</a></td>";
-//		dealerSearchResultObj.append("<tr>" + no + dealername + takuban + syousai + hpurl + twurl + "</tr>");
 		dealerSearchResultObj.append("<tr>" + no + dealername + takuban + hpurl + twurl + "</tr>");
 	}
 	
 }
-
-// 作成保留
-//wfs.dealersearch.searchDealerInfo.dosuccess = function(data){
-//	console.log("success");
-//	wfs.dealersearch.searchDealerInfo.expand(data);
-//}
-//wfs.dealersearch.searchDealerInfo.dofail = function(){
-//	console.log("fail");
-//}
-//wfs.dealersearch.searchDealerInfo.doalways= function(){
-//	console.log("always");
-//}
-
 

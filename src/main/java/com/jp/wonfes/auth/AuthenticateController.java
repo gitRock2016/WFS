@@ -1,9 +1,5 @@
 package com.jp.wonfes.auth;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,16 +11,11 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
-import com.jp.wonfes.service.dao.WfsDataException;
-import com.jp.wonfes.service.dao.common.Usr;
-import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
-import com.jp.wonfes.service.dao.product.DealerInfoQo;
-import com.jp.wonfes.service.dao.product.DealerSampleDao;
+import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
+import com.jp.wonfes.cmmn.dao.qo.Usr;
 
 /**
  * TODO 認証処理の作成だけしているが、権限制御も実装するようにする
@@ -57,8 +48,8 @@ public class AuthenticateController {
 			session.setAttribute("login", "OK");
 
 			Usr u = usrmapper.selectByPrimaryKey(userid);
-			session.setAttribute("s_loginId", u.getUid());
-			session.setAttribute("s_loginName", u.getUnam());
+			session.setAttribute("s_loginId", u.getUsrId());
+			session.setAttribute("s_loginName", u.getUserName());
 			
 			String target = (String) session.getAttribute("target");
 			System.out.println("SampleLoginのloginCheck（POST）、session:" + target);
