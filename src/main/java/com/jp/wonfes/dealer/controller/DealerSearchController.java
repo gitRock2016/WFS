@@ -5,32 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
+import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
+import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.dealer.controller.form.DealerInfoForm;
-import com.jp.wonfes.service.dao.WfsDataException;
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.DealerDetail;
-import com.jp.wonfes.service.dao.common.DealerDetailExample;
-import com.jp.wonfes.service.dao.common.DealerExample;
-import com.jp.wonfes.service.dao.common.mapper.DealerDetailMapper;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
-import com.jp.wonfes.service.dao.product.DealerInfoDao;
-import com.jp.wonfes.service.dao.product.DealerInfoQo;
 import com.jp.wonfes.service.product.form.DealerSearchCondForm;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
@@ -51,10 +43,11 @@ public class DealerSearchController {
 	}
 
 	@Autowired
-	private DealerMapper dealerMapper;
+	private DealersMapper dealersMapper;
 	
 	@Autowired
-	private DealerDetailMapper dealerDetailMapper;
+	private DealersDetailProductsMapper dealersDetailProductsMapper;
+
 	@Autowired
 	private ImgIconUrl imgIconUrl;
 	
@@ -96,16 +89,16 @@ public class DealerSearchController {
 	@RequestMapping(value = "/dlr/dlr_05/search", method = RequestMethod.GET)
 	public String search(@ModelAttribute  DealerSearchCondForm form, Model model) {
 		
-		List<Dealer> list = null;
-		DealerExample de1 = new DealerExample();
+		List<Dealers> list = null;
+		DealersExample de1 = new DealersExample();
 		// チェック
 		String dname=form.getDealerName();
 		if (!Strings.isNullOrEmpty(dname)) {
-			de1.createCriteria().andNameLike(dname + "%");
+			de1.createCriteria().andDealerNameLike(dname + "%");
 		}
 		
 		// 検索
-		list = dealerMapper.selectByExample(de1);
+		list = dealersMapper.selectByExample(de1);
 		
 		model.addAttribute("message", "検索結果："+list.size()+"件");
 		model.addAttribute("fm", form);
@@ -130,12 +123,12 @@ public class DealerSearchController {
 	@ResponseBody
 	public List<DelaerSearchResultForm> searchAjaxWhereDealeName(@PathVariable String _dealername) {
 		// TODO あとでLogicクラスにすること
-		List<Dealer> list = null;
-		DealerExample de1 = new DealerExample();
+		List<Dealers> list = null;
+		DealersExample de1 = new DealersExample();
 		if (!Strings.isNullOrEmpty(_dealername)) {
-			de1.createCriteria().andNameLike(_dealername + "%");
+			de1.createCriteria().andDealerNameLike(_dealername + "%");
 		}
-		list = dealerMapper.selectByExample(de1);
+		list = dealersMapper.selectByExample(de1);
 		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
 		return delaerSearchResultFormList;
 	}
@@ -162,7 +155,7 @@ public class DealerSearchController {
 	public String initDlr06(@ModelAttribute DealerInfoForm form, Model model, @PathVariable("dealerId") Integer dealerId) {
 		
 		// ディーラ情報を検索
-		Dealer d = dealerMapper.selectByPrimaryKey(dealerId);
+		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
 		
  		if(d==null) {
 			// TODO 
@@ -170,14 +163,14 @@ public class DealerSearchController {
 		}
 		
 		// ディーラのもつ作品情報を検索
-		DealerDetailExample dde = new DealerDetailExample();
+ 		DealersDetailProductsExample dde = new DealersDetailProductsExample();
 		dde.createCriteria().andDealerIdEqualTo(dealerId);
-		List<DealerDetail> ddlist= dealerDetailMapper.selectByExample(dde);
+		List<DealersDetailProducts> ddlist= dealersDetailProductsMapper.selectByExample(dde);
 		 
-		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getDealerIconCd());
+		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
 		form.setDealerIconUrl(imgUrl);
 		form.setId(dealerId);
-		form.setDealerName(d.getName());
+		form.setDealerName(d.getDealerName());
 		form.setTakuban(d.getTakuban());
 		// TODO テーブルに事業区分をもっていないので固定でいれる
 		form.setBusinessClassification("1");
@@ -208,12 +201,12 @@ public class DealerSearchController {
 //		return this.searchAjaxCondition("");
 //	}
 //	
-	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealer> list) {
+	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealers> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
-		for (Dealer q : list) {
+		for (Dealers q : list) {
 			DelaerSearchResultForm f = new DelaerSearchResultForm();
 			f.setId(q.getDealerId());
-			f.setDealerName(q.getName());
+			f.setDealerName(q.getDealerName());
 			f.setTakuban(q.getTakuban());
 			f.setHpUrl(q.getHpLink());
 			f.setTwUrl(q.getTwLink());
@@ -222,9 +215,9 @@ public class DealerSearchController {
 		return arlist;
 	}	
 	
-	private List<String> toProductCategories(List<DealerDetail> ddlist) {
+	private List<String> toProductCategories(List<DealersDetailProducts> ddlist) {
 		ArrayList<String> l = new ArrayList<String>();
-		for (DealerDetail d : ddlist) {
+		for (DealersDetailProducts d : ddlist) {
 			l.add(d.getProductName());
 		}
 		return l;

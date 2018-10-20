@@ -3,8 +3,7 @@ package com.jp.wonfes.service.sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jp.wonfes.service.dao.common.Usr;
-import com.jp.wonfes.service.dao.common.mapper.UsrMapper;
+import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 
 @Service
 public class SampleLogic1 implements SampleLogic {
