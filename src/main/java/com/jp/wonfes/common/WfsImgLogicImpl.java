@@ -33,26 +33,38 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 	DealersMapper dealersMapper;
 	
 	@Override
-	public void save(WfsImgIcon imgIcon) throws IOException, WfsLogicException {
+	public void save(WfsImgIcon imgIcon) throws WfsLogicException, WfsSysytemException {
 		// チェック処理
 		checkFile(imgIcon);
-		
+
 		// dealerId毎のフォルダ作成
 		final String iconFolderByDealerId = this.ImgIconUrl.getImgFilePath() + File.separator + imgIcon.getDealerId();
 		Path savePlaceByDealerIdPath = Paths.get(iconFolderByDealerId);
 		if (!Files.isDirectory(savePlaceByDealerIdPath)) {
-			Files.createDirectory(savePlaceByDealerIdPath);
+			try {
+				Files.createDirectory(savePlaceByDealerIdPath);
+			} catch (IOException e) {
+				throw new WfsSysytemException("アイコン画像ディレクトの作成に失敗しました");
+			}
 		}
 
 		// 画像アイコンの保存
 		final String iconAbsoluteFileName = iconFolderByDealerId + File.separator + imgIcon.getWfsImgIconName();
 		File imgIconAbsoluteFile = new File(iconAbsoluteFileName);
-		imgIcon.transferTo(imgIconAbsoluteFile);
-		if(! osName.startsWith("windows")) {
-			Files.setPosixFilePermissions(savePlaceByDealerIdPath, PosixFilePermissions.fromString(permmisions));
-			Files.setPosixFilePermissions(Paths.get(iconAbsoluteFileName), PosixFilePermissions.fromString(permmisions));
+		try {
+			imgIcon.transferTo(imgIconAbsoluteFile);
+		} catch (IllegalStateException | IOException e) {
+			throw new WfsSysytemException("アイコン画像ファイルの保存に失敗しました");
 		}
-		
+		if (!osName.startsWith("windows")) {
+			try {
+				Files.setPosixFilePermissions(savePlaceByDealerIdPath, PosixFilePermissions.fromString(permmisions));
+				Files.setPosixFilePermissions(Paths.get(iconAbsoluteFileName),
+						PosixFilePermissions.fromString(permmisions));
+			} catch (IOException e) {
+				throw new WfsSysytemException("アイコン画像ファイルの権限付与に失敗しました");
+			}
+		}
 	}
 
 	@Override

@@ -26,8 +26,11 @@ import com.jp.wonfes.common.WfsImgIcon;
 import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
+import com.jp.wonfes.common.WfsSysytemException;
 import com.jp.wonfes.dealer.controller.form.DealerEditForm;
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
+import com.jp.wonfes.dealer.logic.DealerRegistLogic;
+import com.jp.wonfes.dealer.logic.dto.RegistDealerInfo;
 
 @Controller
 public class DealerRegistController {
@@ -38,6 +41,9 @@ public class DealerRegistController {
 	private ImgIconUrl imgIconUrl;
 	@Autowired
 	private WfsMessage msg;
+	@Autowired
+	private DealerRegistLogic DealerRegistLogic;
+
 	// mapper
 	@Autowired
 	private DealersMapper dealersMapper;
@@ -52,6 +58,11 @@ public class DealerRegistController {
 	
 	private static final String imgIconDel = "";
 	
+	/**
+	 * 初期表示、新規登録
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
 	public String init(Model model) {
 		
@@ -74,6 +85,7 @@ public class DealerRegistController {
 		String name = dealerRegistForm.getDealerName();
 		String takuban = dealerRegistForm.getTakuban();
 		
+		// TODO FormnによるVALIDATION
 		// チェック
 		String err = "";
 		boolean isEr = false;
@@ -90,43 +102,55 @@ public class DealerRegistController {
 			model.addAttribute("dealerRegistForm", dealerRegistForm);
 			return "dealerregist2";
 		}
+		
+		//		try {
+//			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
+//		} catch (WfsLogicException e) {
+//			model.addAttribute("dealerRegistForm", dealerRegistForm);
+//			model.addAttribute("danger_message", e.getMessage());
+//			return "dealerregist2";
+//		}		
+//		// 登録処理(テーブル）
+//		DealersExample e1 = new DealersExample();
+//		List<Dealers> dlist =dealersMapper.selectByExample(e1);
+//		Integer nextId = this.getDlistMax(dlist)+1; // Id
+//		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
+//		
+//		Dealers dealer = new Dealers();
+//		dealer.setDealerId(nextId); //ディーラId
+//		dealer.setDealerName(name); //ディーラ名
+//		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
+//		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
+//		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
+//		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
+//		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
+//		dealersMapper.insert(dealer);
+//		
+//		// 登録処理(アイコン画像ファイル自体）
+//		try {
+//			wfsImgLogic.save(imgIcon);
+//		} catch (IOException e) {
+//			model.addAttribute("dealerRegistForm", dealerRegistForm);
+//			model.addAttribute("danger_message", "IO例外だよ");
+//			return "dealerregist2";
+//		} catch (WfsLogicException e) {
+//			model.addAttribute("dealerRegistForm", dealerRegistForm);
+//			model.addAttribute("danger_message", e.getMessage());
+//			return "dealerregist2";
+//		}
+		RegistDealerInfo dto= RegistDealerInfo.form2Dto(dealerRegistForm);
 		try {
-			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
+			DealerRegistLogic.registDealerInfo(dto);
 		} catch (WfsLogicException e) {
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
 			model.addAttribute("danger_message", e.getMessage());
 			return "dealerregist2";
-		}		
-		// 登録処理(テーブル）
-		DealersExample e1 = new DealersExample();
-		List<Dealers> dlist =dealersMapper.selectByExample(e1);
-		Integer nextId = this.getDlistMax(dlist)+1; // Id
-		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
-		
-		Dealers dealer = new Dealers();
-		dealer.setDealerId(nextId); //ディーラId
-		dealer.setDealerName(name); //ディーラ名
-		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
-		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
-		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
-		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-		dealersMapper.insert(dealer);
-		
-		// 登録処理(アイコン画像ファイル自体）
-		try {
-			wfsImgLogic.save(imgIcon);
-		} catch (IOException e) {
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
-			model.addAttribute("danger_message", "IO例外だよ");
-			return "dealerregist2";
-		} catch (WfsLogicException e) {
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
+		} catch (WfsSysytemException e) {
 			model.addAttribute("danger_message", e.getMessage());
 			return "dealerregist2";
 		}
 		
-		model.addAttribute("success_message", "情報：登録完了しました");
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報の登録処理" });
+		model.addAttribute("success_message", messageSucceed);
 
 		return "dealerregistfin";
 	}
@@ -192,17 +216,17 @@ public class DealerRegistController {
 		if (!ImgIconOperation.DELETED.getValue().equals(delflg)
 				&& imgIcon.exists() && imgIcon.isImgIcon()) {
 			// アイコン画像を更新しない場合は、画像データがこないので何もしない
-			try {
-				wfsImgLogic.save(imgIcon);
-			} catch (IOException e) {
-				model.addAttribute("dealerRegistForm", dealerRegistForm);
-				model.addAttribute("danger_message", "IO例外だよ");
-				return "dealeredit2";
-			} catch (WfsLogicException e) {
-				model.addAttribute("dealerRegistForm", dealerRegistForm);
-				model.addAttribute("danger_message", e.getMessage());
-				return "dealeredit2";
-			}
+//			try {
+//				wfsImgLogic.save(imgIcon);
+//			} catch (IOException e) {
+//				model.addAttribute("dealerRegistForm", dealerRegistForm);
+//				model.addAttribute("danger_message", "IO例外だよ");
+//				return "dealeredit2";
+//			} catch (WfsLogicException e) {
+//				model.addAttribute("dealerRegistForm", dealerRegistForm);
+//				model.addAttribute("danger_message", e.getMessage());
+//				return "dealeredit2";
+//			}
 		}
 		
 		// TODO 拡張子がおかしい場合はエラーを出すこと、画像に対する仕様を整理しておく
