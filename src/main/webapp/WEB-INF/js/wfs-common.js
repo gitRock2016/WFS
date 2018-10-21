@@ -7,7 +7,6 @@ if(typeof wfs === "undefined"){
 // LOCAL,HONBAN
 wfs.mode="LOCAL"
 
-
 wfs.com={
 		host:{
 			vals:["localhost","www.iwatakhr69.net"],
@@ -33,7 +32,22 @@ wfs.com={
 			}
 		}
 }
-	
+
+wfs.com.confirmBase = function(message, yes_callBack, no_callBack){
+	ret = confirm(message);
+	if(ret==true){
+		yes_callBack();
+	}else{
+// 特に何もしない
+//		no_callBack();
+	}
+}
+
+wfs.com.confirm = function(message, yes_callBack){
+	wfs.com.confirmBase(message, yes_callBack, function(){});
+}
+
+
 $(function(){
 	// 必要に応じ作成
 	wfs.com.baseUrl=wfs.com.getBaseUrl();

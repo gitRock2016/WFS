@@ -1,7 +1,5 @@
 package com.jp.wonfes.dealer.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -14,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsSaledateMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconOperation;
 import com.jp.wonfes.common.ImgIconUrl;
@@ -39,7 +41,15 @@ public class DealerRegistController {
 	// mapper
 	@Autowired
 	private DealersMapper dealersMapper;
-
+	@Autowired
+	private DealersDetailProductsMapper dealersDetailProductsMapper;
+	@Autowired
+	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
+	@Autowired
+	private DealersDetailProductsImgsMapper dealersDetailProductsImgsMapper;
+	@Autowired
+	private DealersDetailProductsSaledateMapper dealersDetailProductsSaledateMapper;
+	
 	private static final String imgIconDel = "";
 	
 	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
@@ -221,8 +231,19 @@ public class DealerRegistController {
 		}
 
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
-		model.addAttribute("success_message", messageSucceed);
+		model.addAttribute("success_message", messageSucceed+"TODO:実際の削除処理は後で実装する");
 		return "dealerregistfin";
+	}
+	
+	@RequestMapping(value="/dlr/dlr_01_04/delete", method=RequestMethod.POST)
+	public String delete(@ModelAttribute("dealerRegistForm") DealerEditForm dealerRegistForm, Model model) {
+		
+		Integer dealerId = dealerRegistForm.getId();
+		// TODO　削除処理はあとでさくせい
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });
+		model.addAttribute("success_message", messageSucceed);
+		
+		return "dealereditfindel";
 	}
 
 	
