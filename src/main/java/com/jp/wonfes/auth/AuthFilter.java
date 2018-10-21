@@ -37,7 +37,12 @@ public class AuthFilter implements Filter {
 			throws IOException, ServletException {
 		
 		HttpSession session = ((HttpServletRequest)request).getSession();
-		String target = ((HttpServletRequest) request).getRequestURI();
+		String url = ((HttpServletRequest) request).getRequestURI();
+		String params = ((HttpServletRequest) request).getQueryString();
+		String target = url;
+		if(params!=null) {
+			target = url + "?" + params;
+		}
 		if(session ==null) {
 			session = ((HttpServletRequest)request).getSession(true);
 			session.setAttribute("target", target);
