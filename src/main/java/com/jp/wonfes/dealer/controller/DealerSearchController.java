@@ -64,7 +64,7 @@ public class DealerSearchController {
 		// ディーラ名
 		dealerSearchCondForm.setDealerName("");
 		// 事業区分
-		dealerSearchCondForm.setBusinessClassification("indiviual");
+		dealerSearchCondForm.setBusinessClassification("1");
 		// ジャンル
 		dealerSearchCondForm.setProductFiled("");
 		// チェックボックスは下記設定しなくとも画面から落ちない

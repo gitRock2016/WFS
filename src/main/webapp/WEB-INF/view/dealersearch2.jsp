@@ -19,8 +19,8 @@
 		</div>
 		<label>事業区分</label>
 		<div class="form-group">
-			<form:radiobutton path="businessClassification" label="個人" value="indiviual"/>
-			<form:radiobutton path="businessClassification" label="法人" value="corporation"/>
+			<form:radiobutton path="businessClassification" label="個人" value="1"/>
+			<form:radiobutton path="businessClassification" label="法人" value="2"/>
 <!-- 				<input type="radio" name="businessClassification" id="indiviual"/>
 				<input type="radio" name="businessClassification" id="corporation"/> -->
 		</div>

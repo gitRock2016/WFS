@@ -1,19 +1,32 @@
 	package com.jp.wonfes.dealer.controller.form;
 
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.common.base.Strings;
 
 public class DealerRegistForm {
 	private Integer id;
+	@NotBlank
 	private String dealerName;
 	private String dealerIconCd;
 	private String dealerIconUrl;
+	// TODO 6桁であることのチェック、数値であることのチェックがほしい
 	private String takuban;
+	// TODO Enumをもちいて個人、法人のコード値であるかどうかチェックする
 	private String businessClassification;
 	private MultipartFile dealerIconImg;
+	@URL
 	private String hpLink;
+	@URL
 	private String twLink;
-	  
-	
 	
 	public Integer getId() {
 		return id;
@@ -70,6 +83,11 @@ public class DealerRegistForm {
 		this.businessClassification = businessClassification;
 	}
 	
+	@AssertTrue(message="{wfs.msg.e.dealer99}")
+	public boolean isNumericTakuban() {
+		if(Strings.isNullOrEmpty(this.takuban)) {return true;} // nullの場合はチェックしない
+		return this.takuban.matches("[0-9]{6}");
+	}
 
 
 }

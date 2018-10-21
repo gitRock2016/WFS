@@ -8,6 +8,15 @@
 	
 	<div class="alert-success">${success_message}</div>
 	<div class="alert-danger">${danger_message}</div>
+	<spring:bind path="dealerRegistForm.*" htmlEscape="true">
+		<c:if test="${status.error}">
+			<div class="row alert alert-dismissible alert-danger">
+				<c:forEach items="${status.errorMessages}" var="beanValidationErrorMessages">
+				${beanValidationErrorMessages}<br>
+				</c:forEach>
+			</div>
+		</c:if>
+	</spring:bind>
 	
 	<form:form modelAttribute="dealerRegistForm" method="post" action="/WonFesSys/dlr/dlr_01_01/reigst" enctype="multipart/form-data" id="dealerRegistForm">
 		<div class="form-group">
@@ -38,8 +47,8 @@
 		</div>
 		<div class="form-group">
 			<label>事業区分</label>
-			<form:radiobutton path="businessClassification" label="個人" value="indiviual"/>
-			<form:radiobutton path="businessClassification" label="法人" value="corporation"/>
+			<form:radiobutton path="businessClassification" label="個人" value="1"/>
+			<form:radiobutton path="businessClassification" label="法人" value="2"/>
 		</div>
 		<div class="form-group">
 			<label for="takuban">卓番号</label>
@@ -56,7 +65,7 @@
 		<div class="form-group">
 			<label for="tweet">tweet</label>
 			<div>
-				<form:input path="hpLink" id="tweet"/>
+				<form:input path="twLink" id="tweet"/>
 			</div>
 		</div>
 		<div class="form-group">

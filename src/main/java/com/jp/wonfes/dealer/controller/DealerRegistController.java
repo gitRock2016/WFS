@@ -3,9 +3,12 @@ package com.jp.wonfes.dealer.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,14 +67,12 @@ public class DealerRegistController {
 	 * @return
 	 */
 	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
-	public String init(Model model) {
+	public String init(@ModelAttribute DealerRegistForm dealerRegistForm, Model model) {
 		
-		DealerRegistForm dealerRegistForm = new DealerRegistForm();
 		/*初期値*/
 		dealerRegistForm.setDealerName(""); // ディーラ名
 		dealerRegistForm.setTakuban(""); // 卓番
-		dealerRegistForm.setBusinessClassification("indiviual"); // 事業区分
-		
+		dealerRegistForm.setBusinessClassification("1"); // 事業区分
 		
 		model.addAttribute("dealerRegistForm", dealerRegistForm);
 		model.addAttribute("message", "");
@@ -80,64 +81,12 @@ public class DealerRegistController {
 	
 	
 	@RequestMapping(value="/dlr/dlr_01_01/reigst", method=RequestMethod.POST)
-	public String regist(@ModelAttribute DealerRegistForm dealerRegistForm,Model model) {
+	public String regist(@ModelAttribute @Valid DealerRegistForm dealerRegistForm,BindingResult results,Model model) {
 		
-		String name = dealerRegistForm.getDealerName();
-		String takuban = dealerRegistForm.getTakuban();
-		
-		// TODO FormnによるVALIDATION
-		// チェック
-		String err = "";
-		boolean isEr = false;
-		if (Strings.isNullOrEmpty(name)) {
-			isEr=true;
-			err = err + "エラー：名前が入力されていません";
-		}
-		if(takuban.length()!=6){
-			isEr=true;
-			err = err + "<br/>" + "エラー：卓盤は6桁まで入力できます";
-		}
-		if(isEr) {
-			model.addAttribute("message", err);
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
+		if(results.hasErrors()) {
 			return "dealerregist2";
 		}
 		
-		//		try {
-//			wfsImgLogic.checkFile(new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerRegistForm.getId()));
-//		} catch (WfsLogicException e) {
-//			model.addAttribute("dealerRegistForm", dealerRegistForm);
-//			model.addAttribute("danger_message", e.getMessage());
-//			return "dealerregist2";
-//		}		
-//		// 登録処理(テーブル）
-//		DealersExample e1 = new DealersExample();
-//		List<Dealers> dlist =dealersMapper.selectByExample(e1);
-//		Integer nextId = this.getDlistMax(dlist)+1; // Id
-//		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), nextId);
-//		
-//		Dealers dealer = new Dealers();
-//		dealer.setDealerId(nextId); //ディーラId
-//		dealer.setDealerName(name); //ディーラ名
-//		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-//		String dealerIconCd = imgIcon.isImgIcon() ? imgIcon.getWfsImgIconName() : "";
-//		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
-//		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
-//		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-//		dealersMapper.insert(dealer);
-//		
-//		// 登録処理(アイコン画像ファイル自体）
-//		try {
-//			wfsImgLogic.save(imgIcon);
-//		} catch (IOException e) {
-//			model.addAttribute("dealerRegistForm", dealerRegistForm);
-//			model.addAttribute("danger_message", "IO例外だよ");
-//			return "dealerregist2";
-//		} catch (WfsLogicException e) {
-//			model.addAttribute("dealerRegistForm", dealerRegistForm);
-//			model.addAttribute("danger_message", e.getMessage());
-//			return "dealerregist2";
-//		}
 		RegistDealerInfo dto= RegistDealerInfo.form2Dto(dealerRegistForm);
 		try {
 			DealerRegistLogic.registDealerInfo(dto);
