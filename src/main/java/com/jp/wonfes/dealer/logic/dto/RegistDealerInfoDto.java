@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
 
-public class RegistDealerInfo {
+public class RegistDealerInfoDto {
 	private Integer id;
 	private String dealerName;
 	private String dealerIconCd;
@@ -74,8 +74,8 @@ public class RegistDealerInfo {
 	}
 	  
 	// beanmaper
-	public static RegistDealerInfo form2Dto(DealerRegistForm f) {
-		RegistDealerInfo r = new RegistDealerInfo();
+	public static RegistDealerInfoDto form2Dto(DealerRegistForm f) {
+		RegistDealerInfoDto r = new RegistDealerInfoDto();
 		r.setId(f.getId());
 		r.setDealerName(f.getDealerName());
 		r.setDealerIconCd(f.getDealerIconCd());

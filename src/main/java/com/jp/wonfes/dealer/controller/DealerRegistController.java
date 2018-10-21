@@ -33,7 +33,9 @@ import com.jp.wonfes.common.WfsSysytemException;
 import com.jp.wonfes.dealer.controller.form.DealerEditForm;
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
 import com.jp.wonfes.dealer.logic.DealerRegistLogic;
-import com.jp.wonfes.dealer.logic.dto.RegistDealerInfo;
+import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
+import com.jp.wonfes.dealer.logic.dto.EditDealerInfoDto;
+import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDto;
 
 @Controller
 public class DealerRegistController {
@@ -45,7 +47,7 @@ public class DealerRegistController {
 	@Autowired
 	private WfsMessage msg;
 	@Autowired
-	private DealerRegistLogic DealerRegistLogic;
+	private DealerRegistLogic dealerRegistLogic;
 
 	// mapper
 	@Autowired
@@ -67,7 +69,7 @@ public class DealerRegistController {
 	 * @return
 	 */
 	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
-	public String init(@ModelAttribute DealerRegistForm dealerRegistForm, Model model) {
+	public String initReg(@ModelAttribute DealerRegistForm dealerRegistForm, Model model) {
 		
 		/*初期値*/
 		dealerRegistForm.setDealerName(""); // ディーラ名
@@ -87,9 +89,9 @@ public class DealerRegistController {
 			return "dealerregist2";
 		}
 		
-		RegistDealerInfo dto= RegistDealerInfo.form2Dto(dealerRegistForm);
+		RegistDealerInfoDto dto= RegistDealerInfoDto.form2Dto(dealerRegistForm);
 		try {
-			DealerRegistLogic.registDealerInfo(dto);
+			dealerRegistLogic.registDealerInfo(dto);
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
 			return "dealerregist2";
@@ -107,27 +109,22 @@ public class DealerRegistController {
 	// TODO ただの画面遷移でもFORMタグで囲ってSUBMITすること
 	//　遷移ボタンをFORMタグで囲って作成するORディーラ情報画面の表示項目をFORMで囲って作成する
 	@RequestMapping(value = "/dlr/dlr_01_01/show/dealerId/{dealerId}", params = "reg=edit", method = RequestMethod.GET)
-	public String initEdit(@PathVariable("dealerId") Integer dealerId, Model model) {
+	public String initEdit(@ModelAttribute DealerEditForm form ,@PathVariable("dealerId") Integer dealerId, Model model) {
 
-		// ディーラ情報を検索
 		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
-		
- 		if(d==null) {
-			// TODO 
-			System.out.println("ディーラ情報がありません的な、共通エラー画面に遷移させる");
+		if (d == null) {
+			model.addAttribute("danger_message", "ディーラ情報が存在しません");
+			return "dealerregist2";
 		}
 		
 		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
-		DealerEditForm form = new DealerEditForm();
 		form.setDealerIconUrl(imgUrl);
 		form.setId(dealerId);
 		form.setDealerName(d.getDealerName());
-		// TODO テーブルに事業区分をもっていないので固定でいれる
-		form.setBusinessClassification("1");
-//		form.setBusinessClassification(form.getBusinessClassification());
+		form.setBusinessClassification(d.getBussinesType());
 		form.setTakuban(d.getTakuban());
-		form.setHpLink(form.getHpLink());
-		form.setTwLink(form.getTwLink());
+		form.setHpLink(d.getHpLink());
+		form.setTwLink(d.getTwLink());
 		
 		model.addAttribute("dealerRegistForm", form);
 		model.addAttribute("editFlg", true);
@@ -136,85 +133,41 @@ public class DealerRegistController {
 	}
 
 	@RequestMapping(value = "/dlr/dlr_01_01/edit", method = RequestMethod.POST)
-	public String edit(@ModelAttribute("dealerRegistForm") DealerEditForm dealerRegistForm, Model model) {
+	public String edit(@ModelAttribute("dealerRegistForm") @Valid DealerEditForm dealerRegistForm,
+			BindingResult results, Model model) {
 		
-		String name = dealerRegistForm.getDealerName(); // ディーラ名
-		String takuban = dealerRegistForm.getTakuban();// 卓番
-		String delflg = dealerRegistForm.getDealerIconImgDelFlg();
-		Integer dealerId =dealerRegistForm.getId();
-
-		// チェック処理
-		String err = "";
-		boolean isEr = false;
-		if (Strings.isNullOrEmpty(name)) {
-			isEr = true;
-			err = err + "エラー：名前が入力されていません";
-		}
-		if (takuban.length() != 6) {
-			isEr = true;
-			err = err + "<br/>" + "エラー：卓盤は6桁まで入力できます";
-		}
-		if (isEr) {
-			model.addAttribute("danger_message", err);
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
-			return "dealeredit2";
-		}
-		
-		WfsImgIcon imgIcon = new WfsImgIcon(dealerRegistForm.getDealerIconImg(), dealerId);
-		// 更新処理(アイコン画像ファイル自体）
-		if (!ImgIconOperation.DELETED.getValue().equals(delflg)
-				&& imgIcon.exists() && imgIcon.isImgIcon()) {
-			// アイコン画像を更新しない場合は、画像データがこないので何もしない
-//			try {
-//				wfsImgLogic.save(imgIcon);
-//			} catch (IOException e) {
-//				model.addAttribute("dealerRegistForm", dealerRegistForm);
-//				model.addAttribute("danger_message", "IO例外だよ");
-//				return "dealeredit2";
-//			} catch (WfsLogicException e) {
-//				model.addAttribute("dealerRegistForm", dealerRegistForm);
-//				model.addAttribute("danger_message", e.getMessage());
-//				return "dealeredit2";
-//			}
-		}
-		
-		// TODO 拡張子がおかしい場合はエラーを出すこと、画像に対する仕様を整理しておく
-		
-		// 更新処理(テーブル）
-		Dealers dealer = dealersMapper.selectByPrimaryKey(dealerRegistForm.getId());
-		dealer.setDealerName(name); // ディーラ名
-		dealer.setTakuban(Strings.nullToEmpty(takuban)); // 卓番
-		dealer.setHpLink(Strings.nullToEmpty(dealerRegistForm.getHpLink())); // HP
-		dealer.setTwLink(Strings.nullToEmpty(dealerRegistForm.getTwLink())); // TW
-		String dealerIconCd = imgIcon.getWfsImgIconName();
-		dealer.setImgIconFile(dealerIconCd);
-		if (ImgIconOperation.DELETED.getValue().equals(delflg)) {
-			// アイコン画像を削除する場合、テーブル上のアイコン画像へのパスを空文字にする
-			dealer.setImgIconFile(imgIconDel);
-		}
-		if (!imgIcon.isImgIcon()) {
-			// 更新しない
-			dealer.setImgIconFile(null);
-		}
-		
-		if (dealersMapper.updateByPrimaryKeySelective(dealer) == 0) {
-			model.addAttribute("dealerRegistForm", dealerRegistForm);
-			model.addAttribute("danger_message", "情報：更新対象がありません。");
+		if(results.hasErrors()) {
 			return "dealeredit2";
 		}
 
+		EditDealerInfoDto dto = EditDealerInfoDto.form2Dto(dealerRegistForm);
+		try {
+			dealerRegistLogic.editDealerInfo(dto);
+		} catch (WfsLogicException e) {
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealeredit2";
+		} catch (WfsSysytemException e) {
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealeredit2";
+		}
+		
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
-		model.addAttribute("success_message", messageSucceed+"TODO:実際の削除処理は後で実装する");
+		model.addAttribute("success_message", messageSucceed);
 		return "dealerregistfin";
 	}
 	
 	@RequestMapping(value="/dlr/dlr_01_04/delete", method=RequestMethod.POST)
 	public String delete(@ModelAttribute("dealerRegistForm") DealerEditForm dealerRegistForm, Model model) {
 		
-		Integer dealerId = dealerRegistForm.getId();
-		// TODO　削除処理はあとでさくせい
+		DeleteDealerInfoDto dto = DeleteDealerInfoDto.form2Dto(dealerRegistForm);
+		try {
+			dealerRegistLogic.deleteDealerInfo(dto);
+		} catch (WfsLogicException e) {
+			model.addAttribute("danger_message", e.getMessage());
+			return "dealeredit2";
+		}
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });
-		model.addAttribute("success_message", messageSucceed);
+		model.addAttribute("success_message", messageSucceed+"TODO:実際の削除処理は後で実装する");
 		
 		return "dealereditfindel";
 	}

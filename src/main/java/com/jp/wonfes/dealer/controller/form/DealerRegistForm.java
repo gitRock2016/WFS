@@ -1,11 +1,7 @@
-	package com.jp.wonfes.dealer.controller.form;
+package com.jp.wonfes.dealer.controller.form;
 
-import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +14,7 @@ public class DealerRegistForm {
 	private String dealerName;
 	private String dealerIconCd;
 	private String dealerIconUrl;
-	// TODO 6桁であることのチェック、数値であることのチェックがほしい
 	private String takuban;
-	// TODO Enumをもちいて個人、法人のコード値であるかどうかチェックする
 	private String businessClassification;
 	private MultipartFile dealerIconImg;
 	@URL
