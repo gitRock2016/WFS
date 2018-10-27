@@ -75,6 +75,7 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dto.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dto.getTwLink())); // TW
+		dealer.setSortKey("ア"); // ソートキー、TODO　リリース後に削除するため固定値をいれる
 		
 		if(dealersMapper.insert(dealer)==0) {
 			throw new WfsLogicException("登録処理に失敗しました");
