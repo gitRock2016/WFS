@@ -50,7 +50,6 @@ public class DealerRegistController {
 		dealerRegistForm.setBusinessClassification("1"); // 事業区分
 		
 		model.addAttribute("dealerRegistForm", dealerRegistForm);
-		model.addAttribute("message", "");
 		return "dealerregist2";
 	}
 	
@@ -100,7 +99,6 @@ public class DealerRegistController {
 
 		model.addAttribute("dealerRegistForm", form);
 		model.addAttribute("editFlg", true);
-		model.addAttribute("message", "");
 		return "dealeredit2";
 	}
 

@@ -40,6 +40,7 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 		// dealerId毎のフォルダ作成
 		final String iconFolderByDealerId = this.ImgIconUrl.getImgFilePath() + File.separator + imgIcon.getDealerId();
 		Path savePlaceByDealerIdPath = Paths.get(iconFolderByDealerId);
+		// フォルダがなければ作成
 		if (!Files.isDirectory(savePlaceByDealerIdPath)) {
 			try {
 				Files.createDirectory(savePlaceByDealerIdPath);
@@ -57,10 +58,10 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 			throw new WfsSysytemException("アイコン画像ファイルの保存に失敗しました");
 		}
 		if (!osName.startsWith("windows")) {
+			// WindowsOS以外の場合、フォルダとアイコン画像ファイルに権限を付与する
 			try {
 				Files.setPosixFilePermissions(savePlaceByDealerIdPath, PosixFilePermissions.fromString(permmisions));
-				Files.setPosixFilePermissions(Paths.get(iconAbsoluteFileName),
-						PosixFilePermissions.fromString(permmisions));
+				Files.setPosixFilePermissions(Paths.get(iconAbsoluteFileName), PosixFilePermissions.fromString(permmisions));
 			} catch (IOException e) {
 				throw new WfsSysytemException("アイコン画像ファイルの権限付与に失敗しました");
 			}
@@ -72,7 +73,8 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 		Integer dealerid = imgIcon.getDealerId();
 		Dealers dealer = dealersMapper.selectByPrimaryKey(dealerid);
 		if(dealer  == null) {
-			throw new WfsLogicException();
+			String messageDanger = msg.getMessage("wfs.msg.e.cmmn4", new String[] { "削除対象のディーラ情報" });
+			throw new WfsLogicException(messageDanger);
 		}
 		dealer.setImgIconFile("");
 		dealersMapper.updateByPrimaryKey(dealer);

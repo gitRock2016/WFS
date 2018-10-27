@@ -1,8 +1,5 @@
 package com.jp.wonfes.dealer.logic.dto;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;

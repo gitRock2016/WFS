@@ -18,11 +18,9 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsSaledateExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconOperation;
-import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.common.WfsImgIcon;
 import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.common.WfsLogicException;
-import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
 import com.jp.wonfes.dealer.logic.DealerRegistLogic;
 import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
@@ -89,7 +87,7 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		
 		// 更新処理(アイコン画像ファイル自体）
 		WfsImgIcon imgIcon = new WfsImgIcon(dto.getDealerIconImg(), dealerId);
-		if (!ImgIconOperation.DELETED.getValue().equals(delflg) && imgIcon.exists() && imgIcon.isImgIcon()) {
+		if (!ImgIconOperation.DELETED.getValue().equals(delflg) && !imgIcon.isEmpty() && imgIcon.isImgIcon()) {
 			// アイコン画像を更新しない場合は、画像データがこないので何もしない
 			wfsImgLogic.save(imgIcon);
 		}
