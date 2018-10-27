@@ -2,12 +2,28 @@ if (typeof wfs.dealerregist === "undefined") {
 	wfs.dealerregist= {}
 }
 
+wfs.dealerregist.action={}
+wfs.dealerregist.action.regist = "/" + wfs.com.cont + "/dlr/dlr_01_01/reigst";
+
+//btnObjは押下したボタンを表すJQオブジェクト
+wfs.dealerregist.regist = function(){
+	const target = $("#dealerRegistForm");
+	target.attr("action", wfs.dealerregist.action.regist);
+	target.submit();
+}
+
+
 $(function() {
 	
 	// アイコン画像を選択時
 	$("#iconImg").change(function(){
 		wfs.imgPreview("iconImg", "iconImgDisp");
 	});
+	
+	$("#dealerRegistBtn").on('click', function(){
+		wfs.dealerregist.regist();
+	})
+	
 
 })
 

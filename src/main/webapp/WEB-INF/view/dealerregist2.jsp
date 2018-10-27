@@ -18,7 +18,7 @@
 		</c:if>
 	</spring:bind>
 	
-	<form:form modelAttribute="dealerRegistForm" method="post" action="/WonFesSys/dlr/dlr_01_01/reigst" enctype="multipart/form-data" id="dealerRegistForm">
+	<form:form modelAttribute="dealerRegistForm" method="post" action="#" enctype="multipart/form-data" id="dealerRegistForm">
 		<div class="form-group">
 			<label for="imgIcon">アイコン画像</label>
 			<div class="icon-image">
@@ -69,10 +69,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary" id="dealerRegistBtn">ディーラ登録</button>
+			<button type="button" class="btn btn-primary" id="dealerRegistBtn">ディーラ登録</button>
 		</div>
 		<c:if test="${editFlg}">
-			<button type="submit" class="btn btn-primary" id="dealerDelBtn">ディーラ削除</button>
+			<button type="button" class="btn btn-primary" id="dealerDelBtn">ディーラ削除</button>
 		</c:if>
 
 

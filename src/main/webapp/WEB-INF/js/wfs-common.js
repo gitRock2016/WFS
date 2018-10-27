@@ -18,6 +18,7 @@ wfs.com={
 		port:"8080", 
 		cont:"WonFesSys",
 		getBaseUrl:function(){
+			// e.g http://localhost:8080/WonFesSys
 			return "http://"+this.host.get()+":"+this.port +"/"+this.cont;
 		},
 		baseUrl:"",
@@ -33,20 +34,19 @@ wfs.com={
 		}
 }
 
-wfs.com.confirmBase = function(message, yes_callBack, no_callBack){
-	ret = confirm(message);
-	if(ret==true){
-		yes_callBack();
+wfs.com.confirmBase = function(message, callbackYes, callbackNo){
+	let ret = confirm(message);
+	if(ret){
+		callbackYes();
 	}else{
-// 特に何もしない
-//		no_callBack();
+		callbackNo();
 	}
 }
 
-wfs.com.confirm = function(message, yes_callBack){
-	wfs.com.confirmBase(message, yes_callBack, function(){});
+wfs.com.confirm = function(message, callbackYes){
+	// キャンセルボタン押下時は何もしない
+	wfs.com.confirmBase(message, callbackYes, function(){});
 }
-
 
 $(function(){
 	// 必要に応じ作成
