@@ -109,7 +109,7 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 			dealer.setImgIconFile(imgIconDel);
 		}
 		if (!imgIcon.isImgIcon()) {
-			// アイコン画像の拡張子でない場合、更新しない
+			// アイコン画像の拡張子でない場合、更新しないようNULLをいれる
 			dealer.setImgIconFile(null);
 		}
 		

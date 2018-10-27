@@ -1,7 +1,5 @@
 package com.jp.wonfes.dealer.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper;
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsSaledateMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
 import com.jp.wonfes.common.ImgIconUrl;
-import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
@@ -86,17 +79,16 @@ public class DealerRegistController {
 		return "dealerregistfin";
 	}
 	
-	// TODO ただの画面遷移でもFORMタグで囲ってSUBMITすること
-	//　遷移ボタンをFORMタグで囲って作成するORディーラ情報画面の表示項目をFORMで囲って作成する
 	@RequestMapping(value = "/dlr/dlr_01_01/show/dealerId/{dealerId}", params = "reg=edit", method = RequestMethod.GET)
-	public String initEdit(@ModelAttribute DealerEditForm form ,@PathVariable("dealerId") Integer dealerId, Model model) {
+	public String initEdit(@ModelAttribute DealerEditForm form, @PathVariable("dealerId") Integer dealerId,
+			Model model) {
 
 		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
 		if (d == null) {
 			model.addAttribute("danger_message", "ディーラ情報が存在しません");
 			return "dealerregist2";
 		}
-		
+
 		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
 		form.setDealerIconUrl(imgUrl);
 		form.setId(dealerId);
@@ -105,7 +97,7 @@ public class DealerRegistController {
 		form.setTakuban(d.getTakuban());
 		form.setHpLink(d.getHpLink());
 		form.setTwLink(d.getTwLink());
-		
+
 		model.addAttribute("dealerRegistForm", form);
 		model.addAttribute("editFlg", true);
 		model.addAttribute("message", "");
@@ -151,24 +143,5 @@ public class DealerRegistController {
 		
 		return "dealereditfindel";
 	}
-
-	
-	// private 
-	/**
-	 * idの最大値を取得する
-	 * @param list
-	 * @return
-	 */
-	private int getDlistMax(List<Dealers> list) {
-		Integer id = new Integer(0);
-		for(Dealers d : list) {
-			Integer a = d.getDealerId();
-			if(a > id) { // idは0より大きいため、初回は必ずtrue
-				id = a;
-			}
-		}
-		return id;
-	}
-	
 	
 }

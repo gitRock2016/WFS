@@ -25,10 +25,8 @@
 				<img src="${dealerRegistForm.dealerIconUrl}" id="iconImgDisp"/>
 			</div>
 			<form:input type="file" name="iconImg" id="iconImg" path="dealerIconImg" class="form-control-file"  value="アイコン登録"/><br>
+			<button type="button" class="btn btn-primary" id="iconClearBtn">アイコンクリア</button>
 			
-			<c:if test="${!editFlg}">
-				<button type="button" class="btn btn-primary">アイコンクリア</button>
-			</c:if>
 			<c:if test="${editFlg}">
 				<label for="dealerIconImgDelCheckId" >アイコン削除
 					<input type="checkbox" id="dealerIconImgDelCheckId" name="dealerIconImgDelCheck" value="1"/>

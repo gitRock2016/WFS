@@ -19,6 +19,11 @@ $(function() {
 	$("#iconImg").change(function(){
 		wfs.imgPreview("iconImg", "iconImgDisp");
 	});
+
+	$("#iconClearBtn").on('click', function() {
+		$('#iconImg').val('');
+		$('#iconImgDisp').attr('src','');
+	});
 	
 	$("#dealerRegistBtn").on('click', function(){
 		wfs.dealerregist.regist();

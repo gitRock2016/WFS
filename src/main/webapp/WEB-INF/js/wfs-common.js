@@ -70,11 +70,11 @@ wfs.do_ajax=function(data){
  * previewObjId, プレビュー表示させたいimgオブジェクトのIDを指定する
  */
 wfs.imgPreview=function(inputFileId, previewObjId){
-	
 	let img =document.getElementById(inputFileId).files[0];
 	let reader = new FileReader();
 	reader.readAsDataURL(img);
 	reader.onload = function(){
+		document.getElementById(previewObjId).src = "";
 		document.getElementById(previewObjId).src = reader.result;
 	}
 }
