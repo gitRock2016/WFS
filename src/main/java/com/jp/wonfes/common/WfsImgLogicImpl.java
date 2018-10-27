@@ -82,21 +82,13 @@ public class WfsImgLogicImpl implements WfsImgLogic {
 	@Override
 	public void checkFile(WfsImgIcon imgIcon) throws WfsLogicException {
 		
-		/** ファイルサイズが0バイトであるかどうか*/
-		/** TODO アイコン画像の指定は必須ではないので、チェックしない*/
 		String errMsg=null;
-/*		if(imgIcon.getSize()==0) {
-//			errMsg = msg.getMessage("wfs.msg.e.mp2", new String[] {});
-			errMsg = msg.getMessage("wfs.msg.e.mp2");
-			throw new WfsLogicException(errMsg);
-		}
-		*/
+		
 		/** ファイルサイズが最大サイズ未満であるかどうか*/
 		final long fileMaxSize = Long.parseLong(wfsApplicationConf.getWfsImgMaxsize()) ;
 		long fileSize = imgIcon.getSize();
 		if(fileSize > fileMaxSize) {
 			errMsg = msg.getMessage("wfs.msg.e.mp1", new String[] {wfsApplicationConf.getWfsImgMaxsize()});
-//			errMsg = msg.getMessage("wfs.msg.e.cmmn3", new String[] {Long.toString(fileSizeMB)});
 			throw new WfsLogicException(errMsg);
 		}
 		

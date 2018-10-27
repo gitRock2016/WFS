@@ -1,6 +1,5 @@
 package com.jp.wonfes.dealer.logic.impl;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +24,17 @@ import com.jp.wonfes.common.WfsImgLogic;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
-import com.jp.wonfes.dealer.controller.form.DealerEditForm;
 import com.jp.wonfes.dealer.logic.DealerRegistLogic;
 import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.EditDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDto;
-import com.jp.wonfes.service.dao.WfsDataException;
 
 @Service
 public class DealerRegistLogicImpl implements DealerRegistLogic {
 	
 	@Autowired
 	private WfsImgLogic wfsImgLogic;
-	@Autowired
-	private ImgIconUrl imgIconUrl;
-	@Autowired
-	private WfsMessage msg;
-	// mapper
+
 	@Autowired
 	private DealersMapper dealersMapper;
 	@Autowired
@@ -58,8 +51,6 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 	@Override
 	public void registDealerInfo(RegistDealerInfoDto dto) throws WfsLogicException, WfsSysytemException {
 
-		wfsImgLogic.checkFile(new WfsImgIcon(dto.getDealerIconImg(), dto.getId()));
-		
 		// 登録処理(テーブル）
 		DealersExample e1 = new DealersExample();
 		List<Dealers> dlist =dealersMapper.selectByExample(e1);
@@ -81,8 +72,10 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 			throw new WfsLogicException("登録処理に失敗しました");
 		}
 		
-		// 登録処理(アイコン画像ファイル自体）
-		wfsImgLogic.save(imgIcon);
+		// 登録処理(アイコン画像ファイル自体)
+		if (!imgIcon.isEmpty()) {
+			wfsImgLogic.save(imgIcon);
+		}
 	
 	}
 
