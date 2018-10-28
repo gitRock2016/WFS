@@ -1,19 +1,28 @@
 if (typeof wfs.dealersearch === "undefined") {
 	wfs.dealersearch = {}
 }
-
-wfs.dealersearch.baseUrl = "/WonFesSys/dlr/dlr_05";
+wfs.dealersearch.baseUrl = "/" + wfs.com.cont + "/dlr/dlr_05";
 
 $(function() {
 	
 	// ジャンル
-	$("#productFiled").prop("readonly",true);
+/*	$("#productFiled").prop("readonly",true);*/
+	$("#productFiledLabel").prop("readonly",true);
 	
 	// 検索ボタン
-	$("#searchBtn").bind("click", function() {
+	$("#searchBtn").on("click", function() {
 		wfs.dealersearch.searchDealerInfo();
 	});
 	
+	$("#clearProductListBtn").on("click", function() {
+		$("#productFiled").val("");
+		$("#productFiledLabel").val("");
+	});
+
+	$("#stub_productListBtn").on("click", function() {
+		$("#productFiled").val("3");
+		$("#productFiledLabel").val("Re:ゼロから始める異世界生活");
+	});
 
 })
 
@@ -22,10 +31,14 @@ $(function() {
 // --------------------------------------------------------------------------v
 wfs.dealersearch.searchDealerInfo = function() {
 	let url = wfs.dealersearch.baseUrl + "/search_ax";
-	let _dealerName=$("#dealerName").val();
-	if (_dealerName) { // ! null, ! undeifined, ! "" の場合、Trueと判定したい
-		url = url + "/" + _dealerName;
-	}
+	let query ="/";
+	const _dealerName = wfs.com.toQuery4NAN($("#dealerName").val());
+	let v = $('[name="businessClassification"]:checked').val();
+	const _businessClassification = wfs.com.toQuery4NAN(v);
+	const _takuban = wfs.com.toQuery4NAN($("#takuban").val());
+	const _productFiled = wfs.com.toQuery4NAN($("#productFiled").val());
+	query = query + _dealerName+"/"+_businessClassification+"/"+_takuban+"/"+_productFiled;
+	url = url + query;
 	
 	$.ajax({
 		type : "GET",
@@ -67,10 +80,23 @@ wfs.dealersearch.searchDealerInfo.expand = function(data){
 		let dealernameUrl = '<a href="' + _dealernameUrl + "/"+data[i].id+ '">' + data[i].dealerName + '</a>';
 		let dealername = "<td>" + dealernameUrl + "</td>";
 		let takuban    = "<td>" + data[i].takuban + "</td>";
-		let hpurl      = "<td><a href=' " + data[i].hpUrl + " ' class='btn btn-info' >HP</a></td>";
-		let twurl      = "<td><a href=' " + data[i].twUrl + " ' class='btn btn-info' >TW</a></td>";
+		let hpurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeHpUrl(data[i].hpLink) + "</td>";
+		let twurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeTwUrl(data[i].twLink) + "</td>";
 		dealerSearchResultObj.append("<tr>" + no + dealername + takuban + hpurl + twurl + "</tr>");
 	}
 	
 }
 
+wfs.dealersearch.searchDealerInfo.expand.makeHpUrl = function(hpUrl) {
+	if (wfs.com.isEmpty(hpUrl)) {
+		return "登録なし";
+	}
+	return '<a href=' + hpUrl + ' class="btn btn-info" >HP</a>';
+}
+
+wfs.dealersearch.searchDealerInfo.expand.makeTwUrl = function(twUrl) {
+	if (wfs.com.isEmpty(twUrl)) {
+		return "登録なし";
+	}
+	return '<a href=' + twUrl + ' class="btn btn-info" >TW</a>';
+}

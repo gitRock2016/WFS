@@ -48,11 +48,22 @@ wfs.com.confirm = function(message, callbackYes){
 	wfs.com.confirmBase(message, callbackYes, function(){});
 }
 
+wfs.com.toQuery4NAN = function(query) {
+	return (query === "" || query === null ) ? "NAN" : query;
+}
+
 $(function(){
 	// 必要に応じ作成
 	wfs.com.baseUrl=wfs.com.getBaseUrl();
 	
 })
+
+wfs.com.isEmpty = function(obj) {
+	if (obj === "" || obj === null || obj === undefined) {
+		return true;
+	}
+	return false;
+}
 
 // --------------------------------------------------------------------------v
 // 共通関数定義

@@ -23,6 +23,9 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.dealer.controller.form.DealerInfoForm;
+import com.jp.wonfes.dealer.logic.DealerSearchLogic;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
 import com.jp.wonfes.service.product.form.DealerSearchCondForm;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
@@ -41,7 +44,10 @@ public class DealerSearchController {
 		fm.put("0003", "艦これ");
 		fm.put("0009", "その他");
 	}
-
+	
+	@Autowired
+	private DealerSearchLogic dealerSearchLogic; 
+	
 	@Autowired
 	private DealersMapper dealersMapper;
 	
@@ -65,23 +71,20 @@ public class DealerSearchController {
 		dealerSearchCondForm.setDealerName("");
 		// 事業区分
 		dealerSearchCondForm.setBusinessClassification("1");
+		// 卓番
+		dealerSearchCondForm.setTakuban("");
 		// ジャンル
 		dealerSearchCondForm.setProductFiled("");
-		// チェックボックスは下記設定しなくとも画面から落ちない
-		//	dealerSearchCondForm.setProduct_fields(new String[] {""});
-		
-		// 
+
 		model.addAttribute("fm", dealerSearchCondForm);
 		model.addAttribute("data", new ArrayList<DelaerSearchResultForm>());
 		
 		return "dealersearch2";
 	}
-
 	
 	/**
-	 * TODO 非推奨　ajaxにする
-	 * 検索
-	 * 
+	 * formによる検索処理
+	 * TODO　利用しないが実装の参考のため残す
 	 * @param form
 	 * @param model
 	 * @return
@@ -108,41 +111,44 @@ public class DealerSearchController {
 		return "dealersearch2";
 	}
 	
-	// TODO
-	// 他の検索条件でも検索できるようにすること
-	// 自動生成でなく独自DAOを作成した検索する
-	// URLに応じてメソッドはオーバーロードする
 	/**
 	 * DBから取得したDealer情報をJSON形式で返却する
-	 * 検索条件の指定あり
-	 * @param _dealername ディーラ名
+	 * 検索条件：@param参照
+	 * @param _dealername
+	 * @param _businessClassification
+	 * @param _takuban
+	 * @param _productFiled
 	 * @return Dealer情報(JSON形式)
 	 */
-//	@RequestMapping(value = "/dlr/dlr_05/search-ax/{_dealername}/{businessClassification}/{productFiled}", method = RequestMethod.GET)
-	@RequestMapping(value = "/dlr/dlr_05/search_ax/{_dealername}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/search_ax/{_dealername}/{_businessClassification}/{_takuban}/{_productFiled}",
+			method = RequestMethod.GET)
 	@ResponseBody
-	public List<DelaerSearchResultForm> searchAjaxWhereDealeName(@PathVariable String _dealername) {
-		// TODO あとでLogicクラスにすること
-		List<Dealers> list = null;
-		DealersExample de1 = new DealersExample();
-		if (!Strings.isNullOrEmpty(_dealername)) {
-			de1.createCriteria().andDealerNameLike(_dealername + "%");
-		}
-		list = dealersMapper.selectByExample(de1);
-		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
-		return delaerSearchResultFormList;
+	public List<SearchDealerInfoDtoResp> searchAjax(
+			@PathVariable String _dealername,
+			@PathVariable String _businessClassification,
+			@PathVariable String _takuban,
+			@PathVariable String _productFiled) {
+		
+		SearchDealerInfoDtoReq dto = new SearchDealerInfoDtoReq ();
+		dto.setDealerName(_dealername);
+		dto.setBusinessClassification(_businessClassification);
+		dto.setTakuban(_takuban);
+		dto.setProductFiled(_productFiled);
+		List<SearchDealerInfoDtoResp> dtoList = dealerSearchLogic.searchDealerInfoList(dto);
+		return dtoList;
 	}
+	
 	
 	/**
 	 * DBから取得したDealer情報をJSON形式で返却する
-	 * 検索条件の指定あり
+	 * 検索条件:なし
 	 * @param _dealername ディーラ名
 	 * @return Dealer情報(JSON形式)
 	 */
 	@RequestMapping(value = "/dlr/dlr_05/search_ax", method = RequestMethod.GET)
 	@ResponseBody
-	public List<DelaerSearchResultForm> searchAjax() {
-		return this.searchAjaxWhereDealeName("");
+	public List<SearchDealerInfoDtoResp> searchAjax() {
+		return this.searchAjax("NAN", "NAN", "NAN", "NAN");
 	}
 	
 	// TODO urlに正規表現によるチェックをつけたい、全体的に
@@ -190,17 +196,6 @@ public class DealerSearchController {
 		return "forward:/dlr/dlr_01_01/show/dealerId"+"/" + id+"?reg=edit";
 	}
 
-	//	/**
-//	 * DBから取得したDealer情報をJSon形式で返却する
-//	 * 検索条件の指定なし
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/dlr/dlr_05/search-ax", method = RequestMethod.GET)
-//	@ResponseBody
-//	public List<DelaerSearchResultForm> searchAjax() {
-//		return this.searchAjaxCondition("");
-//	}
-//	
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealers> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
 		for (Dealers q : list) {
