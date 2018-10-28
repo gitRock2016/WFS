@@ -4,21 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 
 public class SearchDealerInfoDtoResp {
 	private Integer id;
+	private String dealerIconUrl;
 	private String dealerName;
 	private String takuban;
 	private String businessClassification;
 	private List<String> productFiled;
 	private String hpLink;
 	private String twLink;
+	private List<DealersDetailProducts> productList;
 	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getDealerIconUrl() {
+		return dealerIconUrl;
+	}
+	public void setDealerIconUrl(String dealerIconUrl) {
+		this.dealerIconUrl = dealerIconUrl;
 	}
 	public String getDealerName() {
 		return dealerName;
@@ -56,6 +66,14 @@ public class SearchDealerInfoDtoResp {
 	public void setProductFiled(List<String> productFiled) {
 		this.productFiled = productFiled;
 	}
+	public List<DealersDetailProducts> getProductList() {
+		return productList;
+	}
+	public void setProductList(List<DealersDetailProducts> productList) {
+		this.productList = productList;
+	}
+
+	
 	public static SearchDealerInfoDtoResp qo2Dto(Dealers qo) {
 		SearchDealerInfoDtoResp dto = new SearchDealerInfoDtoResp();
 		dto.setId(qo.getDealerId());

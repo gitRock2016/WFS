@@ -6,14 +6,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
+import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample.Criteria;
+import com.jp.wonfes.common.ImgIconUrl;
+import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.dealer.dao.mapper.DealerSearchMapper;
 import com.jp.wonfes.dealer.dao.qo.SelectDealersCategoriesQoResp;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.service.dao.WfsDataException;
 
 @Service
 public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerSearchLogic {
@@ -23,7 +30,58 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 
 	@Autowired
 	private DealerSearchMapper dealerSearchMapper;
+	@Autowired
+	private DealersDetailProductsMapper dealersDetailProductsMapper;
+	@Autowired
+	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
+//	@Autowired
+//	private CategoriesMapper categoriesMapper;
+	@Autowired
+	private ImgIconUrl imgIconUrl;
+	@Autowired
+	private WfsMessage msg;
 	
+	@Override
+	public SearchDealerInfoDtoResp searchDealerInfo(SearchDealerInfoDtoReq dto) throws WfsDataException {
+		
+		// ディーラID
+		Integer dealerId = dto.getId();
+		
+		// ディーラ情報
+		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
+		if (d == null) {
+			throw new WfsDataException(msg.getMessage("wfs.msg.e.cmmn4", new String[] {"ディーラ情報"}));
+		}
+		
+		// ディーラのもつ作品情報
+ 		DealersDetailProductsExample e1 = new DealersDetailProductsExample();
+		e1.createCriteria().andDealerIdEqualTo(dealerId);
+		List<DealersDetailProducts> productList= dealersDetailProductsMapper.selectByExample(e1);
+		
+		// ディーラのもつ作品情報の作品分野
+		// TODO 作品分野の取得はテーブル見直し後に行う
+		// 作品名称は、以下のどちらかでおこないたい
+		//　・マスタから全権取得してキャッシュに保存して再利用
+		//　・他テーブルと結合
+		//　結合予定のテーブル（dealers_detail_products_categories）は見直す可能性があるので、モックで対応
+		
+		// アイコン画像
+		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
+		
+		SearchDealerInfoDtoResp resp = new SearchDealerInfoDtoResp();
+		resp.setId(dealerId);
+		resp.setDealerIconUrl(imgUrl);
+		resp.setDealerName(d.getDealerName());
+		resp.setTakuban(d.getTakuban());
+		resp.setBusinessClassification(d.getBussinesType());
+		resp.setProductFiled(this.getProductFiledMock());
+		resp.setHpLink(resp.getHpLink());
+		resp.setTwLink(resp.getTwLink());
+		resp.setProductList(productList);
+		
+		return resp;
+	}
+
 	@Override
 	public List<SearchDealerInfoDtoResp> searchDealerInfoList(SearchDealerInfoDtoReq dto) {
 		DealersExample e = new DealersExample();
@@ -63,5 +121,20 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		}
 		return arrayList;
 	}
+	
+	// モック
+	/**
+	 * @return
+	 */
+	private List<String> getProductFiledMock() {
+		return new ArrayList<String>() {
+			{
+				add("1"); // 艦隊これくしょん
+				add("3"); // Re:ゼロから始める異世界生活
+			}
+		};
+	}
+
+
 
 }

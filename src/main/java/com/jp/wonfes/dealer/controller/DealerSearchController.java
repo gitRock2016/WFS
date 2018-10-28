@@ -26,6 +26,7 @@ import com.jp.wonfes.dealer.controller.form.DealerInfoForm;
 import com.jp.wonfes.dealer.logic.DealerSearchLogic;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.product.form.DealerSearchCondForm;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
@@ -160,32 +161,15 @@ public class DealerSearchController {
 	@RequestMapping(value = "/dlr/dlr_06/show/dealerId/{dealerId}", method = RequestMethod.GET)
 	public String initDlr06(@ModelAttribute DealerInfoForm form, Model model, @PathVariable("dealerId") Integer dealerId) {
 		
-		// ディーラ情報を検索
-		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
-		
- 		if(d==null) {
-			// TODO 
-			System.out.println("ディーラ情報がありません的な、共通エラー画面に遷移させる");
+		SearchDealerInfoDtoReq dto = new SearchDealerInfoDtoReq();
+		dto.setId(dealerId);
+		try {
+			SearchDealerInfoDtoResp dtoResp = dealerSearchLogic.searchDealerInfo(dto);
+			model.addAttribute("dealerInfoForm", dtoResp);
+		} catch (WfsDataException e) {
+			// TODO　専用のエラー画面に遷移させること
+			model.addAttribute("danger_message", e.getMessage());
 		}
-		
-		// ディーラのもつ作品情報を検索
- 		DealersDetailProductsExample dde = new DealersDetailProductsExample();
-		dde.createCriteria().andDealerIdEqualTo(dealerId);
-		List<DealersDetailProducts> ddlist= dealersDetailProductsMapper.selectByExample(dde);
-		 
-		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
-		form.setDealerIconUrl(imgUrl);
-		form.setId(dealerId);
-		form.setDealerName(d.getDealerName());
-		form.setTakuban(d.getTakuban());
-		// TODO テーブルに事業区分をもっていないので固定でいれる
-		form.setBusinessClassification("1");
-//		form.setBusinessClassification(form.getBusinessClassification());
-		form.setProductsCategories(toProductCategories(ddlist));
-		form.setHpLink(form.getHpLink());
-		form.setTwLink(form.getTwLink());
-		
-		
 		
 		return "dealerInfo";
 	}
