@@ -4,14 +4,14 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
 	<tlib-version>1.0</tlib-version>
 	<short-name>wfsTagLib</short-name>
-	<uri>/WEB-INF/tld/wfsTagLib</uri>
+	<uri>/WEB-INF/tlds/wfsTagLib</uri>
 
 	<!-- タグの定義 -->
 	<tag>
 		<!-- タグの名前 -->
 		<name>outBusinessClassification</name>
 		<!-- タグハンドラクラス -->
-		<tag-class>BusinessClassificationTag</tag-class>
+		<tag-class>com.jp.wonfes.tlds.BusinessClassificationTag</tag-class>
 		<!-- bodyを持つかどうか -->
 		<body-content>empty</body-content>
 		<!-- 属性の定義。attributeを複数並べられる。 -->

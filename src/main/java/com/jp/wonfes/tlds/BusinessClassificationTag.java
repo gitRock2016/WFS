@@ -1,4 +1,4 @@
-package com.jp.wonfes.tld;
+package com.jp.wonfes.tlds;
 
 import java.io.IOException;
 
@@ -14,8 +14,10 @@ import com.jp.wonfes.common.BusinessClassificationEnum;
 import com.jp.wonfes.common.WfsSysytemException;
 
 /**
- * TODO Sampleとして作成
- * ENUMから値を取得する
+ * TODO 課題No37より対応を検討するので、利用は保留とする
+ * 利用例
+ * <wfs:outBusinessClassification code="${dealerInfoForm.businessClassification }"/>
+ * 次回作成する際は、SimpleTagインターフェースの利用も検討する
  * @author rock
  *
  */
