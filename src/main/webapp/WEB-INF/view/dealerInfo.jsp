@@ -24,24 +24,19 @@
 		</div>
 		<div class="form-group">
 			<label for="takuban">卓番号：</label>
-			<c:out value="${dealerInfoForm.takuban }" />
-			<br>TODO 甲ー乙ー丙の形式に変換したい
+			<span id="takubanLabel">
+				<input type="hidden" value="${dealerInfoForm.takuban }" id="takuban"/>
+			</span>
 		</div>
 		<div class="form-group">
 			<label>事業区分：</label>
-			<c:out value="${dealerInfoForm.businessClassification }" />
-			<br>TODO コード値から名称を取得できるようにしたい
+			<input type="hidden" value="${dealerInfoForm.businessClassification }" id="businessClassification"/>
+			<c:out value="${dealerInfoForm.businessClassificationLabel }" />
 		</div>
 		<div class="form-group">
 			<label>作品ジャンル：</label>
 			<div class="abbreviatedFiled">
 				<input type="hidden" value="${dealerInfoForm.productFileds }" id="productFields"/> 
-<%-- 				<c:forEach var="v" items="${dealerInfoForm.productFiled }"
-					varStatus="st">
-					<c:if test="${ st.count==1}">${v }</c:if>
-					<c:if test="${ st.count>1}">,${v }</c:if>
-				</c:forEach>
- --%>
  			</div>
 			<button type="button" class="btn btn-primary" id="checkMap">地図確認</button>
 		</div>

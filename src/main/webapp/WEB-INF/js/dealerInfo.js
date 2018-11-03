@@ -2,6 +2,16 @@ if (typeof wfs.dealerInfo === "undefined") {
 	wfs.dealerInfo= {}
 }
 
+wfs.dealerInfo.formatTakuban = function() {
+	const val = $("#takuban").val();
+	$('#takubanLabel').append(wfs.com.getFormatTakuban(val));
+}
+
+wfs.dealerInfo.formatProductFields = function(){
+	const val = $("#productFields").val();
+	const _val = wfs.com.abbdisp.getAddDisp5(val, ",");
+	$("#productFields").closest("div.abbreviatedFiled").html(_val);
+}
 
 $(function() {
 	
@@ -17,11 +27,11 @@ $(function() {
 		
 	});
 	
-	// 作品分野の表示を整形する
-	const val = $("#productFields").val();
-	const _val = wfs.com.abbdisp.getAddDisp5(val, ",");
-	$("#productFields").closest("div.abbreviatedFiled").html(_val);
+	// 卓番の表示を整形する
+	wfs.dealerInfo.formatTakuban();
 	
+	// 作品分野の表示を整形する
+	wfs.dealerInfo.formatProductFields();
 
 })
 
