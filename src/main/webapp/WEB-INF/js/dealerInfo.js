@@ -2,6 +2,7 @@ if (typeof wfs.dealerInfo === "undefined") {
 	wfs.dealerInfo= {}
 }
 
+
 $(function() {
 	
 	$("#dealerEditBtn").on("click", function(){
@@ -10,6 +11,16 @@ $(function() {
 		$("#dealerInfoForm").attr('action', action);
 		$("#dealerInfoForm").submit();
 	});
+	
+	$('#checkMap').on('click', function(){
+		// TODO 地図画面へ遷移させる
+		
+	});
+	
+	// 作品分野の表示を整形する
+	const val = $("#productFields").val();
+	const _val = wfs.com.abbdisp.getAddDisp5(val, ",");
+	$("#productFields").closest("div.abbreviatedFiled").html(_val);
 	
 
 })

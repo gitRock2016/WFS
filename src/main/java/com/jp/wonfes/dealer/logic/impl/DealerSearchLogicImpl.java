@@ -74,7 +74,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		resp.setDealerName(d.getDealerName());
 		resp.setTakuban(d.getTakuban());
 		resp.setBusinessClassification(d.getBussinesType());
-		resp.setProductFiled(this.getProductFiledMock());
+		resp.setProductFileds(this.getProductFiledsMock());
 		resp.setHpLink(resp.getHpLink());
 		resp.setTwLink(resp.getTwLink());
 		resp.setProductList(productList);
@@ -99,7 +99,10 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		
 		List<SearchDealerInfoDtoResp> arrayList = new ArrayList<SearchDealerInfoDtoResp>();
 		for (Dealers qo : delaersList ) {
-			arrayList.add(SearchDealerInfoDtoResp.qo2Dto(qo));
+			SearchDealerInfoDtoResp _dto = SearchDealerInfoDtoResp.qo2Dto(qo);
+			_dto.setProductFileds("艦これ,アズレン");
+			arrayList.add(_dto);
+//			arrayList.add(SearchDealerInfoDtoResp.qo2Dto(qo));
 		}
 		
 		// 検索条件に作品分野が指定されている場合
@@ -124,13 +127,36 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 	
 	// モック
 	/**
+	 * マスタの名称を格納する
 	 * @return
 	 */
+	private String getProductFiledsMock() {
+		List<String> mocks = this.getProductFiledMock();
+		StringBuilder str = new StringBuilder("");
+		boolean isFirst = true;
+		for(String s : mocks) {
+			if (isFirst) {
+				str.append(s);
+				isFirst = false;
+			} else {
+				str.append(",").append(s);
+			}
+		}
+		return str.toString();
+//		return "艦隊これくしょん,FateGrandOrder,Re:ゼロから始める異世界生活,天野めぐみはスキだらけ!,りゅうおうのおしごと！,アズールレーン,東方Project";
+	}
 	private List<String> getProductFiledMock() {
 		return new ArrayList<String>() {
 			{
-				add("1"); // 艦隊これくしょん
-				add("3"); // Re:ゼロから始める異世界生活
+//				add("1"); // 艦隊これくしょん
+//				add("3"); // Re:ゼロから始める異世界生活
+				add("艦隊これくしょん"); 
+				add("FateGrandOrder"); 
+				add("Re:ゼロから始める異世界生活"); 
+				add("天野めぐみはスキだらけ!"); 
+				add("りゅうおうのおしごと！"); 
+				add("アズールレーン"); 
+				add("東方Project"); 
 			}
 		};
 	}

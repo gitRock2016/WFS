@@ -65,6 +65,36 @@ wfs.com.isEmpty = function(obj) {
 	return false;
 }
 
+wfs.com.abbdisp={}
+/**
+ * 多すぎる表示を略して「・・・」表示する
+ * str　対象の文字列
+ * dlm 区切り文字
+ * maxCount 最大文字
+ * abbDisp 略表示
+ */
+wfs.com.abbdisp.base = function(str, dlm, maxCount, abbDisp){
+	array = str.split(dlm);
+	_str="";
+	for (let i = 0; i < array.length; i++) {
+		// 結合
+		_str = _str + array[i] + dlm + " ";
+		if (i >= maxCount - 1) {
+			_str = _str + abbDisp;
+			// addDispを結合させる
+			break;
+		}
+	}
+	return _str
+}
+
+/**
+ * ５項目以降は「・・・」と略表示とする
+ */
+wfs.com.abbdisp.getAddDisp5 = function(str, dlm){
+	return wfs.com.abbdisp.base(str, dlm, 5, "・・・");
+}
+
 // --------------------------------------------------------------------------v
 // 共通関数定義
 //--------------------------------------------------------------------------v
@@ -107,3 +137,5 @@ wfs.imgPreview=function(inputFileId, previewObjId){
 //	});
 //
 //}
+
+

@@ -12,7 +12,8 @@ public class SearchDealerInfoDtoResp {
 	private String dealerName;
 	private String takuban;
 	private String businessClassification;
-	private List<String> productFiled;
+//	private List<String> productFileds;
+	private String productFileds;
 	private String hpLink;
 	private String twLink;
 	private List<DealersDetailProducts> productList;
@@ -60,11 +61,12 @@ public class SearchDealerInfoDtoResp {
 	public void setTwLink(String twLink) {
 		this.twLink = twLink;
 	}
-	public List<String> getProductFiled() {
-		return productFiled;
+	
+	public String getProductFileds() {
+		return productFileds;
 	}
-	public void setProductFiled(List<String> productFiled) {
-		this.productFiled = productFiled;
+	public void setProductFileds(String productFileds) {
+		this.productFileds = productFileds;
 	}
 	public List<DealersDetailProducts> getProductList() {
 		return productList;
@@ -80,9 +82,8 @@ public class SearchDealerInfoDtoResp {
 		dto.setDealerName(qo.getDealerName());
 		dto.setBusinessClassification(qo.getBussinesType());
 		dto.setTakuban(qo.getTakuban());
-		dto.setProductFiled(new ArrayList<String>() {
-			{add("艦これ");add("東方");}
-		});
+		// productFiledsは別途登録が必要
+		dto.setProductFileds("");
 		dto.setHpLink(qo.getHpLink());
 		dto.setTwLink(qo.getTwLink());
 		

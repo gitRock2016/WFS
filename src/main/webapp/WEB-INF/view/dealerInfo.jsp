@@ -30,16 +30,21 @@
 		<div class="form-group">
 			<label>事業区分：</label>
 			<c:out value="${dealerInfoForm.businessClassification }" />
+<%-- 			<wfs:outBusinessClassification code="${dealerInfoForm.businessClassification }" /> --%>
 			<br>TODO コード値から名称を取得できるようにしたい
 		</div>
 		<div class="form-group">
 			<label>作品ジャンル：</label>
-			<c:forEach var="v" items="${dealerInfoForm.productFiled }"
-				varStatus="st">
-				<c:if test="${ st.count==1}">${v }</c:if>
-				<c:if test="${ st.count>1}">,${v }</c:if>
-			</c:forEach>
-			TODO コントローラ側で名称を取得してmappingさせる
+			<div class="abbreviatedFiled">
+				<input type="hidden" value="${dealerInfoForm.productFileds }" id="productFields"/> 
+<%-- 				<c:forEach var="v" items="${dealerInfoForm.productFiled }"
+					varStatus="st">
+					<c:if test="${ st.count==1}">${v }</c:if>
+					<c:if test="${ st.count>1}">,${v }</c:if>
+				</c:forEach>
+ --%>
+ 			</div>
+			<button type="button" class="btn btn-primary" id="checkMap">地図確認</button>
 		</div>
 		<div class="form-group">
 			<label for="hp">HP：</label>
