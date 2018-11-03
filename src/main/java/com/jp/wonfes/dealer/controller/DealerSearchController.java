@@ -32,31 +32,9 @@ import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
 @Controller
 public class DealerSearchController {
-	
-	/**
-	 * チェックボックス,分野
-	 * TODO　マスタテーブルから取得したデータから作成できるようにしたい
-	 */
-	private final static Map<String, String> fm;
-	static {
-		fm = new HashMap<String, String>();
-		fm.put("0001", "ガルパン");
-		fm.put("0002", "FGO");
-		fm.put("0003", "艦これ");
-		fm.put("0009", "その他");
-	}
-	
-	@Autowired
-	private DealerSearchLogic dealerSearchLogic; 
-	
-	@Autowired
-	private DealersMapper dealersMapper;
-	
-	@Autowired
-	private DealersDetailProductsMapper dealersDetailProductsMapper;
 
 	@Autowired
-	private ImgIconUrl imgIconUrl;
+	private DealerSearchLogic dealerSearchLogic; 
 	
 	/*todo urlにハイフンを入れないようすべて見直すこと*/
 	/**
@@ -102,11 +80,10 @@ public class DealerSearchController {
 		}
 		
 		// 検索
-		list = dealersMapper.selectByExample(de1);
+//		list = dealersMapper.selectByExample(de1);
 		
 		model.addAttribute("message", "検索結果："+list.size()+"件");
 		model.addAttribute("fm", form);
-		model.addAttribute("field", fm);
 		model.addAttribute("data", this.mapperQotoForm(list));
 		
 		return "dealersearch2";

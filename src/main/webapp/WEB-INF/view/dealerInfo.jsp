@@ -38,13 +38,13 @@
 			<div class="abbreviatedFiled">
 				<input type="hidden" value="${dealerInfoForm.productFileds }" id="productFields"/> 
  			</div>
-			<button type="button" class="btn btn-primary" id="checkMap">地図確認</button>
+			<button type="button" class="btn btn-info btn-sm" id="checkMap">地図確認</button>
 		</div>
 		<div class="form-group">
 			<label for="hp">HP：</label>
 			<c:url value="${dealerInfoForm.hpLink }" var="hplink" />
 			<c:if test="${hplink != ''}" var="flg" >
-				<a href="hplink">${hplink }</a>
+				<a href="${hplink }">${hplink }</a>
 			</c:if>
 			<c:if test="${hplink == ''}" var="flg" >
 				<span class="badge badge-pill badge-info">未登録</span>
@@ -54,7 +54,7 @@
 			<label for="tweet">twitter：</label>
 			<c:url value="${dealerInfoForm.twLink }" var="twlink" />
 			<c:if test="${twlink != ''}" var="flg" >
-				<a href="twlink">${twlink }</a>
+				<a href="${twlink }">${twlink }</a>
 			</c:if>
 			<c:if test="${twlink == ''}" var="flg" >
 				<span class="badge badge-pill badge-info">未登録</span>

@@ -71,8 +71,8 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法
 		// 暫定でモック対応
 		resp.setProductFileds(this.getProductFiledsMock());
-		resp.setHpLink(resp.getHpLink());
-		resp.setTwLink(resp.getTwLink());
+		resp.setHpLink(d.getHpLink());
+		resp.setTwLink(d.getTwLink());
 		resp.setProductList(productList);
 		
 		return resp;
