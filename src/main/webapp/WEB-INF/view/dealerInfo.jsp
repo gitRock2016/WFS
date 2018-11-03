@@ -30,7 +30,6 @@
 		<div class="form-group">
 			<label>事業区分：</label>
 			<c:out value="${dealerInfoForm.businessClassification }" />
-<%-- 			<wfs:outBusinessClassification code="${dealerInfoForm.businessClassification }" /> --%>
 			<br>TODO コード値から名称を取得できるようにしたい
 		</div>
 		<div class="form-group">

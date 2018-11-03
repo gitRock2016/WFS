@@ -31,7 +31,6 @@
 <!-- 	<context:component-scan base-package="com.jp.wonfes.service.product" /> -->
 	<context:component-scan base-package="com.jp.wonfes.service.sample" />
 <!-- 	<context:component-scan base-package="com.jp.wonfes.*" /> -->
-	<context:component-scan base-package="com.jp.wonfes.tld.*" />
 
 	<!-- プロパティファイル -->
 	<!-- JDBC設定ファイル -->
