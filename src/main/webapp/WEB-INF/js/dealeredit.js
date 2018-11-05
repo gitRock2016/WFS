@@ -1,20 +1,20 @@
-if (typeof wfs.dealeredit2 === "undefined") {
-	wfs.dealeredit2= {}
+if (typeof wfs.dealeredit === "undefined") {
+	wfs.dealeredit= {}
 }
 
-wfs.dealeredit2.action = {}
-wfs.dealeredit2.action.edit = "/" + wfs.com.cont + "/dlr/dlr_01_01/edit";
-wfs.dealeredit2.action.del = "/" + wfs.com.cont + "/dlr/dlr_01_04/delete";
+wfs.dealeredit.action = {}
+wfs.dealeredit.action.edit = "/" + wfs.com.cont + "/dlr/dlr_01_01/edit";
+wfs.dealeredit.action.del = "/" + wfs.com.cont + "/dlr/dlr_01_04/delete";
 
 // btnObjは押下したボタンを表すJQオブジェクト
-wfs.dealeredit2.del = function(){
+wfs.dealeredit.del = function(){
 	const target = $("#dealerRegistForm");
-	target.attr("action", wfs.dealeredit2.action.del);
+	target.attr("action", wfs.dealeredit.action.del);
 	target.submit();
 }
-wfs.dealeredit2.edit = function(){
+wfs.dealeredit.edit = function(){
 	const target = $("#dealerRegistForm");
-	target.attr("action", wfs.dealeredit2.action.edit);
+	target.attr("action", wfs.dealeredit.action.edit);
 	target.submit();
 }
 
@@ -37,12 +37,12 @@ $(function() {
 		if(isDealerIconImgDelCheck===true){
 			$("#dealerIconImgDelFlg").val("1");
 		}
-		wfs.dealeredit2.edit();
+		wfs.dealeredit.edit();
 	});
 	
 	$("#dealerDelBtn").on("click",function(){
 		const message="ディーラ情報を削除します。よろしいですか？";
-		wfs.com.confirm(message, wfs.dealeredit2.del);
+		wfs.com.confirm(message, wfs.dealeredit.del);
 	});
 })
 

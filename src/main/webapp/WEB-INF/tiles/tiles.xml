@@ -92,12 +92,12 @@
 	</definition>
 	
 	<!-- title以外はディーラ情報登録と同じ -->
-	<definition name="dealeredit2" extends="dealerregist">
+	<definition name="dealeredit" extends="dealerregist">
 		<put-attribute name="titleName" value="ディーラー情報編集"/>
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerEdit2" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealeredit" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
-					<add-attribute value="dealeredit2.js" />
+					<add-attribute value="dealeredit.js" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>

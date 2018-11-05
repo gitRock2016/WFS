@@ -99,7 +99,7 @@ public class DealerRegistController {
 
 		model.addAttribute("dealerRegistForm", form);
 		model.addAttribute("editFlg", true);
-		return "dealeredit2";
+		return "dealeredit";
 	}
 
 	@RequestMapping(value = "/dlr/dlr_01_01/edit", method = RequestMethod.POST)
@@ -107,7 +107,7 @@ public class DealerRegistController {
 			BindingResult results, Model model) {
 		
 		if(results.hasErrors()) {
-			return "dealeredit2";
+			return "dealeredit";
 		}
 
 		EditDealerInfoDto dto = EditDealerInfoDto.form2Dto(dealerRegistForm);
@@ -115,10 +115,10 @@ public class DealerRegistController {
 			dealerRegistLogic.editDealerInfo(dto);
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
-			return "dealeredit2";
+			return "dealeredit";
 		} catch (WfsSysytemException e) {
 			model.addAttribute("danger_message", e.getMessage());
-			return "dealeredit2";
+			return "dealeredit";
 		}
 		
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報編集処理" });
@@ -134,7 +134,7 @@ public class DealerRegistController {
 			dealerRegistLogic.deleteDealerInfo(dto);
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
-			return "dealeredit2";
+			return "dealeredit";
 		}
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });
 		model.addAttribute("success_message", messageSucceed+"TODO:実際の削除処理は後で実装する");
