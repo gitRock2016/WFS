@@ -58,7 +58,7 @@ public class DealerSearchController {
 		model.addAttribute("fm", dealerSearchCondForm);
 		model.addAttribute("data", new ArrayList<DelaerSearchResultForm>());
 		
-		return "dealersearch2";
+		return "dealersearch";
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class DealerSearchController {
 		model.addAttribute("fm", form);
 		model.addAttribute("data", this.mapperQotoForm(list));
 		
-		return "dealersearch2";
+		return "dealersearch";
 	}
 	
 	/**

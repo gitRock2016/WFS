@@ -53,11 +53,11 @@
 	</definition>
 
 	<!-- ディーラー検索画面 -->
-	<definition name="dealersearch2" extends="mainContents.baseLayout">
+	<definition name="dealersearch" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー検索"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealersearch2.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch2" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealersearch" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealersearch.js" />
 				</put-list-attribute>
