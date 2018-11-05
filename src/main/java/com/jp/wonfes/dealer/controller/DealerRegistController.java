@@ -50,7 +50,7 @@ public class DealerRegistController {
 		dealerRegistForm.setBusinessClassification("1"); // 事業区分
 		
 		model.addAttribute("dealerRegistForm", dealerRegistForm);
-		return "dealerregist2";
+		return "dealerregist";
 	}
 	
 	
@@ -58,7 +58,7 @@ public class DealerRegistController {
 	public String regist(@ModelAttribute @Valid DealerRegistForm dealerRegistForm,BindingResult results,Model model) {
 		
 		if(results.hasErrors()) {
-			return "dealerregist2";
+			return "dealerregist";
 		}
 		
 		RegistDealerInfoDto dto= RegistDealerInfoDto.form2Dto(dealerRegistForm);
@@ -66,10 +66,10 @@ public class DealerRegistController {
 			dealerRegistLogic.registDealerInfo(dto);
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
-			return "dealerregist2";
+			return "dealerregist";
 		} catch (WfsSysytemException e) {
 			model.addAttribute("danger_message", e.getMessage());
-			return "dealerregist2";
+			return "dealerregist";
 		}
 		
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報の登録処理" });
@@ -85,7 +85,7 @@ public class DealerRegistController {
 		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
 		if (d == null) {
 			model.addAttribute("danger_message", "ディーラ情報が存在しません");
-			return "dealerregist2";
+			return "dealerregist";
 		}
 
 		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());

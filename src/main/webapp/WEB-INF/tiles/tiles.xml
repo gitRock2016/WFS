@@ -72,27 +72,27 @@
 	</definition>	
 	
 	<!-- ディーラー情報登録画面 -->
-	<definition name="dealerregist2" extends="mainContents.baseLayout">
+	<definition name="dealerregist" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー情報登録"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealerregist2.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/dealerregist.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerRegist2" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealerregist" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
-					<add-attribute value="dealerregist2.js" />
+					<add-attribute value="dealerregist.js" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
 		<put-attribute name="headerCss">
-			<definition name="mainContents.baseLayoutCss.dealerRegist2" extends="mainContents.baseLayoutCss">
+			<definition name="mainContents.baseLayoutCss.dealerregist" extends="mainContents.baseLayoutCss">
 				<put-list-attribute name="cssfiles" inherit="true">
-					<add-attribute value="dealerregist2.css" />
+					<add-attribute value="dealerregist.css" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
 	</definition>
 	
 	<!-- title以外はディーラ情報登録と同じ -->
-	<definition name="dealeredit2" extends="dealerregist2">
+	<definition name="dealeredit2" extends="dealerregist">
 		<put-attribute name="titleName" value="ディーラー情報編集"/>
 		<put-attribute name="headerJs">
 			<definition name="mainContents.baseLayoutJs.dealerEdit2" extends="mainContents.baseLayoutJs">
