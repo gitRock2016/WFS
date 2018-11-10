@@ -12,9 +12,7 @@
 	<body>
 	<h2>開発画面へ</h2>
 	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
-	<c:url value="/g04/init" var="g04_init" /><a href="${g04_init}">ディーラー検索画面</a><br/>
 	<c:url value="/dlr/dlr_05/init" var="dlr05_init" /><a href="${dlr05_init}">ディーラー検索画面2</a><br/>
-	<c:url value="/g06/init" var="g06_init" /><a href="${g06_init}">ディーラー登録画面</a><br/>
 	<c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" /><a href="${dlr_01_01_show}">ディーラー登録画面2</a><br/>
 	<c:url value="/dlr/dlr_06/show/dealerId/1" var="dlr_06_show_dealerId_1" /><a href="${dlr_06_show_dealerId_1}">ディーラー情報画面</a><br/>
 	<c:url value="/g00/logout" var="g00_logout" /><a href="${g00_logout}">logout</a><br/>

@@ -123,8 +123,8 @@
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/g07/*</url-pattern>
 	</filter-mapping>
-	
-	<filter-mapping>
+
+<!-- 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/accnt/*</url-pattern>
 	</filter-mapping>
@@ -139,7 +139,7 @@
 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/map/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	
 	<!-- ディレクティブの共通設定 -->
 	<jsp-config>

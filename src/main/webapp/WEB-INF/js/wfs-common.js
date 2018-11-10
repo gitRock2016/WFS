@@ -7,7 +7,6 @@ if(typeof wfs === "undefined"){
 // LOCAL,HONBAN
 wfs.mode="LOCAL"
 
-
 wfs.com={
 		host:{
 			vals:["localhost","www.iwatakhr69.net"],
@@ -19,6 +18,7 @@ wfs.com={
 		port:"8080", 
 		cont:"WonFesSys",
 		getBaseUrl:function(){
+			// e.g http://localhost:8080/WonFesSys
 			return "http://"+this.host.get()+":"+this.port +"/"+this.cont;
 		},
 		baseUrl:"",
@@ -33,12 +33,82 @@ wfs.com={
 			}
 		}
 }
-	
+
+wfs.com.confirmBase = function(message, callbackYes, callbackNo){
+	let ret = confirm(message);
+	if(ret){
+		callbackYes();
+	}else{
+		callbackNo();
+	}
+}
+
+wfs.com.confirm = function(message, callbackYes){
+	// キャンセルボタン押下時は何もしない
+	wfs.com.confirmBase(message, callbackYes, function(){});
+}
+
+wfs.com.toQuery4NAN = function(query) {
+	return (query === "" || query === null ) ? "NAN" : query;
+}
+
 $(function(){
 	// 必要に応じ作成
 	wfs.com.baseUrl=wfs.com.getBaseUrl();
 	
 })
+
+wfs.com.isEmpty = function(obj) {
+	if (obj === "" || obj === null || obj === undefined) {
+		return true;
+	}
+	return false;
+}
+
+wfs.com.abbdisp={}
+/**
+ * 多すぎる表示を略して「・・・」表示する
+ * str　対象の文字列
+ * dlm 区切り文字
+ * maxCount 最大文字
+ * abbDisp 略表示
+ */
+wfs.com.abbdisp.base = function(str, dlm, maxCount, abbDisp){
+	array = str.split(dlm);
+	_str="";
+	for (let i = 0; i < array.length; i++) {
+		// 結合
+		_str = _str + array[i] + dlm + " ";
+		if (i >= maxCount - 1) {
+			_str = _str + abbDisp;
+			// addDispを結合させる
+			break;
+		}
+	}
+	return _str
+}
+
+/**
+ * ５項目以降は「・・・」と略表示とする
+ */
+wfs.com.abbdisp.getAddDisp5 = function(str, dlm){
+	return wfs.com.abbdisp.base(str, dlm, 5, "・・・");
+}
+/**
+ * valはString型の卓番6桁であること
+ * 変換前：「080201」
+ * 変換後：「8-2-1」
+ */
+wfs.com.getFormatTakuban = function(val) {
+	if (wfs.com.isEmpty(val) || val.length !== 6) {
+		return "";
+	}
+	let ko = val.substring(0, 2);
+	let otu = val.substring(2, 4);
+	let hei = val.substring(4, 6);
+	const takuban= parseInt(ko) + "-" + parseInt(otu) + "-" + parseInt(hei);
+	return takuban
+}
 
 // --------------------------------------------------------------------------v
 // 共通関数定義
@@ -56,11 +126,11 @@ wfs.do_ajax=function(data){
  * previewObjId, プレビュー表示させたいimgオブジェクトのIDを指定する
  */
 wfs.imgPreview=function(inputFileId, previewObjId){
-	
 	let img =document.getElementById(inputFileId).files[0];
 	let reader = new FileReader();
 	reader.readAsDataURL(img);
 	reader.onload = function(){
+		document.getElementById(previewObjId).src = "";
 		document.getElementById(previewObjId).src = reader.result;
 	}
 }
@@ -82,3 +152,5 @@ wfs.imgPreview=function(inputFileId, previewObjId){
 //	});
 //
 //}
+
+

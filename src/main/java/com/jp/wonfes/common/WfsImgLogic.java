@@ -8,8 +8,9 @@ public interface WfsImgLogic {
 	 * アイコン画像を保存する
 	 * @param imgIcon
 	 * @throws IOException 
+	 * @throws WfsSysytemException 
 	 */
-	void save(WfsImgIcon imgIcon) throws IOException, WfsLogicException;
+	void save(WfsImgIcon imgIcon) throws WfsLogicException, WfsSysytemException;
 	
 	/**
 	 * アイコン画像を削除する

@@ -23,33 +23,18 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersExample;
 import com.jp.wonfes.common.ImgIconUrl;
 import com.jp.wonfes.dealer.controller.form.DealerInfoForm;
+import com.jp.wonfes.dealer.logic.DealerSearchLogic;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.service.dao.WfsDataException;
 import com.jp.wonfes.service.product.form.DealerSearchCondForm;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 
 @Controller
 public class DealerSearchController {
-	
-	/**
-	 * チェックボックス,分野
-	 * TODO　マスタテーブルから取得したデータから作成できるようにしたい
-	 */
-	private final static Map<String, String> fm;
-	static {
-		fm = new HashMap<String, String>();
-		fm.put("0001", "ガルパン");
-		fm.put("0002", "FGO");
-		fm.put("0003", "艦これ");
-		fm.put("0009", "その他");
-	}
 
 	@Autowired
-	private DealersMapper dealersMapper;
-	
-	@Autowired
-	private DealersDetailProductsMapper dealersDetailProductsMapper;
-
-	@Autowired
-	private ImgIconUrl imgIconUrl;
+	private DealerSearchLogic dealerSearchLogic; 
 	
 	/*todo urlにハイフンを入れないようすべて見直すこと*/
 	/**
@@ -64,24 +49,21 @@ public class DealerSearchController {
 		// ディーラ名
 		dealerSearchCondForm.setDealerName("");
 		// 事業区分
-		dealerSearchCondForm.setBusinessClassification("indiviual");
+		dealerSearchCondForm.setBusinessClassification("1");
+		// 卓番
+		dealerSearchCondForm.setTakuban("");
 		// ジャンル
 		dealerSearchCondForm.setProductFiled("");
-		// チェックボックスは下記設定しなくとも画面から落ちない
-		//	dealerSearchCondForm.setProduct_fields(new String[] {""});
-		
-		// 
+
 		model.addAttribute("fm", dealerSearchCondForm);
 		model.addAttribute("data", new ArrayList<DelaerSearchResultForm>());
 		
-		return "dealersearch2";
+		return "dealersearch";
 	}
-
 	
 	/**
-	 * TODO 非推奨　ajaxにする
-	 * 検索
-	 * 
+	 * formによる検索処理
+	 * TODO　利用しないが実装の参考のため残す
 	 * @param form
 	 * @param model
 	 * @return
@@ -98,51 +80,53 @@ public class DealerSearchController {
 		}
 		
 		// 検索
-		list = dealersMapper.selectByExample(de1);
+//		list = dealersMapper.selectByExample(de1);
 		
 		model.addAttribute("message", "検索結果："+list.size()+"件");
 		model.addAttribute("fm", form);
-		model.addAttribute("field", fm);
 		model.addAttribute("data", this.mapperQotoForm(list));
 		
-		return "dealersearch2";
+		return "dealersearch";
 	}
 	
-	// TODO
-	// 他の検索条件でも検索できるようにすること
-	// 自動生成でなく独自DAOを作成した検索する
-	// URLに応じてメソッドはオーバーロードする
 	/**
 	 * DBから取得したDealer情報をJSON形式で返却する
-	 * 検索条件の指定あり
-	 * @param _dealername ディーラ名
+	 * 検索条件：@param参照
+	 * @param _dealername
+	 * @param _businessClassification
+	 * @param _takuban
+	 * @param _productFiled
 	 * @return Dealer情報(JSON形式)
 	 */
-//	@RequestMapping(value = "/dlr/dlr_05/search-ax/{_dealername}/{businessClassification}/{productFiled}", method = RequestMethod.GET)
-	@RequestMapping(value = "/dlr/dlr_05/search_ax/{_dealername}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_05/search_ax/{_dealername}/{_businessClassification}/{_takuban}/{_productFiled}",
+			method = RequestMethod.GET)
 	@ResponseBody
-	public List<DelaerSearchResultForm> searchAjaxWhereDealeName(@PathVariable String _dealername) {
-		// TODO あとでLogicクラスにすること
-		List<Dealers> list = null;
-		DealersExample de1 = new DealersExample();
-		if (!Strings.isNullOrEmpty(_dealername)) {
-			de1.createCriteria().andDealerNameLike(_dealername + "%");
-		}
-		list = dealersMapper.selectByExample(de1);
-		List<DelaerSearchResultForm> delaerSearchResultFormList =this.mapperQotoForm(list);
-		return delaerSearchResultFormList;
+	public List<SearchDealerInfoDtoResp> searchAjax(
+			@PathVariable String _dealername,
+			@PathVariable String _businessClassification,
+			@PathVariable String _takuban,
+			@PathVariable String _productFiled) {
+		
+		SearchDealerInfoDtoReq dto = new SearchDealerInfoDtoReq ();
+		dto.setDealerName(_dealername);
+		dto.setBusinessClassification(_businessClassification);
+		dto.setTakuban(_takuban);
+		dto.setProductFiled(_productFiled);
+		List<SearchDealerInfoDtoResp> dtoList = dealerSearchLogic.searchDealerInfoList(dto);
+		return dtoList;
 	}
+	
 	
 	/**
 	 * DBから取得したDealer情報をJSON形式で返却する
-	 * 検索条件の指定あり
+	 * 検索条件:なし
 	 * @param _dealername ディーラ名
 	 * @return Dealer情報(JSON形式)
 	 */
 	@RequestMapping(value = "/dlr/dlr_05/search_ax", method = RequestMethod.GET)
 	@ResponseBody
-	public List<DelaerSearchResultForm> searchAjax() {
-		return this.searchAjaxWhereDealeName("");
+	public List<SearchDealerInfoDtoResp> searchAjax() {
+		return this.searchAjax("NAN", "NAN", "NAN", "NAN");
 	}
 	
 	// TODO urlに正規表現によるチェックをつけたい、全体的に
@@ -154,32 +138,15 @@ public class DealerSearchController {
 	@RequestMapping(value = "/dlr/dlr_06/show/dealerId/{dealerId}", method = RequestMethod.GET)
 	public String initDlr06(@ModelAttribute DealerInfoForm form, Model model, @PathVariable("dealerId") Integer dealerId) {
 		
-		// ディーラ情報を検索
-		Dealers d = dealersMapper.selectByPrimaryKey(dealerId);
-		
- 		if(d==null) {
-			// TODO 
-			System.out.println("ディーラ情報がありません的な、共通エラー画面に遷移させる");
+		SearchDealerInfoDtoReq dto = new SearchDealerInfoDtoReq();
+		dto.setId(dealerId);
+		try {
+			SearchDealerInfoDtoResp dtoResp = dealerSearchLogic.searchDealerInfo(dto);
+			model.addAttribute("dealerInfoForm", dtoResp);
+		} catch (WfsDataException e) {
+			// TODO　専用のエラー画面に遷移させること
+			model.addAttribute("danger_message", e.getMessage());
 		}
-		
-		// ディーラのもつ作品情報を検索
- 		DealersDetailProductsExample dde = new DealersDetailProductsExample();
-		dde.createCriteria().andDealerIdEqualTo(dealerId);
-		List<DealersDetailProducts> ddlist= dealersDetailProductsMapper.selectByExample(dde);
-		 
-		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
-		form.setDealerIconUrl(imgUrl);
-		form.setId(dealerId);
-		form.setDealerName(d.getDealerName());
-		form.setTakuban(d.getTakuban());
-		// TODO テーブルに事業区分をもっていないので固定でいれる
-		form.setBusinessClassification("1");
-//		form.setBusinessClassification(form.getBusinessClassification());
-		form.setProductsCategories(toProductCategories(ddlist));
-		form.setHpLink(form.getHpLink());
-		form.setTwLink(form.getTwLink());
-		
-		
 		
 		return "dealerInfo";
 	}
@@ -190,17 +157,6 @@ public class DealerSearchController {
 		return "forward:/dlr/dlr_01_01/show/dealerId"+"/" + id+"?reg=edit";
 	}
 
-	//	/**
-//	 * DBから取得したDealer情報をJSon形式で返却する
-//	 * 検索条件の指定なし
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/dlr/dlr_05/search-ax", method = RequestMethod.GET)
-//	@ResponseBody
-//	public List<DelaerSearchResultForm> searchAjax() {
-//		return this.searchAjaxCondition("");
-//	}
-//	
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealers> list) {
 		List<DelaerSearchResultForm> arlist = new ArrayList<DelaerSearchResultForm>();
 		for (Dealers q : list) {

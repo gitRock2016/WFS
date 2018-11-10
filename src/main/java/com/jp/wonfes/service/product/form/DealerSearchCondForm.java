@@ -3,6 +3,7 @@ package com.jp.wonfes.service.product.form;
 public class DealerSearchCondForm {
 	private String dealerName;
 	private String businessClassification;
+	private String takuban;
 	private String productFiled;
 	
 	// 非推奨 TODO 後で削除すること
@@ -39,6 +40,11 @@ public class DealerSearchCondForm {
 	public void setProductFiled(String productFiled) {
 		this.productFiled = productFiled;
 	}
-
+	public String getTakuban() {
+		return takuban;
+	}
+	public void setTakuban(String takuban) {
+		this.takuban = takuban;
+	}
 
 }
