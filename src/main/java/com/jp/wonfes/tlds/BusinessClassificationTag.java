@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.jp.wonfes.cmmn.dao.mapper.CategoriesMapper;
 import com.jp.wonfes.cmmn.dao.qo.Categories;
-import com.jp.wonfes.common.BusinessClassificationEnum;
 import com.jp.wonfes.common.WfsSysytemException;
+import com.jp.wonfes.domain.code.BusinessClassificationCd;
 
 /**
  * TODO 課題No37より対応を検討するので、利用は保留とする
@@ -31,8 +31,9 @@ public class BusinessClassificationTag extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			Integer _code = Integer.parseInt(code);
-			BusinessClassificationEnum e = BusinessClassificationEnum.valueOf(_code);
+//			Integer _code = Integer.parseInt(code);
+			BusinessClassificationCd e = BusinessClassificationCd.getByCode(code);
+//			BusinessClassificationEnum e = BusinessClassificationEnum.valueOf(_code);
 			pageContext.getOut().print(e.getName());
 		} catch (IOException e) {
 			e.printStackTrace();

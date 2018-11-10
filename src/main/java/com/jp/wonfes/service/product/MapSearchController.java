@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
+import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
+import com.jp.wonfes.cmmn.dao.qo.Dealers;
 import com.jp.wonfes.common.Takuban;
-import com.jp.wonfes.service.dao.common.Dealer;
-import com.jp.wonfes.service.dao.common.DealerExample;
-import com.jp.wonfes.service.dao.common.mapper.DealerMapper;
 import com.jp.wonfes.service.product.form.DelaerSearchResultForm;
 import com.jp.wonfes.service.product.form.MapSearchForm;
 import com.jp.wonfes.service.product.form.UsrDetailFavProducts;
@@ -29,7 +28,7 @@ import com.jp.wonfes.service.product.form.UsrFavProducts;
 public class MapSearchController {
 	
 	@Autowired
-	private DealerMapper dealerMapper;
+	private DealersMapper dealersMapper;
 
 	/**
 	 * 初期表示
@@ -58,7 +57,7 @@ public class MapSearchController {
 			// 最大のディーラを設定する
 			model.addAttribute("showHole", 6);
 		}else {
-			Dealer d = dealerMapper.selectByPrimaryKey(Integer.parseInt(dealerId));
+			Dealers d = dealersMapper.selectByPrimaryKey(Integer.parseInt(dealerId));
 			String takuban=d.getTakuban();
 			Takuban t= new Takuban(takuban);
 			model.addAttribute("showHole", t.getKo());
