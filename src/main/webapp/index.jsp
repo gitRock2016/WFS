@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>ログイン</title>
-	</head> 
-	<body>
+<head>
+	<meta charset="utf-8">
+	<title>TOP</title>
+<script type="text/javascript">
+	function send(){
+		alert("aaa");
+	}
+	send();
+</script>
+
+</head> 
+
+<body>
+	
 	<h2>開発画面へ</h2>
+	<c:url value="/top" var="top" /><a href="${top}">top</a><br/>
 	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
 	<c:url value="/dlr/dlr_05/init" var="dlr05_init" /><a href="${dlr05_init}">ディーラー検索画面2</a><br/>
 	<c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" /><a href="${dlr_01_01_show}">ディーラー登録画面2</a><br/>

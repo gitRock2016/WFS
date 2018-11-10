@@ -17,6 +17,16 @@ public class WfsApplicationConf {
 	private String wfsImgDefaultFile;
 	@Value("${wfs.img.maxsize}")
 	private String wfsImgMaxsize;
+	@Value("${wfs.img.top.url}")
+	private String wfsImgTopUrl;
+
+	public String getWfsImgTopUrl() {
+		return wfsImgTopUrl;
+	}
+
+	public void setWfsImgTopUrl(String wfsImgTopUrl) {
+		this.wfsImgTopUrl = wfsImgTopUrl;
+	}
 
 	public String getWfsUrl() {
 		return wfsUrl;

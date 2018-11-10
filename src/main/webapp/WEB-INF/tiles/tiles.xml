@@ -40,6 +40,12 @@
 	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
 -->
 	<!-- contents -->
+	<!-- top画面 -->
+	<definition name="top" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="WFS"/>
+		<put-attribute name="body" value="/WEB-INF/view/top.jsp" />
+	</definition>
+
 	<!-- アカウント情報画面 -->
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>

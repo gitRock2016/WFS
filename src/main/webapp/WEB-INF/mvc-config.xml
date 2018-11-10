@@ -26,6 +26,7 @@
 	<!-- コンポーネント -->
 	<context:component-scan base-package="com.jp.wonfes.auth" />
 	<context:component-scan base-package="com.jp.wonfes.common" />
+	<context:component-scan base-package="com.jp.wonfes.account.*" />
 	<context:component-scan base-package="com.jp.wonfes.dealer.*" />
 	<context:component-scan base-package="com.jp.wonfes.service.dao.product" />
 <!-- 	<context:component-scan base-package="com.jp.wonfes.service.product" /> -->
