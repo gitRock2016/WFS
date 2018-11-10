@@ -94,6 +94,21 @@ wfs.com.abbdisp.base = function(str, dlm, maxCount, abbDisp){
 wfs.com.abbdisp.getAddDisp5 = function(str, dlm){
 	return wfs.com.abbdisp.base(str, dlm, 5, "・・・");
 }
+/**
+ * valはString型の卓番6桁であること
+ * 変換前：「080201」
+ * 変換後：「8-2-1」
+ */
+wfs.com.getFormatTakuban = function(val) {
+	if (wfs.com.isEmpty(val) || val.length !== 6) {
+		return "";
+	}
+	let ko = val.substring(0, 2);
+	let otu = val.substring(2, 4);
+	let hei = val.substring(4, 6);
+	const takuban= parseInt(ko) + "-" + parseInt(otu) + "-" + parseInt(hei);
+	return takuban
+}
 
 // --------------------------------------------------------------------------v
 // 共通関数定義

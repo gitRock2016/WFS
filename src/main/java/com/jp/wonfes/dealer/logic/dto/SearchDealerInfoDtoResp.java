@@ -12,6 +12,7 @@ public class SearchDealerInfoDtoResp {
 	private String dealerName;
 	private String takuban;
 	private String businessClassification;
+	private String businessClassificationLabel;
 //	private List<String> productFileds;
 	private String productFileds;
 	private String hpLink;
@@ -48,6 +49,12 @@ public class SearchDealerInfoDtoResp {
 	}
 	public void setBusinessClassification(String businessClassification) {
 		this.businessClassification = businessClassification;
+	}
+	public String getBusinessClassificationLabel() {
+		return businessClassificationLabel;
+	}
+	public void setBusinessClassificationLabel(String businessClassificationLabel) {
+		this.businessClassificationLabel = businessClassificationLabel;
 	}
 	public String getHpLink() {
 		return hpLink;

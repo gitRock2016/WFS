@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
@@ -20,6 +19,7 @@ import com.jp.wonfes.dealer.dao.mapper.DealerSearchMapper;
 import com.jp.wonfes.dealer.dao.qo.SelectDealersCategoriesQoResp;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.domain.code.BusinessClassificationCd;
 import com.jp.wonfes.service.dao.WfsDataException;
 
 @Service
@@ -32,8 +32,9 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 	private DealerSearchMapper dealerSearchMapper;
 	@Autowired
 	private DealersDetailProductsMapper dealersDetailProductsMapper;
-	@Autowired
-	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
+	// 課題No38のためモックで取得するためコメントアウト
+//	@Autowired
+//	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
 //	@Autowired
 //	private CategoriesMapper categoriesMapper;
 	@Autowired
@@ -57,14 +58,6 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
  		DealersDetailProductsExample e1 = new DealersDetailProductsExample();
 		e1.createCriteria().andDealerIdEqualTo(dealerId);
 		List<DealersDetailProducts> productList= dealersDetailProductsMapper.selectByExample(e1);
-		
-		// ディーラのもつ作品情報の作品分野
-		// TODO 作品分野の取得はテーブル見直し後に行う
-		// 作品名称は、以下のどちらかでおこないたい
-		//　・マスタから全権取得してキャッシュに保存して再利用
-		//　・他テーブルと結合
-		//　結合予定のテーブル（dealers_detail_products_categories）は見直す可能性があるので、モックで対応
-		
 		// アイコン画像
 		String imgUrl = imgIconUrl.getImgIconFilePath(dealerId, d.getImgIconFile());
 		
@@ -74,9 +67,12 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		resp.setDealerName(d.getDealerName());
 		resp.setTakuban(d.getTakuban());
 		resp.setBusinessClassification(d.getBussinesType());
+		resp.setBusinessClassificationLabel(BusinessClassificationCd.getByCode(d.getBussinesType()).getName());
+		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法
+		// 暫定でモック対応
 		resp.setProductFileds(this.getProductFiledsMock());
-		resp.setHpLink(resp.getHpLink());
-		resp.setTwLink(resp.getTwLink());
+		resp.setHpLink(d.getHpLink());
+		resp.setTwLink(d.getTwLink());
 		resp.setProductList(productList);
 		
 		return resp;
@@ -106,6 +102,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		}
 		
 		// 検索条件に作品分野が指定されている場合
+		// 検索結果を作品分野で絞り込む
 		// TODO Logicで絞り込むよりテーブル側で絞り込めるよう制御したほうが楽そう。独自DAOで絞り込んだ形で取得するか、ERを工夫するか検討
 		if ("NAN".equals(dto.getProductFiled()) ? false : true) {
 			List<SearchDealerInfoDtoResp> list = new ArrayList<SearchDealerInfoDtoResp>(arrayList.size());
@@ -160,7 +157,5 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 			}
 		};
 	}
-
-
 
 }

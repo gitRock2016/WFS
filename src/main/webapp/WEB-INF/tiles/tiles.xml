@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+ "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"  
+ "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+ 
 <!-- <!DOCTYPE tiles-definitions PUBLIC 
- "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
- "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-  -->
-  <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> -->
  
 <tiles-definitions>
 	
@@ -57,18 +59,7 @@
  		<put-attribute name="titleName" value="ディーラー検索"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealersearch.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch1" extends="mainContents.baseLayoutJs">
-				<put-list-attribute name="jsfiles" inherit="true">
-					<add-attribute value="dealersearch.js" />
-				</put-list-attribute>
-			</definition>
-		</put-attribute>
-	</definition>
-	<definition name="dealersearch2" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="ディーラー検索"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealersearch2.jsp" />
-		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch2" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealersearch" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealersearch.js" />
 				</put-list-attribute>
@@ -87,74 +78,34 @@
  		<put-attribute name="titleName" value="ディーラー情報登録"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealerregist.jsp" />
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealerregist" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealerregist.js" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
 		<put-attribute name="headerCss">
-			<definition name="mainContents.baseLayoutCss.dealerSearch" extends="mainContents.baseLayoutCss">
+			<definition name="mainContents.baseLayoutCss.dealerregist" extends="mainContents.baseLayoutCss">
 				<put-list-attribute name="cssfiles" inherit="true">
-<!-- 				あとで登録と編集は統合するつもりなので、同じCSSにする -->
-					<add-attribute value="dealeredit.css" />
-				</put-list-attribute>
-			</definition>
-		</put-attribute>
-	</definition>
-
-	<definition name="dealerregist2" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="ディーラー情報登録"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealerregist2.jsp" />
-		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerRegist2" extends="mainContents.baseLayoutJs">
-				<put-list-attribute name="jsfiles" inherit="true">
-					<add-attribute value="dealerregist2.js" />
-				</put-list-attribute>
-			</definition>
-		</put-attribute>
-		<put-attribute name="headerCss">
-			<definition name="mainContents.baseLayoutCss.dealerRegist2" extends="mainContents.baseLayoutCss">
-				<put-list-attribute name="cssfiles" inherit="true">
-					<add-attribute value="dealerregist2.css" />
+					<add-attribute value="dealerregist.css" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
 	</definition>
 	
 	<!-- title以外はディーラ情報登録と同じ -->
-	<definition name="dealeredit2" extends="dealerregist2">
+	<definition name="dealeredit" extends="dealerregist">
 		<put-attribute name="titleName" value="ディーラー情報編集"/>
 		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerEdit2" extends="mainContents.baseLayoutJs">
-				<put-list-attribute name="jsfiles" inherit="true">
-					<add-attribute value="dealeredit2.js" />
-				</put-list-attribute>
-			</definition>
-		</put-attribute>
-	</definition>
-	
-	<!-- ディーラー情報編集画面 -->
-	<definition name="dealeredit" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="ディーラー情報編集"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealeredit.jsp" />
-		<put-attribute name="headerJs">
-			<definition name="mainContents.baseLayoutJs.dealerSearch" extends="mainContents.baseLayoutJs">
+			<definition name="mainContents.baseLayoutJs.dealeredit" extends="mainContents.baseLayoutJs">
 				<put-list-attribute name="jsfiles" inherit="true">
 					<add-attribute value="dealeredit.js" />
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
-		<put-attribute name="headerCss">
-			<definition name="mainContents.baseLayoutCss.dealerSearch" extends="mainContents.baseLayoutCss">
-				<put-list-attribute name="cssfiles" inherit="true">
-					<add-attribute value="dealeredit.css" />
-				</put-list-attribute>
-			</definition>
-		</put-attribute>
 	</definition>
 	
-		<!-- ディーラー情報画面 -->
+	<!-- ディーラー情報画面 -->
 	<definition name="dealerInfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealerInfo.jsp" />
