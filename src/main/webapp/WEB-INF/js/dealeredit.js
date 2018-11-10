@@ -44,6 +44,9 @@ $(function() {
 		const message="ディーラ情報を削除します。よろしいですか？";
 		wfs.com.confirm(message, wfs.dealeredit.del);
 	});
+	$('#showMapBtn').on('click', function() {
+		$("#dealerId4map").val($('#id').val());
+	});
 })
 
 // --------------------------------------------------------------------------v
