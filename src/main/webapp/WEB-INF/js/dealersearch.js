@@ -80,23 +80,16 @@ wfs.dealersearch.searchDealerInfo.expand = function(data){
 		let dealernameUrl = '<a href="' + _dealernameUrl + "/"+data[i].id+ '">' + data[i].dealerName + '</a>';
 		let dealername = "<td>" + dealernameUrl + "</td>";
 		let takuban    = "<td>" + data[i].takuban + "</td>";
-		let hpurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeHpUrl(data[i].hpLink) + "</td>";
-		let twurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeTwUrl(data[i].twLink) + "</td>";
+		let hpurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeUrl(data[i].hpLink,"HP") + "</td>";
+		let twurl = "<td>" + wfs.dealersearch.searchDealerInfo.expand.makeUrl(data[i].twLink,"Tw") + "</td>";
 		dealerSearchResultObj.append("<tr>" + no + dealername + takuban + hpurl + twurl + "</tr>");
 	}
 	
 }
 
-wfs.dealersearch.searchDealerInfo.expand.makeHpUrl = function(hpUrl) {
-	if (wfs.com.isEmpty(hpUrl)) {
+wfs.dealersearch.searchDealerInfo.expand.makeUrl = function(url, label) {
+	if (wfs.com.isEmpty(url)) {
 		return "登録なし";
 	}
-	return '<a href=' + hpUrl + ' class="btn btn-info" >HP</a>';
-}
-
-wfs.dealersearch.searchDealerInfo.expand.makeTwUrl = function(twUrl) {
-	if (wfs.com.isEmpty(twUrl)) {
-		return "登録なし";
-	}
-	return '<a href=' + twUrl + ' class="btn btn-info" >TW</a>';
+	return '<a href=' + url + ' class="btn btn-info" target="_blank">' + label + '</a>';
 }
