@@ -47,15 +47,11 @@ public class AccountSearchController {
 	 * @return
 	 */
 	@RequestMapping(value="/top", method=RequestMethod.GET)
-	public String initTop(HttpSession session,Model model) {
-		boolean isSession = false;
-		if(session != null && session.getAttribute("target")!=null) {
-			isSession =true;
-		}
-		model.addAttribute("isSession", isSession);
-		
-		String url_logo=wfsApplicationConf.getWfsImgTopUrl()+"log3.jpg";
-		model.addAttribute("url_logo", url_logo);
+	public String initTop(Model model) {
+		// ロゴとして読み込む画像ファイルは遷移先のJSPで指定する
+		// ここでは、WEBサーバー上の画像ファイルの格納先までのパスを渡す
+		String baseUrlLogo = wfsApplicationConf.getWfsImgTopUrl();
+		model.addAttribute("baseUrlLogo", baseUrlLogo);
 		return "top";
 	}
 	
