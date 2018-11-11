@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h3>ログイン</h3>
-	<c:url value="/g00/login" var="login"/>
+	<c:url value="/accnt/accnt_01" var="login"/>
 	<form:form action="${login }" method="POST" modelAttribute="loginForm">
 		user:<input type="text" id="user" name="userid">
 		password:<input type="text" id="password" name="userpassword">

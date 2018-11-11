@@ -12,7 +12,7 @@
 	<br/>
 	<c:url value="/" var="top"/><a href="${top }">TOP画面へ</a>
 	<br/>
-	<c:url value="/g00/login" var="login"/><a href="${login }">Login画面へ</a>
+	<c:url value="/accnt/accnt_01" var="login"/><a href="${login }">Login画面へ</a>
 	<br/>
 	
 

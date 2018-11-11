@@ -80,67 +80,26 @@
 	</filter-mapping> -->
 	
 	<!-- 認証 -->
-	<!-- todo tilesのため -->
 	<filter>
 		<filter-name>AuthFilter</filter-name>
 		<filter-class>com.jp.wonfes.auth.AuthFilter</filter-class>
-		
-<!-- TODO init-paramを利用して、除外クラスの設定をfilterクラスでやってみたい
-「http://d.hatena.ne.jp/gekimu/20061115」
- 		<init-param>
-			<param-name></param-name>
-			<param-value></param-value>
-		</init-param>
-	 -->
-	 
-<!--
-以下は適用対象外
-・アカウント登録、/g02/*
--->
 	</filter>
-	
-	<filter-mapping>
+ 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g01/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g03/*</url-pattern>
+		<url-pattern>/accnt/accnt_03</url-pattern>
+		<url-pattern>/accnt/accnt_04</url-pattern>
+		<url-pattern>/accnt/accnt_05</url-pattern>
+		<url-pattern>/accnt/accnt_06</url-pattern>
+		<url-pattern>/dlr/dlr_01_01/*</url-pattern>
+		<url-pattern>/dlr/dlr_02</url-pattern>
+		<url-pattern>/dlr/dlr_03</url-pattern>
+		<url-pattern>/dlr/dlr_04</url-pattern>
+		<url-pattern>/wrk/wrk_01_01</url-pattern>
+		<url-pattern>/wrk/wrk_01_02</url-pattern>
+		<url-pattern>/wrk/wrk_02</url-pattern>
+		<url-pattern>/wrk/wrk_03</url-pattern>
 	</filter-mapping>	
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g04/*</url-pattern>
-	</filter-mapping>	
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g05/*</url-pattern>
-	</filter-mapping>	
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g06/*</url-pattern>
-	</filter-mapping>	
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/g07/*</url-pattern>
-	</filter-mapping>
 
-<!-- 	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/accnt/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/dlr/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/wrk/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/map/*</url-pattern>
-	</filter-mapping> -->
-	
 	<!-- ディレクティブの共通設定 -->
 	<jsp-config>
 		<jsp-property-group>

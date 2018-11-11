@@ -50,14 +50,14 @@ public class AuthFilter implements Filter {
 			// TODo
         	System.out.println("sessionなし１．");
         	System.out.println("target:"+target);
-			((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
+			((HttpServletResponse)response).sendRedirect("/WonFesSys/accnt/accnt_01");
 		}else {
             Object loginCheck = session.getAttribute("login");
             if (loginCheck == null){
     			session.setAttribute("target", target);
             	System.out.println("logincheck,NG");
             	System.out.println("target:"+target);
-            	((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
+            	((HttpServletResponse)response).sendRedirect("/WonFesSys/accnt/accnt_01");
             }else {
             	System.out.println("logincheck,ZOK");
             }
