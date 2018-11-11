@@ -5,6 +5,7 @@
 <c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" />
 <c:url value="/sample/init" var="sample_init" />
 <c:url value="/accnt/accnt_02" var="accnt_accnt_02" />
+<c:set var="isSession" value="${sessionScope.login !=null }"/>
 
 <div id="header">
 <header>
@@ -16,12 +17,22 @@
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
 					<li><a href="${top }" title="TODO 作成中">作品検索</a></li>
-					<li><a href="${top }" title="TODO 作成中">作品登録</a></li>
+					<c:if test="${isSession }">
+						<li><a href="${top }" title="TODO 作成中">作品登録</a></li>
+					</c:if>
 					<li><a href="${dlr05_init }" title=ディーラー検索>ディーラー検索</a></li>
-					<li><a href="${dlr_01_01_show }" title="ディーラー登録">ディーラー登録</a></li>
-					<li><a href="${accnt_accnt_02 }" title="logaout">LogOut</a></li>
-					<li><a href="${accnt_accnt_02 }" title="logaout">アカウント情報</a></li>
-					<li><a href="${accnt_accnt_02 }" title="logaout">アカウント管理</a></li>
+					<c:if test="${isSession }">
+						<li><a href="${dlr_01_01_show }" title="ディーラー登録">ディーラー登録</a></li>
+					</c:if>
+					<c:if test="${isSession }">
+						<li><a href="${accnt_accnt_02 }" title="logout">LogOut</a></li>
+						<li><a href="${top }" title="TODO 作成中">アカウント情報</a></li>
+						<li><a href="${top }" title="TODO 作成中">アカウント管理</a></li>
+					</c:if>
+					<c:if test="${! isSession }">
+						<li><a href="${top }" title="TODO 作成中">LogIn</a></li>
+						<li><a href="${top }" title="TODO 作成中">アカウント登録</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>

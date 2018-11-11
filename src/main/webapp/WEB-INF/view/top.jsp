@@ -1,15 +1,7 @@
 <!DOCTYPE html>
-<%
-String ss = (String)session.getAttribute("target");
-boolean isSession = false;
-if(ss!=null){
-	isSession=true;
-}
-
-%>
-
 <div class="container">
 	<div class="page-header">
-		<img src="${url_logo }" id="topImgId" name="topImg"/>
+		<!-- 読み込むロゴ画像を指定する -->
+		<img src="${baseUrlLogo }/log2.jpg" id="topImgId" name="topImg"/>
 	</div>
 </div>
