@@ -60,9 +60,14 @@ public class AccountManageController {
 			session.setAttribute("s_loginName", u.getUserName());
 			
 			String target = (String) session.getAttribute("target");
-			System.out.println("SampleLoginのloginCheck（POST）、session:" + target);
-			String redirectsaki = target.substring("/WonFesSys".length());
-			return "redirect:" + redirectsaki;
+			if(target!=null) {
+				// ログイン画面以外に遷移しようとしている場合
+				System.out.println("SampleLoginのloginCheck（POST）、session:" + target);
+				String redirectsaki = target.substring("/WonFesSys".length());
+				return "redirect:" + redirectsaki;
+			}else {
+				return "top";
+			}
 		}else {
 			model.addAttribute("message","userid, passwordが不正です。再入力してください");
 			return "loginerror";
