@@ -24,10 +24,6 @@ public class WfsApplicationConf {
 		return wfsImgTopUrl;
 	}
 
-	public void setWfsImgTopUrl(String wfsImgTopUrl) {
-		this.wfsImgTopUrl = wfsImgTopUrl;
-	}
-
 	public String getWfsUrl() {
 		return wfsUrl;
 	}
