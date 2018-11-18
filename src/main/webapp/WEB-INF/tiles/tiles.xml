@@ -56,6 +56,13 @@
 	<definition name="accountregist" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント登録"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountregist" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountregist.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
 	<!-- ディーラー検索画面 -->
@@ -75,7 +82,7 @@
 	<definition name="accountregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー登録完了"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregistfin.jsp" />
-	</definition>	
+	</definition>
 	
 	<!-- ディーラー情報登録画面 -->
 	<definition name="dealerregist" extends="mainContents.baseLayout">

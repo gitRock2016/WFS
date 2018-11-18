@@ -1,5 +1,5 @@
 <c:url value="/accnt/accnt_01" var="login" />
-
+<c:url value="/accnt/accnt_03/init" var="toregist" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,11 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/honoka/bootstrap.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/honoka/bootstrap.min.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+	<script src="<c:url value="/js/jquery-3.3.1.js" />"></script>
+	<script src="<c:url value="/js/wfs-common.js" />"></script>
+	<script src="<c:url value="/js/login.js" />"></script>
+
 </head>
 <body>
 <div class="container">
@@ -21,7 +26,7 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 			<div class="bs-component">
-					<form:form action="${login }" method="POST" modelAttribute="loginForm">
+					<form:form action="${login }" method="POST" modelAttribute="loginForm" id="loginForm">
 						<div class="col-lg-8 col-lg-offset-1 ">
 								<div class="form-group">
 										<label for="user">user</label>
@@ -32,8 +37,8 @@
 									<input type="text" id="password" name="userpassword" class="form-control">
 								</div>
 							<div class="form-group formButtons">
-								<button type="submit" class="btn btn-primary">ログイン</button>
-								<button type="button" class="btn btn-primary">新規登録</button>
+								<button type="submit" class="btn btn-primary" id="loginBtn">ログイン</button>
+								<button type="button" class="btn btn-primary" id="accountRegistBtn" onclick='location.href="${toregist}"'>新規登録</button>
 							</div>
 						</div>
 					</form:form>
