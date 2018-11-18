@@ -15,11 +15,11 @@ public class AccountRegistForm {
 	private String username;
 
 	@NotEmpty
-	@Length(min=9, max = 32)
+	@Length(min=5, max = 32)
 	private String password;
 	
 	@NotEmpty
-	@Length(min=9, max = 32)
+	@Length(min=5, max = 32)
 	private String passwordSecond;
 
 	//	private String passwoSecSecound
