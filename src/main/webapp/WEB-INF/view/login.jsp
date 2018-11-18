@@ -25,12 +25,13 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+		<div class="alert-success">${success_message}</div>
 			<div class="bs-component">
 					<form:form action="${login }" method="POST" modelAttribute="loginForm" id="loginForm">
 						<div class="col-lg-8 col-lg-offset-1 ">
 								<div class="form-group">
 										<label for="user">user</label>
-										<input type="text" id="user" name="userid" class="form-control">
+										<input type="text" id="user" name="userid" class="form-control" value="${loginForm.userid }">
 								</div>
 								<div class="form-group">
 									<label for="password">password</label>

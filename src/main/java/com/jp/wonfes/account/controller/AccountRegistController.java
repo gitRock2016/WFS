@@ -9,15 +9,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jp.wonfes.account.controller.form.AccountRegistForm;
 import com.jp.wonfes.account.logic.AccountRegistLogic;
 import com.jp.wonfes.account.logic.dto.RegistAccountDto;
+import com.jp.wonfes.auth.LoginForm;
 import com.jp.wonfes.common.WfsLogicException;
+import com.jp.wonfes.common.WfsMessage;
 
 @Controller
 public class AccountRegistController {
-	
+	@Autowired
+	private WfsMessage msg;
 	@Autowired
 	private AccountRegistLogic accountRegistLogic;
 	
@@ -27,7 +31,7 @@ public class AccountRegistController {
 	}
 
 	@RequestMapping(value = "/accnt/accnt_03/regist", method = RequestMethod.POST)
-	public String regist(@ModelAttribute @Valid AccountRegistForm form, BindingResult results, Model model) {
+	public String regist(@ModelAttribute @Valid AccountRegistForm form, BindingResult results, Model model,RedirectAttributes redirectAttributes) {
 
 		if (results.hasErrors()) {
 			return "accountregist";
@@ -40,6 +44,11 @@ public class AccountRegistController {
 			model.addAttribute("danger_message", e.getMessage());
 			return "accountregist";
 		}
+		redirectAttributes.addFlashAttribute("success_message",
+				msg.getMessage("wfs.msg.e.cmmn1", new String[] { "アカウント情報の登録" }));
+		form.setPassword(null); // パスワードはリダイレクト先で表示させない
+		redirectAttributes.addFlashAttribute("loginForm", form);
+		
 		return "redirect:/accnt/accnt_01";
 	}
 	

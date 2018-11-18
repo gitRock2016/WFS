@@ -11,9 +11,9 @@ $(function() {
 	$("#loginBtn").on("click",function(){
 		// TODO 後で作成
 	});
-	$("#accountRegistBtn").on("click",function(){
-		wfs.login.initAccountRegist();
-	});
+//	$("#accountRegistBtn").on("click",function(){
+//		wfs.login.initAccountRegist();
+//	});
 	
 })
 
@@ -22,10 +22,10 @@ $(function() {
 // --------------------------------------------------------------------------v
 
 // btnObjは押下したボタンを表すJQオブジェクト
-wfs.login.initAccountRegist = function(){
-	const target = $("#loginForm");
-	target.attr("action", wfs.login.action.url2);
-	
-	target.submit();
-}
+//wfs.login.initAccountRegist = function(){
+//	const target = $("#loginForm");
+//	target.attr("action", wfs.login.action.url2);
+//	
+//	target.submit();
+//}
 

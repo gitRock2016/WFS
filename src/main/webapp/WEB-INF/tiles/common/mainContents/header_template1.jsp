@@ -6,6 +6,7 @@
 <c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" />
 <c:url value="/sample/init" var="sample_init" />
 <c:url value="/accnt/accnt_02" var="accnt_accnt_02" />
+<c:url value="/accnt/accnt_03/init" var="accnt_accnt_03_init" />
 <c:set var="isSession" value="${sessionScope.login !=null }"/>
 
 <div id="header">
@@ -32,7 +33,7 @@
 					</c:if>
 					<c:if test="${! isSession }">
 						<li><a href="${accnt_accnt_01 }" title="ログイン">LogIn</a></li>
-						<li><a href="${top }" title="TODO 作成中">アカウント登録</a></li>
+						<li><a href="${accnt_accnt_03_init }" title="アカウントの新規登録">アカウント登録</a></li>
 					</c:if>
 				</ul>
 			</div>
