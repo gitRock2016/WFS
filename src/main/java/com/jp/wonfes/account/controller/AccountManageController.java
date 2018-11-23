@@ -17,6 +17,9 @@ import com.google.common.base.Objects;
 import com.jp.wonfes.account.controller.form.LoginForm;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
+import com.jp.wonfes.common.WfsLogicException;
+import com.jp.wonfes.domain.auth.AuthManageLogic;
+import com.jp.wonfes.domain.auth.WfsSss;
 
 @Controller
 public class AccountManageController {
@@ -24,6 +27,9 @@ public class AccountManageController {
 	@Autowired
 	private UsrMapper usrmapper;
 	
+	@Autowired
+	private AuthManageLogic authManageLogic;
+
 	@RequestMapping(value = "/accnt/accnt_01", method = RequestMethod.GET)
 	public String init(Model model) {
 		return "login";
@@ -32,31 +38,32 @@ public class AccountManageController {
 	@RequestMapping(value = "/accnt/accnt_01", method = RequestMethod.POST)
 	public String auth(HttpSession session, @ModelAttribute LoginForm form, Model model) {
 
-		String userid=form.getUserid();
-		String password=form.getPassword();
+		String userid = form.getUserid();
+		String password = form.getPassword();
 
-		if(this.isAuth(userid, password)) {
+		try {
+			authManageLogic.isAuth(userid, password);
+			
 			// 認証OKの場合
-			session.setAttribute("login", "OK");
+			session.setAttribute(WfsSss.ISLOGIN.getCode(), WfsSss.OK);
 
 			Usr u = usrmapper.selectByPrimaryKey(userid);
-			session.setAttribute("s_loginId", u.getUsrId());
-			session.setAttribute("s_loginName", u.getUserName());
-			
-			String target = (String) session.getAttribute("target");
-			if(target!=null) {
-				// ログイン画面以外に遷移しようとしている場合
-				System.out.println("SampleLoginのloginCheck（POST）、session:" + target);
+			session.setAttribute(WfsSss.ID.getCode(), u.getUsrId());
+			session.setAttribute(WfsSss.NAME.getCode(), u.getUserName());
+
+			String target = (String) session.getAttribute(WfsSss.TARGET.getCode());
+			if (target != null) {
+				// ログイン画面以外に遷移しようとしていた場合、元々の遷移先にリダイレクトする
 				String redirectsaki = target.substring("/WonFesSys".length());
 				return "redirect:" + redirectsaki;
-			}else {
-				return "top";
+			} else {
+				return "login";
 			}
-		}else {
-			model.addAttribute("message","userid, passwordが不正です。再入力してください");
-			return "loginerror";
+		} catch (WfsLogicException e) {
+			model.addAttribute("danger_message", e.getMessage());
+			return "login";
 		}
-		
+
 	}
 	
 	@RequestMapping(value = "/accnt/accnt_02", method = RequestMethod.GET)
@@ -69,20 +76,5 @@ public class AccountManageController {
 	
 	// TODO USRテーブルのpasswordカラムを見直す
 	//	・NOT NULL属性を追加
-	private boolean isAuth(String userid, String password) {
-		Usr u = usrmapper.selectByPrimaryKey(userid);
-		if (u == null) {
-			return false;
-		}
-		String dbpwd = CharMatcher.WHITESPACE.trimTrailingFrom(u.getPasswd());
-		String rqpwd = DigestUtils.md5DigestAsHex(password.getBytes());
-		if (!Objects.equal(dbpwd, rqpwd)) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	
 	
 }
