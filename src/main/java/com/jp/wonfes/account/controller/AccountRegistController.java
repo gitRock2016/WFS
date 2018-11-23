@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jp.wonfes.account.controller.form.AccountRegistForm;
 import com.jp.wonfes.account.logic.AccountRegistLogic;
 import com.jp.wonfes.account.logic.dto.RegistAccountDto;
-import com.jp.wonfes.auth.LoginForm;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 

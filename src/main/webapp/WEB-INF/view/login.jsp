@@ -35,7 +35,7 @@
 								</div>
 								<div class="form-group">
 									<label for="password">password</label>
-									<input type="text" id="password" name="userpassword" class="form-control">
+									<input type="text" id="password" name="password" class="form-control">
 								</div>
 							<div class="form-group formButtons">
 								<button type="submit" class="btn btn-primary" id="loginBtn">ログイン</button>

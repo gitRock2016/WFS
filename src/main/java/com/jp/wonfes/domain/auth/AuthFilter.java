@@ -1,4 +1,5 @@
-package com.jp.wonfes.auth;
+package com.jp.wonfes.domain.auth;
+
 
 import java.io.IOException;
 
