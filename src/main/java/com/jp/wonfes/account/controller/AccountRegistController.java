@@ -48,7 +48,7 @@ public class AccountRegistController {
 		form.setPassword(null); // パスワードはリダイレクト先で表示させない
 		redirectAttributes.addFlashAttribute("loginForm", form);
 		
-		return "redirect:/accnt/accnt_01";
+		return "redirect:/accnt/accnt_01/show";
 	}
 	
 }

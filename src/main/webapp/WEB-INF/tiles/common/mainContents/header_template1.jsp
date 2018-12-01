@@ -1,5 +1,5 @@
 <c:url value="/" var="top" />
-<c:url value="/accnt/accnt_01" var="accnt_accnt_01" />
+<c:url value="/accnt/accnt_01/show" var="accnt_accnt_01" />
 <c:url value="/accnt/accnt_02" var="accnt_accnt_02" />
 <c:url value="/g03/init" var="g03_init" />
 <c:url value="/dlr/dlr_05/init" var="dlr05_init" />

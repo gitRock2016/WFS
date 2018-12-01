@@ -47,12 +47,12 @@ public class AuthFilter implements Filter {
 		if (session == null) {
 			session = ((HttpServletRequest) request).getSession(true);
 			session.setAttribute(WfsSss.TARGET.getCode(), target);
-			((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01");
+			((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01/show");
 		} else {
 			Object loginCheck = session.getAttribute(WfsSss.ISLOGIN.getCode());
 			if (loginCheck == null) {
 				session.setAttribute(WfsSss.TARGET.getCode(), target);
-				((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01");
+				((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01/show");
 			}
 		}
 		chain.doFilter(request, response);

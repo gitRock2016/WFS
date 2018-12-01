@@ -1,4 +1,4 @@
-<c:url value="/accnt/accnt_01" var="login" />
+<c:url value="/accnt/accnt_01/login" var="login" />
 <c:url value="/accnt/accnt_03/init" var="toregist" />
 <!DOCTYPE html>
 <html>

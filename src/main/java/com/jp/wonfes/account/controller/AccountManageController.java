@@ -7,18 +7,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.base.Objects;
 import com.jp.wonfes.account.controller.form.LoginForm;
+import com.jp.wonfes.account.logic.AccountManageLogic;
+import com.jp.wonfes.account.logic.dto.CheckAccountDto;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsLogicException;
-import com.jp.wonfes.domain.auth.AuthManageLogic;
 import com.jp.wonfes.domain.auth.WfsSss;
 
 @Controller
@@ -28,21 +26,24 @@ public class AccountManageController {
 	private UsrMapper usrmapper;
 	
 	@Autowired
-	private AuthManageLogic authManageLogic;
+	private AccountManageLogic accountManageLogic;
 
-	@RequestMapping(value = "/accnt/accnt_01", method = RequestMethod.GET)
+	@RequestMapping(value = "/accnt/accnt_01/show", method = RequestMethod.GET)
 	public String init(Model model) {
 		return "login";
 	}
 
-	@RequestMapping(value = "/accnt/accnt_01", method = RequestMethod.POST)
-	public String auth(HttpSession session, @ModelAttribute LoginForm form, Model model) {
+	@RequestMapping(value = "/accnt/accnt_01/login", method = RequestMethod.POST)
+	public String login(HttpSession session, @ModelAttribute LoginForm form, Model model) {
 
 		String userid = form.getUserid();
 		String password = form.getPassword();
 
 		try {
-			authManageLogic.isAuth(userid, password);
+			CheckAccountDto checkDto = new CheckAccountDto();
+			checkDto.setUserid(userid);
+			checkDto.setPassword(password);
+			accountManageLogic.checkAccountInfo(checkDto);
 			
 			// 認証OKの場合
 			session.setAttribute(WfsSss.ISLOGIN.getCode(), WfsSss.OK);
@@ -73,8 +74,4 @@ public class AccountManageController {
 		return "logout";
 		
 	}
-	
-	// TODO USRテーブルのpasswordカラムを見直す
-	//	・NOT NULL属性を追加
-	
 }
