@@ -21,10 +21,9 @@
 	<!-- 静的ファイル -->
 	<mvc:resources mapping="/js/**"  location="/WEB-INF/js/"/>
 	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
-<!--
-	WEBサーバーで画像を管理する
+<!-- 	WEBサーバーで画像を管理する -->
  	<mvc:resources mapping="/img/**" location="/WEB-INF/img/" />
-  -->
+ 
 	
 	<!-- コンポーネント -->
 	<context:component-scan base-package="com.jp.wonfes.common" />

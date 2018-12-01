@@ -1,0 +1,19 @@
+/* bootstrapの上書き */
+/* header全体*/
+div#header .container{
+	background-image: url("/WonFesSys/img/header1.jpg");
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-size:cover;
+}
+/* header メニュー先頭*/
+div#header .navbar-header a{
+	color: #009999;
+}
+
+/* header メニュー*/
+div#header .navbar-nav li a{
+	color: #009999;
+}
+
+

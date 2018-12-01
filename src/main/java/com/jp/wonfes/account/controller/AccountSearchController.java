@@ -50,8 +50,8 @@ public class AccountSearchController {
 	public String initTop(Model model) {
 		// ロゴとして読み込む画像ファイルは遷移先のJSPで指定する
 		// ここでは、WEBサーバー上の画像ファイルの格納先までのパスを渡す
-		String baseUrlLogo = wfsApplicationConf.getWfsImgTopUrl();
-		model.addAttribute("baseUrlLogo", baseUrlLogo);
+//		String baseUrlLogo = wfsApplicationConf.getWfsImgTopUrl();
+//		model.addAttribute("baseUrlLogo", baseUrlLogo);
 		return "top";
 	}
 	
