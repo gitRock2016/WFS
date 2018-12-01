@@ -57,7 +57,7 @@ public class AccountManageController {
 				String redirectsaki = target.substring("/WonFesSys".length());
 				return "redirect:" + redirectsaki;
 			} else {
-				return "login";
+				return "accountinfo";
 			}
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
