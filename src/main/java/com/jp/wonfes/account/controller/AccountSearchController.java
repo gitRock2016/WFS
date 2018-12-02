@@ -1,45 +1,30 @@
 package com.jp.wonfes.account.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jp.wonfes.cmmn.dao.mapper.DealersMapper;
-import com.jp.wonfes.cmmn.dao.qo.Dealers;
-import com.jp.wonfes.common.ImgIconUrl;
-import com.jp.wonfes.common.WfsApplicationConf;
+import com.jp.wonfes.account.logic.AccountSearchLogic;
+import com.jp.wonfes.account.logic.dto.SearchAccountDtoReq;
+import com.jp.wonfes.account.logic.dto.SearchAccountDtoResp;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
-import com.jp.wonfes.common.WfsSysytemException;
-import com.jp.wonfes.dealer.controller.form.DealerEditForm;
-import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
-import com.jp.wonfes.dealer.logic.DealerRegistLogic;
-import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
-import com.jp.wonfes.dealer.logic.dto.EditDealerInfoDto;
-import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDto;
+import com.jp.wonfes.domain.auth.WfsSss;
 
 @Controller
 public class AccountSearchController {
 	
 	@Autowired
-	private ImgIconUrl imgIconUrl;
-	@Autowired
 	private WfsMessage msg;
+
 	@Autowired
-	private DealerRegistLogic dealerRegistLogic;
-	@Autowired
-	private DealersMapper dealersMapper;
-	
-	@Autowired
-	private WfsApplicationConf wfsApplicationConf; 
+	private AccountSearchLogic accountSearchLogic;
 
 	/**
 	 * 初期表示、top
@@ -48,13 +33,25 @@ public class AccountSearchController {
 	 */
 	@RequestMapping(value="/top", method=RequestMethod.GET)
 	public String initTop(Model model) {
-		// ロゴとして読み込む画像ファイルは遷移先のJSPで指定する
-		// ここでは、WEBサーバー上の画像ファイルの格納先までのパスを渡す
-//		String baseUrlLogo = wfsApplicationConf.getWfsImgTopUrl();
-//		model.addAttribute("baseUrlLogo", baseUrlLogo);
 		return "top";
 	}
 	
-	
+	@RequestMapping(value="/accnt/accnt_04/init", method=RequestMethod.GET)
+	public String initAccnt04(HttpSession session, Model model) {
+		
+		String userId = (String) session.getAttribute(WfsSss.ID.getCode());
+
+		SearchAccountDtoReq dto = new SearchAccountDtoReq();
+		dto.setUsrId(userId);
+		try {
+			List<SearchAccountDtoResp> data = accountSearchLogic.searchAccountInfo(dto);
+			model.addAttribute("data", data);
+			model.addAttribute("dataCount", data.size());
+		} catch (WfsLogicException e) {
+			model.addAttribute("danger_message", "なにがしかエラーが発生");
+		}
+		return "accountinfo";
+	}
+
 	
 }

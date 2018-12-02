@@ -3,7 +3,7 @@ if (typeof wfs.dealerregist === "undefined") {
 }
 
 wfs.dealerregist.action={}
-wfs.dealerregist.action.regist = "/" + wfs.com.cont + "/dlr/dlr_01_01/reigst";
+wfs.dealerregist.action.regist = "/" + wfs.com.cont + "/dlr/dlr_01/reigst";
 
 //btnObjは押下したボタンを表すJQオブジェクト
 wfs.dealerregist.regist = function(){
