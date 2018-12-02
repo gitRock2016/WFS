@@ -58,6 +58,13 @@
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.accountinfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="accountinfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
 	<!-- アカウント登録画面 -->
