@@ -1,4 +1,5 @@
-package com.jp.wonfes.auth;
+package com.jp.wonfes.domain.auth;
+
 
 import java.io.IOException;
 
@@ -35,34 +36,25 @@ public class AuthFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		HttpSession session = ((HttpServletRequest)request).getSession();
+
+		HttpSession session = ((HttpServletRequest) request).getSession();
 		String url = ((HttpServletRequest) request).getRequestURI();
 		String params = ((HttpServletRequest) request).getQueryString();
 		String target = url;
-		if(params!=null) {
+		if (params != null) {
 			target = url + "?" + params;
 		}
-		if(session ==null) {
-			session = ((HttpServletRequest)request).getSession(true);
-			session.setAttribute("target", target);
-			
-			// TODo
-        	System.out.println("sessionなし１．");
-        	System.out.println("target:"+target);
-			((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
-		}else {
-            Object loginCheck = session.getAttribute("login");
-            if (loginCheck == null){
-    			session.setAttribute("target", target);
-            	System.out.println("logincheck,NG");
-            	System.out.println("target:"+target);
-            	((HttpServletResponse)response).sendRedirect("/WonFesSys/g00/login");
-            }else {
-            	System.out.println("logincheck,ZOK");
-            }
+		if (session == null) {
+			session = ((HttpServletRequest) request).getSession(true);
+			session.setAttribute(WfsSss.TARGET.getCode(), target);
+			((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01/show");
+		} else {
+			Object loginCheck = session.getAttribute(WfsSss.ISLOGIN.getCode());
+			if (loginCheck == null) {
+				session.setAttribute(WfsSss.TARGET.getCode(), target);
+				((HttpServletResponse) response).sendRedirect("/WonFesSys/accnt/accnt_01/show");
+			}
 		}
-
 		chain.doFilter(request, response);
 	}
 

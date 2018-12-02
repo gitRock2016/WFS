@@ -1,24 +1,12 @@
 <!DOCTYPE html>
-<%--
-	spring:bindの記載方法、暫定で参考のため残す
- 	<spring:bind path="accountRegistForm01.userid" htmlEscape="true">
-		status.expression:${status.expression }<br>
-		status.value:${status.value}<br>
-		status.errorMessages<br>
-		<c:forEach items="${status.errorMessages}" var="msg">
-			${msg }<br>
-		</c:forEach>
-	</spring:bind>
---%>
+
+
 	<div class="container">
 		<div class="page-header">
 			<h1>アカウント登録画面</h1>
 		</div>
-		<%-- 		<div class="row alert alert-dismissible alert-danger">
-			<form:errors path="accountRegistForm01.*" />
-		</div> --%>
-
-		<spring:bind path="accountRegistForm01.*" htmlEscape="true">
+		
+		<spring:bind path="accountRegistForm.*" htmlEscape="true">
 			<c:if test="${status.error}">
 				<div class="row alert alert-dismissible alert-danger">
 					<c:forEach items="${status.errorMessages}" var="msg">
@@ -27,13 +15,12 @@
 				</div>
 			</c:if>
 		</spring:bind>
-
-		<%-- 		<form:errors path="accountRegistForm01.*" /> --%>
+		<div class="alert-success">${success_message}</div>
+		<div class="alert-danger">${danger_message}</div>
 
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form:form action="/WonFesSys/g02/regist" id="registForm"
-					modelAttribute="accountRegistForm01">
+				<form:form action="/WonFesSys/g02/regist" id="accountRegistForm" modelAttribute="accountRegistForm">
 					<div class="form-group">
 						<label for="dealerId">id</label>
 						<div>
@@ -54,7 +41,14 @@
 								maxlength="32" pattern="^[0-9A-Za-z]+$">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary">登録</button>
+					<div class="form-group">
+						<label for="passwordSecond">パスワード(2回目)</label>
+						<div>
+							<input type="password" id="passwordSecond" name="passwordSecond"
+								maxlength="32" pattern="^[0-9A-Za-z]+$">
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary" id="accountRegistBtn">登録</button>
 				</form:form>
 			</div>
 		</div>

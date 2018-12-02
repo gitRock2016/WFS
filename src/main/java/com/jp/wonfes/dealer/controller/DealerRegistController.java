@@ -41,7 +41,7 @@ public class DealerRegistController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/dlr/dlr_01_01/show", params="reg=new", method=RequestMethod.GET)
+	@RequestMapping(value="/dlr/dlr_01/show", params="reg=new", method=RequestMethod.GET)
 	public String initReg(@ModelAttribute DealerRegistForm dealerRegistForm, Model model) {
 		
 		/*初期値*/
@@ -54,7 +54,7 @@ public class DealerRegistController {
 	}
 	
 	
-	@RequestMapping(value="/dlr/dlr_01_01/reigst", method=RequestMethod.POST)
+	@RequestMapping(value="/dlr/dlr_01/reigst", method=RequestMethod.POST)
 	public String regist(@ModelAttribute @Valid DealerRegistForm dealerRegistForm,BindingResult results,Model model) {
 		
 		if(results.hasErrors()) {
@@ -78,7 +78,7 @@ public class DealerRegistController {
 		return "dealerregistfin";
 	}
 	
-	@RequestMapping(value = "/dlr/dlr_01_01/show/dealerId/{dealerId}", params = "reg=edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_01/show/dealerId/{dealerId}", params = "reg=edit", method = RequestMethod.GET)
 	public String initEdit(@ModelAttribute DealerEditForm form, @PathVariable("dealerId") Integer dealerId,
 			Model model) {
 
@@ -102,7 +102,7 @@ public class DealerRegistController {
 		return "dealeredit";
 	}
 
-	@RequestMapping(value = "/dlr/dlr_01_01/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/dlr/dlr_01/edit", method = RequestMethod.POST)
 	public String edit(@ModelAttribute("dealerRegistForm") @Valid DealerEditForm dealerRegistForm,
 			BindingResult results, Model model) {
 		

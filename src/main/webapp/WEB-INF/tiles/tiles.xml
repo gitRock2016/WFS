@@ -25,6 +25,7 @@
  	<definition name="mainContents.baseLayoutCss" template="/WEB-INF/tiles/common/mainContents/layout_template1_css.jsp">
 		<put-list-attribute name="cssfiles">
 			<add-attribute value="honoka/bootstrap.css" />
+			<add-attribute value="layout_header.css" />
 		</put-list-attribute>
 	</definition>
 	
@@ -40,16 +41,43 @@
 	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
 -->
 	<!-- contents -->
+	<!-- top画面 -->
+	<definition name="top" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="WFS"/>
+		<put-attribute name="body" value="/WEB-INF/view/top.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.top" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="top.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+
 	<!-- アカウント情報画面 -->
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.accountinfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="accountinfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
 	<!-- アカウント登録画面 -->
 	<definition name="accountregist" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント登録"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountregist" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountregist.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
 	<!-- ディーラー検索画面 -->
@@ -69,7 +97,7 @@
 	<definition name="accountregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー登録完了"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregistfin.jsp" />
-	</definition>	
+	</definition>
 	
 	<!-- ディーラー情報登録画面 -->
 	<definition name="dealerregist" extends="mainContents.baseLayout">
