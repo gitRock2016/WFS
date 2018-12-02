@@ -151,10 +151,10 @@ public class DealerSearchController {
 		return "dealerInfo";
 	}
 
-	@RequestMapping(value = "/dlr/dlr_06/send/dlr_01_01", method = RequestMethod.GET)
+	@RequestMapping(value = "/dlr/dlr_06/send/dlr_01", method = RequestMethod.GET)
 	public String sendDr0101(@ModelAttribute DealerInfoForm form, Model model) {
 		String id  = String.valueOf(form.getId());
-		return "forward:/dlr/dlr_01_01/show/dealerId"+"/" + id+"?reg=edit";
+		return "forward:/dlr/dlr_01/show/dealerId"+"/" + id+"?reg=edit";
 	}
 
 	private List<DelaerSearchResultForm> mapperQotoForm(List<Dealers> list) {

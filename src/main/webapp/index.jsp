@@ -44,7 +44,7 @@
 	<a href="${top}">top</a><br/>
 	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
 	<c:url value="/dlr/dlr_05/init" var="dlr05_init" /><a href="${dlr05_init}">ディーラー検索画面2</a><br/>
-	<c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" /><a href="${dlr_01_01_show}">ディーラー登録画面2</a><br/>
+	<c:url value="/dlr/dlr_01/show?reg=new" var="dlr_01_show" /><a href="${dlr_01_show}">ディーラー登録画面2</a><br/>
 	<c:url value="/dlr/dlr_06/show/dealerId/1" var="dlr_06_show_dealerId_1" /><a href="${dlr_06_show_dealerId_1}">ディーラー情報画面</a><br/>
 	<c:url value="/accnt/accnt_02" var="accnt_accnt_02" /><a href="${accnt_accnt_02}">logout</a><br/>
 	<c:url value="/sample/init" var="sample_init" /><a href="${sample_init}">sample画面</a><br/>
