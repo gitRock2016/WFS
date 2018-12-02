@@ -1,3 +1,4 @@
+<c:url value="/dlr/dlr_06/show/dealerId" var="showDealerInfo"/>
 <!DOCTYPE html>
 <div class="container">
 	<div class="page-header">
@@ -66,11 +67,18 @@
 				<c:if test="${dataCount > 0}">
 					<c:forEach var="obj" items="${data}" varStatus="obj_status">
 						<tr>
-							<td><c:out value="${obj.productName}" /></td>
+							<td>
+<%-- 								<c:out value="${obj.productName}" /> --%>
+								<input type="hidden" name="productId" value="${obj.productId}" />
+								<a href='#'>${obj.productName}</a>
+							</td>
 							<td><c:out value="${obj.categoryName}" /></td>
 							<td><c:out value="${obj.price}" /></td>
 							<td><c:out value="${obj.takuban}" /></td>
-							<td><c:out value="${obj.dealerName}" /></td>
+							<td>
+								<input type="hidden" name="dealerId" value="${obj.dealerId}" />
+								<a href='${showDealerInfo}/${obj.dealerId}' target='_blank'>${obj.dealerName}</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</c:if>

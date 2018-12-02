@@ -54,32 +54,4 @@ public class AccountSearchController {
 	}
 
 	
-	
-	// Mock
-//	private List<SearchAccountInfoDto> getMockSearchAccountInfoDtoList() {
-//
-//		SearchAccountInfoDto d1 = new SearchAccountInfoDto() {
-//			{
-//				setDealerName("ゆめのかぐつち");
-//				setPrice("1000");
-//				setProductCategory("FGO");
-//				setProductName("ジャンヌ");
-//				setTakuban("090201");
-//			}
-//		};
-//		SearchAccountInfoDto d2 = new SearchAccountInfoDto() {
-//			{
-//				setDealerName("ぴよぴよ堂");
-//				setPrice("10000");
-//				setProductCategory("艦これ");
-//				setProductName("愛宕");
-//				setTakuban("090201");
-//			}
-//		};
-//		List<SearchAccountInfoDto> list = new ArrayList<>();
-//		list.add(d1); list.add(d2);
-//		return list;
-//	}
-	
-	
 }

@@ -3,10 +3,14 @@ package com.jp.wonfes.account.dao.qo;
 public class SelectUserFavProductsQoResp {
 	private String usrId;
 	private String productName;
+	private Integer productId;
 	private String categoryName;
+	private Integer categoryId;
 	private Integer price;
 	private String takuban;
 	private String dealerName;
+	private Integer dealerId;
+	
 	public String getUsrId() {
 		return usrId;
 	}
@@ -43,7 +47,24 @@ public class SelectUserFavProductsQoResp {
 	public void setDealerName(String dealerName) {
 		this.dealerName = dealerName;
 	}
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+	public Integer getDealerId() {
+		return dealerId;
+	}
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
+	}
+	public Integer getProductId() {
+		return productId;
+	}
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 	
 	
-    
 }

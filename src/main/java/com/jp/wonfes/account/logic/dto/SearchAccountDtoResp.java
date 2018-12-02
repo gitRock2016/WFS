@@ -8,6 +8,8 @@ public class SearchAccountDtoResp {
 	private Integer price;
 	private String takuban;
 	private String dealerName;
+	private Integer dealerId;
+	private Integer productId;
 	
 	public String getProductName() {
 		return productName;
@@ -39,6 +41,18 @@ public class SearchAccountDtoResp {
 	public void setDealerName(String dealerName) {
 		this.dealerName = dealerName;
 	}
+	public Integer getDealerId() {
+		return dealerId;
+	}
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
+	}
+	public Integer getProductId() {
+		return productId;
+	}
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 	
 	public static SearchAccountDtoResp qo2Dto(SelectUserFavProductsQoResp qo) {
 		SearchAccountDtoResp dto = new SearchAccountDtoResp();
@@ -47,6 +61,9 @@ public class SearchAccountDtoResp {
 		dto.setPrice(qo.getPrice());
 		dto.setProductName(qo.getProductName());
 		dto.setTakuban(qo.getTakuban());
+		dto.setDealerId(qo.getDealerId());
+		dto.setProductId(qo.getProductId());
+		
 		return dto;
 	}
 }

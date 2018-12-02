@@ -6,12 +6,15 @@
 		resultType="com.jp.wonfes.account.dao.qo.SelectUserFavProductsQoResp">
 		<!-- クエリのエイリアスはresultTypeのクラスと一致させる -->
 		SELECT
-			usrFav.usr_id             as usrId,
-			dealersDet.product_name   as productName,
+			usrFav.usr_id as usrId,
+			dealersDet.product_name as productName,
+			dealersDet.product_id as productId,
+			cat.category_id as categoryId,
 			cat.category_name_reading as categoryName,
-			dealersDet.price          as price,
-			dealers.takuban           as takuban,
-			dealers.dealer_name       as dealerName
+			dealersDet.price as price,
+			dealers.takuban as takuban,
+			dealers.dealer_name as dealerName,
+			dealers.dealer_id as dealerId
 		FROM
 		  wfs.usr_detail_fav_products usrFav
 			inner join wfs.dealers_detail_products dealersDet
