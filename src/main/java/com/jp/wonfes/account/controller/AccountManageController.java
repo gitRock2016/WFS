@@ -1,5 +1,9 @@
 package com.jp.wonfes.account.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,9 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jp.wonfes.account.controller.form.AccountInfoForm;
 import com.jp.wonfes.account.controller.form.LoginForm;
 import com.jp.wonfes.account.logic.AccountManageLogic;
+import com.jp.wonfes.account.logic.dto.AccountInfoDto;
 import com.jp.wonfes.account.logic.dto.CheckAccountDto;
+import com.jp.wonfes.account.logic.dto.SearchAccountDtoReq;
+import com.jp.wonfes.account.logic.dto.SearchAccountDtoResp;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsLogicException;
@@ -74,5 +82,48 @@ public class AccountManageController {
 		session.invalidate();
 		return "logout";
 		
+	}
+	
+	@RequestMapping(value="/accnt/accnt_06/init", method=RequestMethod.GET)
+	public String initAccnt06(Model model) {
+		
+//		String userId = (String) session.getAttribute(WfsSss.ID.getCode());
+//
+//		SearchAccountDtoReq dto = new SearchAccountDtoReq();
+//		dto.setUsrId(userId);
+//		try {
+//			List<SearchAccountDtoResp> data = accountSearchLogic.searchAccountInfo(dto);
+//			model.addAttribute("data", data);
+//			model.addAttribute("dataCount", data.size());
+//		} catch (WfsLogicException e) {
+//			model.addAttribute("danger_message", "なにがしかエラーが発生");
+//		}
+		List<AccountInfoDto> l= this.getmockAccountList();
+		model.addAttribute("data", l);
+		model.addAttribute("dataCount", l.size());
+		return "accountmanager";
+	}
+
+	private List<AccountInfoDto> getmockAccountList() {
+		AccountInfoDto d1 = new AccountInfoDto() {
+			{
+				setUsrId("iwatakhr");setInsDate("20181201");setIsExistFavProduct("1");
+			}
+		};
+		AccountInfoDto d2 = new AccountInfoDto() {
+			{
+				setUsrId("rock");setInsDate("20171201");setIsExistFavProduct("1");
+			}
+		};
+		List<AccountInfoDto> list = new ArrayList<AccountInfoDto>();
+		list.add(d1); list.add(d2);
+		return list;
+	}	
+	
+	@RequestMapping(value="/accnt/accnt_06/del", method=RequestMethod.POST)
+	public String delAccnt06(@ModelAttribute AccountInfoForm form, Model model) {
+		model.addAttribute("success_message", "削除成功、");
+
+		return "accountmanager";
 	}
 }

@@ -67,6 +67,19 @@
 		</put-attribute>
 	</definition>
 
+	<!-- アカウント管理画面 -->
+	<definition name="accountmanager" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="アカウント管理"/>
+		<put-attribute name="body" value="/WEB-INF/view/accountmanager.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.accountmanager" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="accountmanager.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	<!-- アカウント登録画面 -->
 	<definition name="accountregist" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント登録"/>
