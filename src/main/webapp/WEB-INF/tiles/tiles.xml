@@ -25,6 +25,7 @@
  	<definition name="mainContents.baseLayoutCss" template="/WEB-INF/tiles/common/mainContents/layout_template1_css.jsp">
 		<put-list-attribute name="cssfiles">
 			<add-attribute value="honoka/bootstrap.css" />
+			<add-attribute value="wfs-common.css" />
 			<add-attribute value="layout_header.css" />
 		</put-list-attribute>
 	</definition>
@@ -58,6 +59,13 @@
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountinfoJs" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountinfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 		<put-attribute name="headerCss">
 			<definition name="mainContents.baseLayoutCss.accountinfo" extends="mainContents.baseLayoutCss">
 				<put-list-attribute name="cssfiles" inherit="true">

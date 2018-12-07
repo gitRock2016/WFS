@@ -5,8 +5,8 @@
 		<h1>アカウント情報画面</h1>
 	</div>
 	
-	<div class="alert-success">${success_message}</div>
-	<div class="alert-danger">${danger_message}</div>
+	<div class="alert-success" id="success_message">${success_message}</div>
+	<div class="alert-danger" id="danger_message">${danger_message}</div>
 
 	<div class="page-header">
 		<h4>検索条件</h4>
@@ -25,8 +25,8 @@
 			<div class="form-group">
 				<label for="price">値段</label>
 				<div>
-					<input type="text" id="priceFrom" name="priceFrom"/>～
-					<input type="text" id="priceTo" name="priceTo"/>
+					<input type="number" id="priceFrom" name="priceFrom"/>～
+					<input type="number" id="priceTo" name="priceTo"/>
 					<button type="button" class="btn btn-primary" id="narrowingBtn">絞り込み</button>
 				</div>
 			</div>
@@ -48,9 +48,9 @@
 	
 	<div class="page-header">
 		<h4>お気に入り一覧
-		<span class="text-success">${dataCount}件表示	</span></h4>
+		<span class="text-success" id="favListCount">${dataCount}</span><span class="text-success">件表示</span></h4>
 			
-		<table class="table table-striped table-hover table-bordered">
+		<table class="table table-striped table-hover table-bordered" id="favListTable">
 			<thead>
 				<tr>
 					<th>作品名</th>
@@ -66,7 +66,7 @@
 				</c:if>
 				<c:if test="${dataCount > 0}">
 					<c:forEach var="obj" items="${data}" varStatus="obj_status">
-						<tr>
+						<tr class="wfs-show">
 							<td>
 <%-- 								<c:out value="${obj.productName}" /> --%>
 								<input type="hidden" name="productId" value="${obj.productId}" />
@@ -75,7 +75,7 @@
 							<td><c:out value="${obj.categoryName}" /></td>
 							<td><c:out value="${obj.price}" /></td>
 							<td><c:out value="${obj.takuban}" /></td>
-							<td>
+							<td >
 								<input type="hidden" name="dealerId" value="${obj.dealerId}" />
 								<a href='${showDealerInfo}/${obj.dealerId}' target='_blank'>${obj.dealerName}</a>
 							</td>
