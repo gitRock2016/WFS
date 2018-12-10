@@ -154,3 +154,30 @@ wfs.imgPreview=function(inputFileId, previewObjId){
 //}
 
 
+wfs.katakanaToHiragana = function(str){
+	return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+		var chr = match.charCodeAt(0) - 0x60;
+		return String.fromCharCode(chr);
+	});
+}
+
+/**
+ * ソートする
+ * 昇順にソート
+ * ひらがな：あ、い、・・・
+ * 数値：１，２，・・・
+ * 対応：数値、ひらがな、カタカナ
+ */
+wfs.sortAscMoji = function(a, b) {
+	return a.charCodeAt() - b.charCodeAt();
+}
+
+wfs.sortAscNum = function(a, b) {
+	return a - b;
+//	return wfs.sortAsc(wfs.katakanaToHiragana(a), wfs.katakanaToHiragana(b));
+}
+
+wfs.sortDesc = function(a, b){
+	return -1 * wfs.sortAsc(a, b);
+}
+

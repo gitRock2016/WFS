@@ -39,6 +39,7 @@
 						<option value="takuban">卓番</option>
 					</select>
 				</div>
+			<button type="button" class="btn btn-primary" id="sortSampleBtn">stub,並び替え,値段</button>
 			</div>
 <%-- 		</form:form> --%>
 	</div>

@@ -5,7 +5,53 @@ if (typeof wfs.accountinfo === "undefined") {
 wfs.accountinfo.mess={}
 wfs.accountinfo.mess.err1 = 'Toの値段がFromより小さいです。検索条件を見直してください。';
 
+
+WfsSortObj = function (key, obj){
+	this.key=key;
+	this.obj=obj;
+}
+WfsSortObj.prototype.getKey = function(){
+	return this.key;
+}
+WfsSortObj.prototype.getObj= function(){
+	return this.obj;
+}
+
+wfs.accountinfo.sortFavList = function(sorts, kind){
+	sorts = sorts.sort(function(a, b){
+		let akey = a.getKey();
+		let bkey = b.getKey();
+		if(kind==='price'){
+			return wfs.sortAscNum(akey, bkey);
+		}else if(kind==='category'){
+			return wfs.sortAscMoji(akey, bkey);
+		}
+	});
+	console.log(sorts);
+}
+
 $(function() {
+	
+	$('#sortSampleBtn').on('click', function(){
+		const trs = $('table#favListTable tbody tr');
+		const kind='price'; // TODO リストから取得する
+		
+		let sorts=[];
+		trs.each(function(){
+			let key;
+			if(kind === 'price'){ // TODO リストで選択したもので処理を分ける、暫定で値段だけ実行する
+				key= $(this).find('td').eq(2).text();
+			}
+			sorts.push(new WfsSortObj(key, $(this)));
+		});
+		wfs.accountinfo.sortFavList(sorts, kind);
+		const target = $('table#favListTable tbody');
+		for (let i = 0; i < sorts.length; i++) {
+			target.append(sorts[i].getObj());
+		}
+		
+	});
+
 	
 	$("#narrowingBtn").on("click",function(){
 		wfs.accountinfo.narrowFavList();
@@ -69,4 +115,3 @@ wfs.accountinfo.narrowByPrice = function(from, to, val){
 	}
 	return isNarrow;
 }
-
