@@ -17,14 +17,42 @@ WfsSortObj.prototype.getObj= function(){
 	return this.obj;
 }
 
-wfs.accountinfo.sortFavList = function(sorts, kind){
-	sorts = sorts.sort(function(a, b){
+WfsSortFactory = function(kind) {
+	this.kind = kind;
+	this.sorts = [];
+}
+WfsSortFactory.prototype.setWfsSort = function(wfsSortObj) {
+	this.sorts.push(wfsSortObj);
+}
+WfsSortFactory.prototype.setSortFunc = function(f) {
+	this.sortFunc=f;
+}
+// TODO kindに応じたソート処理を実装する、
+呼び出し側はkindを設定することで処理を呼び分けられるようにする
+
+WfsSortFactory.prototype.sort = function(f) {
+	this.sorts = this.sorts.sort(function(a, b) {
 		let akey = a.getKey();
 		let bkey = b.getKey();
-		if(kind==='price'){
+		return f(akey, bkey);
+	})
+}
+WfsSortFactory.prototype.getSorts = function() {
+	return this.sorts;
+}
+
+
+wfs.accountinfo.sortFavList = function(sorts, kind) {
+	sorts = sorts.sort(function(a, b) {
+		let akey = a.getKey();
+		let bkey = b.getKey();
+		if (kind === 'price') {
 			return wfs.sortAscNum(akey, bkey);
-		}else if(kind==='category'){
-			return wfs.sortAscMoji(akey, bkey);
+		} else if (kind === 'category') {
+			// TODO 検索結果にHIDDENでひらがな値を持たせて、それをキーにソートする
+			// return wfs.sortAscMoji(akey, bkey);
+		} else if (kind === 'takuban') {
+			return wfs.sortAscNum(akey, bkey);
 		}
 	});
 	console.log(sorts);
@@ -32,15 +60,44 @@ wfs.accountinfo.sortFavList = function(sorts, kind){
 
 $(function() {
 	
-	$('#sortSampleBtn').on('click', function(){
+	$('#sortSampleBtn').on('click', function() {
+		const kind = $('#sortSelect').val();
 		const trs = $('table#favListTable tbody tr');
-		const kind='price'; // TODO リストから取得する
+
+		let wfsSortFactry = new WfsSortFactory(kind);
+		trs.each(function() {
+			let key;
+			if (kind === 'price') {
+				key = parseInt($(this).find('td').eq(2).text());
+			}
+			wfsSortFactry.setWfsSort(new WfsSortObj(key, $(this)));
+		});
+//		wfsSortFactry.sort(wfs.sortAscNum);
+		wfsSortFactry.sort(function(a,b){ return a- b});
+		let sorts = wfsSortFactry.getSorts();
+		const target = $('table#favListTable tbody');
+		for (let i = 0; i < sorts.length; i++) {
+			target.append(sorts[i].getObj());
+		}
+	});
+	
+	
+	$('#sortSelect').on('blur',function(){
+		
+		const kind=$(this).val();
+		const trs = $('table#favListTable tbody tr');
 		
 		let sorts=[];
 		trs.each(function(){
 			let key;
-			if(kind === 'price'){ // TODO リストで選択したもので処理を分ける、暫定で値段だけ実行する
-				key= $(this).find('td').eq(2).text();
+			if(kind === 'price'){
+				key= parseInt($(this).find('td').eq(2).text());
+			}else if(kind==='category'){
+				// TODO 検索結果にHIDDENでひらがな値を持たせて、それをキーにソートする
+				//				key= $(this).find('td').eq(2).text();
+			}else if(kind==='takuban'){
+				// TODO 検索結果にHIDDENでひらがな値を持たせて、それをキーにソートする
+				key= parseInt($(this).find('td').eq(3).text());
 			}
 			sorts.push(new WfsSortObj(key, $(this)));
 		});
@@ -51,8 +108,7 @@ $(function() {
 		}
 		
 	});
-
-	
+		
 	$("#narrowingBtn").on("click",function(){
 		wfs.accountinfo.narrowFavList();
 	});

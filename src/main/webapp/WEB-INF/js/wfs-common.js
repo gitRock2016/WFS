@@ -180,4 +180,3 @@ wfs.sortAscNum = function(a, b) {
 wfs.sortDesc = function(a, b){
 	return -1 * wfs.sortAsc(a, b);
 }
-

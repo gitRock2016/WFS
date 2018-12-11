@@ -33,7 +33,7 @@
 			<div class="form-group">
 				<label for="sort">並び替え</label>
 				<div>
-					<select name="sort">
+					<select name="sort" id="sortSelect">
 						<option value="price">値段</option>
 						<option value="category">ジャンル</option>
 						<option value="takuban">卓番</option>
