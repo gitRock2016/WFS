@@ -5,6 +5,7 @@ import com.jp.wonfes.account.dao.qo.SelectUserFavProductsQoResp;
 public class SearchAccountDtoResp {
 	private String productName;
 	private String categoryName;
+	private String categoryNameReading;
 	private Integer price;
 	private String takuban;
 	private String dealerName;
@@ -53,10 +54,18 @@ public class SearchAccountDtoResp {
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
-	
+	public String getCategoryNameReading() {
+		return categoryNameReading;
+	}
+	public void setCategoryNameReading(String categoryNameReading) {
+		this.categoryNameReading = categoryNameReading;
+	}
+
+
 	public static SearchAccountDtoResp qo2Dto(SelectUserFavProductsQoResp qo) {
 		SearchAccountDtoResp dto = new SearchAccountDtoResp();
 		dto.setCategoryName(qo.getCategoryName());
+		dto.setCategoryNameReading(qo.getCategoryNameReading());
 		dto.setDealerName(qo.getDealerName());
 		dto.setPrice(qo.getPrice());
 		dto.setProductName(qo.getProductName());

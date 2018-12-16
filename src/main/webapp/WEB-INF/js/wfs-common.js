@@ -169,14 +169,57 @@ wfs.katakanaToHiragana = function(str){
  * 対応：数値、ひらがな、カタカナ
  */
 wfs.sortAscMoji = function(a, b) {
-	return a.charCodeAt() - b.charCodeAt();
+	let aa = wfs.katakanaToHiragana(a.toString());
+	let bb = wfs.katakanaToHiragana(b.toString());
+	if(aa < bb){
+		return -1;
+	}else if(aa > bb){
+		return 1
+	}else{
+		return 0;
+	}
 }
 
 wfs.sortAscNum = function(a, b) {
 	return a - b;
-//	return wfs.sortAsc(wfs.katakanaToHiragana(a), wfs.katakanaToHiragana(b));
 }
 
-wfs.sortDesc = function(a, b){
-	return -1 * wfs.sortAsc(a, b);
+wfs.sortDescNum = function(a, b){
+	return -1 * wfs.sortAscNum(a, b);
 }
+
+/**
+ * Class
+ * */
+
+WfsSortObj = function (key, obj){
+	this.key=key; // ソートするためのキー
+	this.obj=obj; // ソートされるオブジェクト 
+}
+WfsSortObj.prototype.getKey = function(){
+	return this.key;
+}
+WfsSortObj.prototype.getObj= function(){
+	return this.obj;
+}
+
+WfsSortFactory = function() {
+	this.sorts = []; // WfsSortObjを格納する
+	this.sorteds = []; // ソート済のWfsSortObj
+}
+WfsSortFactory.prototype.setWfsSort = function(wfsSortObj) {
+	this.sorts.push(wfsSortObj);
+}
+WfsSortFactory.prototype.sort = function(f) {
+	this.sorteds = this.sorts.concat();
+	this.sorteds = this.sorteds.sort(function(a, b) {
+		let akey = a.getKey();
+		let bkey = b.getKey();
+		return f(akey, bkey);
+	})
+}
+WfsSortFactory.prototype.getSorts = function() {
+	return this.sorteds;
+}
+
+

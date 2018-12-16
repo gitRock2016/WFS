@@ -5,6 +5,7 @@ public class SelectUserFavProductsQoResp {
 	private String productName;
 	private Integer productId;
 	private String categoryName;
+	private String categoryNameReading;
 	private Integer categoryId;
 	private Integer price;
 	private String takuban;
@@ -64,6 +65,12 @@ public class SelectUserFavProductsQoResp {
 	}
 	public void setProductId(Integer productId) {
 		this.productId = productId;
+	}
+	public String getCategoryNameReading() {
+		return categoryNameReading;
+	}
+	public void setCategoryNameReading(String categoryNameReading) {
+		this.categoryNameReading = categoryNameReading;
 	}
 	
 	

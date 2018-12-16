@@ -21,12 +21,11 @@
 				action="/WonFesSys/mp/show" name="mapSearchForm">
 				<button type="submit" class="btn btn-info btn-sm" id="showMapBtn">地図確認</button>
 			</form:form>
-<%-- 		<form:form modelAttribute="fm" method="get" action="/WonFesSys/dlr/dlr_05/search"> --%>
 			<div class="form-group">
 				<label for="price">値段</label>
 				<div>
-					<input type="number" id="priceFrom" name="priceFrom"/>～
-					<input type="number" id="priceTo" name="priceTo"/>
+					<input type="number" id="priceFrom" name="priceFrom" min="0"/>～
+					<input type="number" id="priceTo" name="priceTo" min="0"/>
 					<button type="button" class="btn btn-primary" id="narrowingBtn">絞り込み</button>
 				</div>
 			</div>
@@ -39,9 +38,7 @@
 						<option value="takuban">卓番</option>
 					</select>
 				</div>
-			<button type="button" class="btn btn-primary" id="sortSampleBtn">stub,並び替え,値段</button>
 			</div>
-<%-- 		</form:form> --%>
 	</div>
 	
 	</div>
@@ -69,11 +66,10 @@
 					<c:forEach var="obj" items="${data}" varStatus="obj_status">
 						<tr class="wfs-show">
 							<td>
-<%-- 								<c:out value="${obj.productName}" /> --%>
 								<input type="hidden" name="productId" value="${obj.productId}" />
 								<a href='#'>${obj.productName}</a>
 							</td>
-							<td><c:out value="${obj.categoryName}" /></td>
+							<td><c:out value="${obj.categoryName}" /><input type="hidden" name="categoryNameReading" value="${obj.categoryNameReading}" /></td>
 							<td><c:out value="${obj.price}" /></td>
 							<td><c:out value="${obj.takuban}" /></td>
 							<td >
