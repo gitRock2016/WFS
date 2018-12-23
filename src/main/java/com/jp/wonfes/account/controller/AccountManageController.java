@@ -84,7 +84,7 @@ public class AccountManageController {
 		
 	}
 	
-	@RequestMapping(value="/accnt/accnt_06/init", method=RequestMethod.GET)
+	@RequestMapping(value="/accnt/accnt_05/init", method=RequestMethod.GET)
 	public String initAccnt06(Model model) {
 		
 //		String userId = (String) session.getAttribute(WfsSss.ID.getCode());
@@ -104,6 +104,15 @@ public class AccountManageController {
 		return "accountmanager";
 	}
 
+
+	@RequestMapping(value="/accnt/accnt_05/del", method=RequestMethod.POST)
+	public String delAccnt06(@ModelAttribute AccountInfoForm form, Model model) {
+		model.addAttribute("success_message", "削除成功、");
+
+		return "accountmanager";
+	}
+	
+	// private 
 	private List<AccountInfoDto> getmockAccountList() {
 		AccountInfoDto d1 = new AccountInfoDto() {
 			{
@@ -120,10 +129,4 @@ public class AccountManageController {
 		return list;
 	}	
 	
-	@RequestMapping(value="/accnt/accnt_06/del", method=RequestMethod.POST)
-	public String delAccnt06(@ModelAttribute AccountInfoForm form, Model model) {
-		model.addAttribute("success_message", "削除成功、");
-
-		return "accountmanager";
-	}
 }

@@ -25,7 +25,7 @@
 				</thead>
 				<tbody>
 					<c:if test="${dataCount==0}">
-						<p class="text-danger">※お気に入り登録した作品がありません。</p>
+						<p class="text-danger">※ユーザ―情報がありません</p>
 					</c:if>
 					<c:if test="${dataCount > 0}">
 						<c:forEach var="obj" items="${data}" varStatus="obj_status">
@@ -36,9 +36,11 @@
 								</td>
 								<td><c:out value="${obj.insDate}" /></td>
 								<td><c:out value="${obj.isExistFavProduct}" /></td>
-								<td><label for="selected_${obj_status.index}"><input
-										type="radio" name="selected" id="selected_${obj_status.index }"
-										value="${obj.usrId}">選択</label></td>
+								<td>
+									<label for="selected_${obj_status.index}">
+									<input type="radio" name="selected" id="selected_${obj_status.index }" value="${obj.usrId}">
+									選択</label>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:if>
