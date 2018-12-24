@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.jp.wonfes.account.controller.form.AccountInfoForm;
 import com.jp.wonfes.account.controller.form.LoginForm;
 import com.jp.wonfes.account.logic.AccountManageLogic;
+import com.jp.wonfes.account.logic.AccountSearchLogic;
 import com.jp.wonfes.account.logic.dto.AccountInfoDto;
 import com.jp.wonfes.account.logic.dto.CheckAccountDto;
 import com.jp.wonfes.account.logic.dto.SearchAccountDtoReq;
 import com.jp.wonfes.account.logic.dto.SearchAccountDtoResp;
+import com.jp.wonfes.account.logic.dto.SearchUsersInfoDtoResp;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsLogicException;
@@ -35,6 +37,8 @@ public class AccountManageController {
 	
 	@Autowired
 	private AccountManageLogic accountManageLogic;
+	@Autowired
+	private AccountSearchLogic accountSearchLogic;
 
 	@RequestMapping(value = "/accnt/accnt_01/show", method = RequestMethod.GET)
 	public String init(Model model) {
@@ -87,18 +91,8 @@ public class AccountManageController {
 	@RequestMapping(value="/accnt/accnt_05/init", method=RequestMethod.GET)
 	public String initAccnt06(Model model) {
 		
-//		String userId = (String) session.getAttribute(WfsSss.ID.getCode());
-//
-//		SearchAccountDtoReq dto = new SearchAccountDtoReq();
-//		dto.setUsrId(userId);
-//		try {
-//			List<SearchAccountDtoResp> data = accountSearchLogic.searchAccountInfo(dto);
-//			model.addAttribute("data", data);
-//			model.addAttribute("dataCount", data.size());
-//		} catch (WfsLogicException e) {
-//			model.addAttribute("danger_message", "なにがしかエラーが発生");
-//		}
-		List<AccountInfoDto> l= this.getmockAccountList();
+//		List<AccountInfoDto> l= this.getmockAccountList();
+		List<SearchUsersInfoDtoResp> l = accountSearchLogic.searchUsersInfo();
 		model.addAttribute("data", l);
 		model.addAttribute("dataCount", l.size());
 		return "accountmanager";

@@ -9,6 +9,6 @@ import com.jp.wonfes.common.WfsLogicException;
 
 public interface AccountSearchLogic {
 	List<SearchAccountDtoResp> searchAccountInfo(SearchAccountDtoReq dto) throws WfsLogicException;
-	List<SearchUsersInfoDtoResp> searchUsersInfo() throws WfsLogicException;
+	List<SearchUsersInfoDtoResp> searchUsersInfo();
 
 }
