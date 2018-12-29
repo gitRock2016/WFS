@@ -15,7 +15,7 @@
 			<span class="text-success">${dataCount}件表示	</span></h4>
 			<form:form method="post" action="/WonFesSys/accnt/accnt_05/del" id="delAccountForm">
 				<input type="hidden" id="delAccount" name="delAccount" value=""/>
-				<button type="button" class="btn btn-primary" id="accountDelBtn">削除</button>
+				<button type="button" class="btn btn-primary" id="accountDelBtn">アカウントの削除</button>
 			</form:form>
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
@@ -42,7 +42,7 @@
 								<td>
 									<label for="selected_${obj_status.index}">
 									<input type="radio" name="selected" id="selected_${obj_status.index }" value="${obj.usrId}">
-									選択</label>
+									</label>
 								</td>
 							</tr>
 						</c:forEach>

@@ -111,7 +111,14 @@ public class AccountManageController {
 			model.addAttribute("danger_message", e.getMessage());
 			return "accountmanager";
 		}
-		model.addAttribute("success_message", msg.getMessage("wfs.msg.e.cmmn1", new String[] { "アカウントの削除処理" }));
+		// 削除後の再検索
+		SearchUsersInfoDtoReq dto = new SearchUsersInfoDtoReq();
+		dto.setUserId(null); // 検索条件を指定しない
+		List<SearchUsersInfoDtoResp> l = accountSearchLogic.searchUsersInfo(dto);
+		model.addAttribute("data", l);
+		model.addAttribute("dataCount", l.size());
+		model.addAttribute("success_message",
+				msg.getMessage("wfs.msg.e.cmmn1", new String[] { "アカウント( " + delAccount + " )の削除処理" }));
 		return "accountmanager";
 	}
 	
