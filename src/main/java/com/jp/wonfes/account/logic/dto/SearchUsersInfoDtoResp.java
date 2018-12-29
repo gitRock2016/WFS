@@ -1,13 +1,14 @@
 package com.jp.wonfes.account.logic.dto;
 
 public class SearchUsersInfoDtoResp {
-	private Integer usrId;
+	private String usrId;
 	private String insDate;
 	private String isExistFavProduct;
-	public Integer getUsrId() {
+
+	public String getUsrId() {
 		return usrId;
 	}
-	public void setUsrId(Integer usrId) {
+	public void setUsrId(String usrId) {
 		this.usrId = usrId;
 	}
 	public String getInsDate() {

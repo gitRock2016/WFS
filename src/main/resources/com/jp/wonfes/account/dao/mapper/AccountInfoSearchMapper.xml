@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jp.wonfes.account.dao.mapper.AccountInfoSearchMapper">
+	<select id="selectAccountUserInfoDetails"
+		parameterType="com.jp.wonfes.account.dao.mapper.qo.SelectAccountUserInfoQoReq"
+		resultType="com.jp.wonfes.account.dao.qo.SelectAccountUserInfoQoResp">
+		SELECT
+			 usr.usr_id     as usrId
+			,usr.passwd     as passwd
+			,usr.user_name  as userName
+			,usr.ins_date   as insDate
+			,usr.upd_date   as updDate
+			,usrl.role      as role
+			,usrdfp.dealer_id as dealerId
+			,usrdfp.product_id as productId
+		from wfs.usr usr
+			left join wfs.usr_role usrl
+			 on usr.usr_id = usrl.usr_id
+			left join wfs.usr_detail_fav_products usrdfp
+			 on usr.usr_id = usrdfp.usr_id
+		<where>
+			<if test="userId != null">
+				 usr_id = #{userId}
+			</if>
+		</where>
+		order by usr.usr_id
+	</select>
+	
+	
+</mapper>

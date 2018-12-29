@@ -9,11 +9,14 @@
 	<div class="alert-danger">${danger_message}</div>
 
 	
-	<form:form method="post" action="/WonFesSys/accnt/accnt_06/del" modelAttribute="accountInfoForm">
+
 		<div class="page-header">
 			<h4>アカウント一覧
 			<span class="text-success">${dataCount}件表示	</span></h4>
-			<button type="submit" class="btn btn-primary" id="accountDelBtn">削除</button>
+			<form:form method="post" action="/WonFesSys/accnt/accnt_05/del" id="delAccountForm">
+				<input type="hidden" id="delAccount" name="delAccount" value=""/>
+				<button type="button" class="btn btn-primary" id="accountDelBtn">削除</button>
+			</form:form>
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
 					<tr>
@@ -47,6 +50,5 @@
 				</tbody>
 			</table>
 		</div>
-	</form:form>
 	
 </div>
