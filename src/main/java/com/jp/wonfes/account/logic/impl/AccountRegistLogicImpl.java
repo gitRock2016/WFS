@@ -1,5 +1,11 @@
 package com.jp.wonfes.account.logic.impl;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -37,8 +43,19 @@ public class AccountRegistLogicImpl implements AccountRegistLogic{
 		usr.setUsrId(userid);
 		usr.setPasswd(DigestUtils.md5DigestAsHex(password.getBytes()));
 		usr.setUserName(username);
+		Date date = this.getNow();
+		usr.setInsDate(date);
+		usr.setUpdDate(date);
 		usrmapper.insert(usr);
 		
+	}
+	
+	private Date getNow() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZoneId zone = ZoneId.systemDefault();
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, zone);
+		Instant instant = zonedDateTime.toInstant();
+		return Date.from(instant);
 	}
 
 }

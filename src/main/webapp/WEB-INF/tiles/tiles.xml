@@ -86,6 +86,13 @@
 				</put-list-attribute>
 			</definition>
 		</put-attribute>
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountmanager" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountmanager.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 	
 	<!-- アカウント登録画面 -->

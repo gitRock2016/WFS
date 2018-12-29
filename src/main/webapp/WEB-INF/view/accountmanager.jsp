@@ -9,11 +9,14 @@
 	<div class="alert-danger">${danger_message}</div>
 
 	
-	<form:form method="post" action="/WonFesSys/accnt/accnt_06/del" modelAttribute="accountInfoForm">
+
 		<div class="page-header">
 			<h4>アカウント一覧
 			<span class="text-success">${dataCount}件表示	</span></h4>
-			<button type="submit" class="btn btn-primary" id="accountDelBtn">削除</button>
+			<form:form method="post" action="/WonFesSys/accnt/accnt_05/del" id="delAccountForm">
+				<input type="hidden" id="delAccount" name="delAccount" value=""/>
+				<button type="button" class="btn btn-primary" id="accountDelBtn">アカウントの削除</button>
+			</form:form>
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
 					<tr>
@@ -25,7 +28,7 @@
 				</thead>
 				<tbody>
 					<c:if test="${dataCount==0}">
-						<p class="text-danger">※お気に入り登録した作品がありません。</p>
+						<p class="text-danger">※ユーザ―情報がありません</p>
 					</c:if>
 					<c:if test="${dataCount > 0}">
 						<c:forEach var="obj" items="${data}" varStatus="obj_status">
@@ -36,15 +39,16 @@
 								</td>
 								<td><c:out value="${obj.insDate}" /></td>
 								<td><c:out value="${obj.isExistFavProduct}" /></td>
-								<td><label for="selected_${obj_status.index}"><input
-										type="radio" name="selected" id="selected_${obj_status.index }"
-										value="${obj.usrId}">選択</label></td>
+								<td>
+									<label for="selected_${obj_status.index}">
+									<input type="radio" name="selected" id="selected_${obj_status.index }" value="${obj.usrId}">
+									</label>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:if>
 				</tbody>
 			</table>
 		</div>
-	</form:form>
 	
 </div>

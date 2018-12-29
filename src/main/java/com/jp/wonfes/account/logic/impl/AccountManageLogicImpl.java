@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 import com.jp.wonfes.account.logic.AccountManageLogic;
 import com.jp.wonfes.account.logic.dto.CheckAccountDto;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
@@ -37,6 +38,18 @@ public class AccountManageLogicImpl implements AccountManageLogic {
 		String rqpwd = AuthManage.getPasswordEnryptionAccount(password);
 		if (!Objects.equal(dbpwd, rqpwd)) {
 			throw new WfsLogicException(msg.getMessage("wfs.msg.e.accnt2"));
+		}
+	}
+
+	@Override
+	public void deleteAccountInfo(String userId) throws WfsLogicException {
+		if(Strings.isNullOrEmpty(userId)) {
+			throw new WfsLogicException(msg.getMessage("wfs.msg.e.cmmn4"));
+		}
+		
+		int count = usrmapper.deleteByPrimaryKey(userId);
+		if (count == 0) {
+			throw new WfsLogicException(msg.getMessage("wfs.msg.e.cmmn5"));
 		}
 	}
 

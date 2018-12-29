@@ -14,17 +14,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jp.wonfes.account.controller.form.AccountInfoForm;
 import com.jp.wonfes.account.controller.form.LoginForm;
 import com.jp.wonfes.account.logic.AccountManageLogic;
+import com.jp.wonfes.account.logic.AccountSearchLogic;
 import com.jp.wonfes.account.logic.dto.AccountInfoDto;
 import com.jp.wonfes.account.logic.dto.CheckAccountDto;
 import com.jp.wonfes.account.logic.dto.SearchAccountDtoReq;
 import com.jp.wonfes.account.logic.dto.SearchAccountDtoResp;
+import com.jp.wonfes.account.logic.dto.SearchUsersInfoDtoReq;
+import com.jp.wonfes.account.logic.dto.SearchUsersInfoDtoResp;
 import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsLogicException;
+import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.domain.auth.WfsSss;
 
 @Controller
@@ -32,9 +37,12 @@ public class AccountManageController {
 	
 	@Autowired
 	private UsrMapper usrmapper;
-	
 	@Autowired
 	private AccountManageLogic accountManageLogic;
+	@Autowired
+	private AccountSearchLogic accountSearchLogic;
+	@Autowired
+	private WfsMessage msg;
 
 	@RequestMapping(value = "/accnt/accnt_01/show", method = RequestMethod.GET)
 	public String init(Model model) {
@@ -84,26 +92,37 @@ public class AccountManageController {
 		
 	}
 	
-	@RequestMapping(value="/accnt/accnt_06/init", method=RequestMethod.GET)
+	@RequestMapping(value="/accnt/accnt_05/init", method=RequestMethod.GET)
 	public String initAccnt06(Model model) {
-		
-//		String userId = (String) session.getAttribute(WfsSss.ID.getCode());
-//
-//		SearchAccountDtoReq dto = new SearchAccountDtoReq();
-//		dto.setUsrId(userId);
-//		try {
-//			List<SearchAccountDtoResp> data = accountSearchLogic.searchAccountInfo(dto);
-//			model.addAttribute("data", data);
-//			model.addAttribute("dataCount", data.size());
-//		} catch (WfsLogicException e) {
-//			model.addAttribute("danger_message", "なにがしかエラーが発生");
-//		}
-		List<AccountInfoDto> l= this.getmockAccountList();
+		SearchUsersInfoDtoReq dto = new SearchUsersInfoDtoReq();
+		dto.setUserId(null); // 検索条件を指定しない
+		List<SearchUsersInfoDtoResp> l = accountSearchLogic.searchUsersInfo(dto);
 		model.addAttribute("data", l);
 		model.addAttribute("dataCount", l.size());
 		return "accountmanager";
 	}
 
+
+	@RequestMapping(value = "/accnt/accnt_05/del", method = RequestMethod.POST)
+	public String delAccnt06(@RequestParam("delAccount") String delAccount, Model model) {
+		try {
+			accountManageLogic.deleteAccountInfo(delAccount);
+		} catch (WfsLogicException e) {
+			model.addAttribute("danger_message", e.getMessage());
+			return "accountmanager";
+		}
+		// 削除後の再検索
+		SearchUsersInfoDtoReq dto = new SearchUsersInfoDtoReq();
+		dto.setUserId(null); // 検索条件を指定しない
+		List<SearchUsersInfoDtoResp> l = accountSearchLogic.searchUsersInfo(dto);
+		model.addAttribute("data", l);
+		model.addAttribute("dataCount", l.size());
+		model.addAttribute("success_message",
+				msg.getMessage("wfs.msg.e.cmmn1", new String[] { "アカウント( " + delAccount + " )の削除処理" }));
+		return "accountmanager";
+	}
+	
+	// private 
 	private List<AccountInfoDto> getmockAccountList() {
 		AccountInfoDto d1 = new AccountInfoDto() {
 			{
@@ -120,10 +139,4 @@ public class AccountManageController {
 		return list;
 	}	
 	
-	@RequestMapping(value="/accnt/accnt_06/del", method=RequestMethod.POST)
-	public String delAccnt06(@ModelAttribute AccountInfoForm form, Model model) {
-		model.addAttribute("success_message", "削除成功、");
-
-		return "accountmanager";
-	}
 }

@@ -31,4 +31,5 @@
 		WHERE
 			usrFav.usr_id = #{userId}
 	</select>
+	
 </mapper>
