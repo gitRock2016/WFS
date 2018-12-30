@@ -32,8 +32,6 @@
 			</div>
 			<div class="form-group">
 				<label>コメント：</label>
-<%-- 				TODO 登録時にテキストエリアを利用する
-				<textarea id="comment" cols="15" rows="6">${workInfoForm.comment }</textarea> --%>
 				<div id="comment">
 					<span>${workInfoForm.comment }</span>
 				</div>
@@ -45,23 +43,13 @@
 		</div>
 		<div class="col-lg-7">
 			<div class="bs-component" id="imgFiled">
-<!-- 				<div class="form-group"> -->
+				<c:forEach var="obj" items="${workInfoForm.productImgUrls}"
+					varStatus="obj_status">
 					<div class="icon-image">
-						<img src="${workInfoForm.productImgUrl1}" id="productImgUrl1" name="productImgUrl1"/>
+						<img src="${obj}" id="productImgUrl${obj_status.count }"
+							name="productImgUrl${obj_status.count }" />
 					</div>
-					<div class="icon-image">
-						<img src="${workInfoForm.productImgUrl2}" id="productImgUrl2" name="productImgUrl2"/>
-					</div>
-					<div class="icon-image">
-						<img src="${workInfoForm.productImgUrl3}" id="productImgUrl3" name="productImgUrl3"/>
-					</div>
-					<div class="icon-image">
-						<img src="${workInfoForm.productImgUrl4}" id="productImgUrl4" name="productImgUrl4"/>
-					</div>
-					<div class="icon-image">
-						<img src="${workInfoForm.productImgUrl5}" id="productImgUrl5" name="productImgUrl5"/>
-					</div>
-<!-- 				</div> -->
+				</c:forEach>
 			</div>
 		</div>
 	</form:form>
