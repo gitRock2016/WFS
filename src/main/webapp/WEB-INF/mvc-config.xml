@@ -26,6 +26,7 @@
 	<!-- コンポーネント -->
 	<context:component-scan base-package="com.jp.wonfes.account.*" />
 	<context:component-scan base-package="com.jp.wonfes.dealer.*" />
+	<context:component-scan base-package="com.jp.wonfes.work.*" />
 	<context:component-scan base-package="com.jp.wonfes.domain.*" />
 	
 	<!-- todo リリース後以下は破棄する予定 -->
