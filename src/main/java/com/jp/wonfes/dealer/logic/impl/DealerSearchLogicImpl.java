@@ -19,6 +19,7 @@ import com.jp.wonfes.dealer.dao.mapper.DealerSearchMapper;
 import com.jp.wonfes.dealer.dao.qo.SelectDealersCategoriesQoResp;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoProductDtoResp;
 import com.jp.wonfes.domain.code.BusinessClassificationCd;
 import com.jp.wonfes.service.dao.WfsDataException;
 
@@ -73,7 +74,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		resp.setProductFileds(this.getProductFiledsMock());
 		resp.setHpLink(d.getHpLink());
 		resp.setTwLink(d.getTwLink());
-		resp.setProductList(productList);
+		resp.setProductList(this.getQo2dto(productList));
 		
 		return resp;
 	}
@@ -122,6 +123,19 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		return arrayList;
 	}
 	
+	private List<SearchDealerInfoProductDtoResp> getQo2dto(List<DealersDetailProducts> productList) {
+		List<SearchDealerInfoProductDtoResp> list = new ArrayList<SearchDealerInfoProductDtoResp>();
+		for (DealersDetailProducts qo : productList) {
+			SearchDealerInfoProductDtoResp dto = new SearchDealerInfoProductDtoResp();
+			dto.setDealerId(qo.getDealerId());
+			dto.setProductId(qo.getProductId());
+			dto.setProductName(qo.getProductName());
+			dto.setPrice(qo.getPrice());
+			list.add(dto);
+		}
+		return list;
+	}
+
 	// モック
 	/**
 	 * マスタの名称を格納する
@@ -157,5 +171,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 			}
 		};
 	}
+
+
 
 }

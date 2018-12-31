@@ -42,6 +42,7 @@
  --%>
  	<h2>開発画面へ</h2>
 	<a href="${top}">top</a><br/>
+	<c:url value="/wrk/wrk_05/init/1/1" var="wrk_wrk_05_init" /><a href="${wrk_wrk_05_init}">作品情報画面、ディーラ１、作品１</a><br/>
 	<c:url value="/g03/init" var="g03_init" /><a href="${g03_init}">アカウント情報画面</a><br/>
 	<c:url value="/dlr/dlr_05/init" var="dlr05_init" /><a href="${dlr05_init}">ディーラー検索画面2</a><br/>
 	<c:url value="/dlr/dlr_01/show?reg=new" var="dlr_01_show" /><a href="${dlr_01_show}">ディーラー登録画面2</a><br/>

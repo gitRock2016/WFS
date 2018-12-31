@@ -197,5 +197,26 @@
  		<put-attribute name="titleName" value="ディーラ情報削除完了画面"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealereditfindel.jsp" />
 	</definition>
-
+	
+	<!-- 作品情報画面 -->
+	<definition name="workinfo" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品情報"/>
+		<put-attribute name="body" value="/WEB-INF/view/workinfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workinfo" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workinfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workinfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workinfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	
 </tiles-definitions>
