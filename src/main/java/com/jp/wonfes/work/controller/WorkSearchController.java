@@ -1,7 +1,5 @@
 package com.jp.wonfes.work.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +39,7 @@ public class WorkSearchController {
 	}
 	
 	// mock
-	// TODO Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
+	// Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
 //	private WorkInfoForm getMock1() {
 //		WorkInfoForm form = new WorkInfoForm();
 //		form.setProductId(1);

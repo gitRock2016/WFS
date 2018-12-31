@@ -185,13 +185,6 @@
 		<put-attribute name="body" value="/WEB-INF/view/dealerregistfin.jsp" />
 	</definition>
 	
-	<!-- ディーラー情報登録編集完了 -->
-	<!-- TODO 仕様にないので後で削除 -->
-	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="ディーラ情報登録編集完了"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealereditfinreg.jsp" />
-	</definition>
-	
 	<!-- ディーラー情報削除完了 -->
 	<definition name="dealereditfindel" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報削除完了画面"/>

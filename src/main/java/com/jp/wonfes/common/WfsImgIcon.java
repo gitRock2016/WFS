@@ -18,7 +18,7 @@ public class WfsImgIcon extends WfsAbstractFile {
 		this.dealerId = dealerId;
 		this.extention = this.getWfsExtention();
 		
-		// TODO 画像アイコンであることのチェックを行う、DI使う？
+		// TODO 画像アイコンであることのチェックを行いたい
 		// 拡張子がなければエラー
 		// 拡張子が画像アイコンでなければエラー
 		// アイコンファイル名が拡張子を含め10桁を超える場合（テーブル定義を拡張したほうがいい）

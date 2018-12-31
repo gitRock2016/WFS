@@ -22,11 +22,6 @@ public class AccountRegistForm {
 	@Length(min=5, max = 32)
 	private String passwordSecond;
 
-	//	private String passwoSecSecound
-	// passwordSecondはクライアント側のみで利用するため定義しない
-	
-	// TODO 半角数値、半角英数値のチェックを実装すること
-
 	public String getUserid() {
 		return userid;
 	}

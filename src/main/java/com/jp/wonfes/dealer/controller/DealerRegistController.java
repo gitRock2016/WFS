@@ -137,7 +137,7 @@ public class DealerRegistController {
 			return "dealeredit";
 		}
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報削除処理" });
-		model.addAttribute("success_message", messageSucceed+"TODO:実際の削除処理は後で実装する");
+		model.addAttribute("success_message", messageSucceed);
 		
 		return "dealereditfindel";
 	}

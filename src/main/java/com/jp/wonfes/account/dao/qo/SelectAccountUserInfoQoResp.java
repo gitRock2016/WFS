@@ -1,16 +1,10 @@
 package com.jp.wonfes.account.dao.qo;
 
-import java.time.LocalDateTime;
-
 public class SelectAccountUserInfoQoResp {
 
 	private String usrId;
 	private String passwd;
 	private String userName;
-	// TODO issNo48
-//	private LocalDateTime insDate;
-//	private LocalDateTime updDate;
-
 	private String insDate;
 	private String updDate;
 	private String role;
@@ -35,20 +29,6 @@ public class SelectAccountUserInfoQoResp {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
-//	public LocalDateTime getInsDate() {
-//		return insDate;
-//	}
-//	public void setInsDate(LocalDateTime insDate) {
-//		this.insDate = insDate;
-//	}
-//	public LocalDateTime getUpdDate() {
-//		return updDate;
-//	}
-//	public void setUpdDate(LocalDateTime updDate) {
-//		this.updDate = updDate;
-//	}
-	
 	public String getInsDate() {
 		return insDate;
 	}

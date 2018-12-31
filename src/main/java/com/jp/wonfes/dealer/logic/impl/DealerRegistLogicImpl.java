@@ -64,8 +64,8 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		dealer.setImgIconFile(dealerIconCd); // ディーラーアイコンコード
 		dealer.setHpLink(Strings.nullToEmpty(dto.getHpLink())); // HP
 		dealer.setTwLink(Strings.nullToEmpty(dto.getTwLink())); // TW
-		dealer.setSortKey("ア"); // ソートキー、TODO　リリース後に削除するため固定値をいれる
-		
+		dealer.setSortKey("ア"); // ソートキー、TODO　ディーラ名の先頭小文字をいれること
+			
 		if(dealersMapper.insert(dealer)==0) {
 			throw new WfsLogicException("登録処理に失敗しました");
 		}
@@ -91,8 +91,8 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 			// アイコン画像を更新しない場合は、画像データがこないので何もしない
 			wfsImgLogic.save(imgIcon);
 		}
-		// TODO 拡張子がおかしい場合はエラーを出すこと、画像に対する仕様を整理しておく
-		
+		// TODO 拡張子がおかしい場合はエラーを出すようにしたい（画像に対する仕様を整理する）
+			
 		// 更新処理(テーブル）
 		Dealers dealer = dealersMapper.selectByPrimaryKey(dto.getId());
 		dealer.setDealerName(name); // ディーラ名
@@ -124,26 +124,26 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		DealersDetailProductsSaledateExample example1 = new DealersDetailProductsSaledateExample();
 		example1.createCriteria().andDealerIdEqualTo(id);
 		int r1 = dealersDetailProductsSaledateMapper.deleteByExample(example1);
-		// TODO debug
-		System.out.println("DealersDetailProductsSaledate:削除件数:" + r1);
+		// TODO Loggerを導入したい
+		// System.out.println("DealersDetailProductsSaledate:削除件数:" + r1);
 		
 		DealersDetailProductsImgsExample example2 = new DealersDetailProductsImgsExample();
 		example2.createCriteria().andDealerIdEqualTo(id);
 		int r2=dealersDetailProductsImgsMapper.deleteByExample(example2);
-		System.out.println("DealersDetailProductsImgs:削除件数:" + r2);
+//		System.out.println("DealersDetailProductsImgs:削除件数:" + r2);
 		
 		DealersDetailProductsCategoriesExample example3 = new DealersDetailProductsCategoriesExample();
 		example3.createCriteria().andDealerIdEqualTo(id);
 		int r3 = dealersDetailProductsCategoriesMapper.deleteByExample(example3);
-		System.out.println("DealersDetailProductsCategories:削除件数:" + r3);
+//		System.out.println("DealersDetailProductsCategories:削除件数:" + r3);
 		
 		DealersDetailProductsExample example4= new DealersDetailProductsExample();
 		example4.createCriteria().andDealerIdEqualTo(id);
 		int r4 = dealersDetailProductsMapper.deleteByExample(example4);
-		System.out.println("DealersDetailProducts:削除件数:" + r4);
+//		System.out.println("DealersDetailProducts:削除件数:" + r4);
 		
 		int r5 = dealersMapper.deleteByPrimaryKey(id);
-		System.out.println("Dealers:削除件数:" + r5);
+//		System.out.println("Dealers:削除件数:" + r5);
 		
 		if (r1 + r2 + r3 + r4 + r5 == 0) {
 			throw new WfsLogicException("ディーラ情報の削除に失敗しました。");

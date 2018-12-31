@@ -16,8 +16,6 @@ import com.jp.wonfes.cmmn.dao.mapper.UsrMapper;
 import com.jp.wonfes.cmmn.dao.qo.Usr;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
-import com.jp.wonfes.common.WfsSysytemException;
-import com.jp.wonfes.service.dao.WfsDataException;
 
 @Service
 public class AccountRegistLogicImpl implements AccountRegistLogic{
