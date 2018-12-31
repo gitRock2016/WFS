@@ -28,7 +28,7 @@ wfs.com={
 			get:function(childUrl){
 				const s = childUrl.substr(0,1);
 				// よく間違えそうな誤りだけチェック
-				if(s!=="/"){alert("URL指定誤り、先頭の/は不要です：");} 
+				if (s !== "/") {childUrl = "/" + childUrl} 
 				return wfs.com.baseUrl+childUrl;
 			}
 		}
