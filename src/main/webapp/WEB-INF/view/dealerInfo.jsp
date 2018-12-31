@@ -68,7 +68,7 @@
 
 	<div class="col-lg-12">
 		<div class="bs-component">
-			<table class="table table-striped table-hover table-bordered">
+			<table class="table table-striped table-hover table-bordered" id="searchResultDealerInfo">
 				<thead>
 					<tr>
 						<th>作品名</th>
@@ -80,7 +80,11 @@
 						<c:forEach var="obj" items="${dealerInfoForm.productList}"
 							varStatus="obj_status">
 							<tr class="table-info">
-								<td><c:out value="${obj.productName}" /></td>
+								<td>
+									<input type="hidden" value="${obj.productName }" name="productName_${obj_status.count} }"/>
+									<input type="hidden" value="${obj.dealerId }" name="dealerId_${obj_status.count} }"/>
+									<input type="hidden" value="${obj.productId }" name="productId_${obj_status.count} }"/>
+								</td>
 								<td><c:out value="${obj.price}" /></td>
 							</tr>
 						</c:forEach>
