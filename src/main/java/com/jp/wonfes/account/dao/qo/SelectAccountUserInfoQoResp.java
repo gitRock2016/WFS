@@ -1,7 +1,5 @@
 package com.jp.wonfes.account.dao.qo;
 
-import java.time.LocalDateTime;
-
 public class SelectAccountUserInfoQoResp {
 
 	private String usrId;

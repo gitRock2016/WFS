@@ -8,17 +8,11 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImgIcon {
 	
-//	@Autowired
-//	private WfsApplicationConf wfsApplicationConf; 
-	
-	private static final int iconFileNameMaxLength = 10;
+//	private static final int iconFileNameMaxLength = 10;
 	private static final String[] extentionList = {"jpeg","jpg","gif","png","BMP"};
 
 	private String dealerId;

@@ -19,9 +19,6 @@ import com.jp.wonfes.domain.auth.WfsSss;
 
 @Controller
 public class AccountSearchController {
-	
-	@Autowired
-	private WfsMessage msg;
 
 	@Autowired
 	private AccountSearchLogic accountSearchLogic;

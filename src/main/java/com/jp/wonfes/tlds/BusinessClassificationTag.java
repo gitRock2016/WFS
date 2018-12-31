@@ -5,12 +5,6 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.jp.wonfes.cmmn.dao.mapper.CategoriesMapper;
-import com.jp.wonfes.cmmn.dao.qo.Categories;
-import com.jp.wonfes.common.WfsSysytemException;
 import com.jp.wonfes.domain.code.BusinessClassificationCd;
 
 /**

@@ -21,7 +21,7 @@ import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoProductDtoResp;
 import com.jp.wonfes.domain.code.BusinessClassificationCd;
-import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.domain.excp.WfsDataException;
 
 @Service
 public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerSearchLogic {
