@@ -39,9 +39,7 @@ wfs.map4Djn.getFavDealerJson = function() {
 	}).done(function(data){
 		wfs.map.initFlashFavDealer(data);
 	}).fail(function(){
-		// TODO 正式なエラー表示をあとで実装すること
 		alert("favディーラJSONの取得に失敗しました");
-		
 	});
 	
 }

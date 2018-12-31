@@ -31,9 +31,7 @@ public class ImgIcon {
 		this.dealerId = dealerId;
 		this.imgIcon = dealerIconImg;
 		this.imgIconName = this.getFormatIconName(dealerIconImg.getOriginalFilename());
-		// TODO window専用の対応
 		this.savePlaceByDealerId = wfsImgPath + "\\" + dealerId;
-//		this.savePlaceByDealerId = wfsApplicationConf.getWfsImgPath() + "\\" + dealerId;
 		this.ImgIconAbsoluteFileName = this.savePlaceByDealerId + "\\" + this.imgIconName;
 	}
 	
@@ -64,8 +62,6 @@ public class ImgIcon {
 
 	// 画像ファイルであるかどうか
 	public boolean isImgFile() {
-		// TODO extentionListに拡張子が含まれるかどうかを判定すること
-		// 暫定TRUE
 		List<String> l = Arrays.asList(extentionList);
 		return l.contains(this.getExtention());
 	}

@@ -71,25 +71,11 @@ public class DealerInfoDaoImpl implements DealerInfoDao{
 		
 		return list;
 	}
-	
+
+	@Override
 	public void registDealerInfo(DealerInfoQo qo) throws WfsDataException {
-		// TODO　後で作成
-		// とりあえずチェック
-		// null
-//		if (qo.getDealerKey() == null || qo.getDealerName() == null || qo.getTakuban() == null) {
-//			throw new WfsDataException("ディーラ情報の登録値が不正です");
-//		}
-//		if (qo.getDealerKey().equals("") || qo.getDealerName().equals("") || qo.getTakuban().equals("")) {
-//			throw new WfsDataException("ディーラ情報の登録値が不正です");
-//		}
-//		// 一意制約
-//		if(! this.searchDealerInfo(qo).isEmpty()) {
-//			throw new WfsDataException("ディーラ情報がすでに登録されています");
-//		};
-//		
-//		
-//		jt.update("insert into dealer values(?, ?, ?)", qo.getDealerKey(), qo.getDealerName(), Integer.valueOf(qo.getTakuban()));
 		
 	}
+	
 
 }

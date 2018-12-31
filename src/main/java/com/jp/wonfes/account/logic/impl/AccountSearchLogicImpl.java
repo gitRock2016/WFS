@@ -71,13 +71,6 @@ public class AccountSearchLogicImpl implements AccountSearchLogic{
 		String isExistFavProduct = qo.getDealerId() != null ? "あり" : "なし";
 		dto.setIsExistFavProduct(isExistFavProduct);
 
-// TODO issNo48
-//		String insDate;
-//		DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//		LocalDateTime _insDate = qo.getInsDate();
-//		insDate = _insDate.format(f);
-//		dto.setInsDate(insDate);
-		
 		dto.setInsDate(qo.getInsDate());
 		return dto;
 	}

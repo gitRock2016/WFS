@@ -13,25 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * TODO filterの適用対象URLは除外設定ができない、url自体の構成を見直す
- * ログイン機能　　/login/g01/login
- * ワンフェス機能　/wonfes/g01/search
- * ワンフェス機能　/wonfes/g01/regist
- * 
- * 
- * @author rock
- *
- */
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {
-		// TODO Auto-generated constructor stub
+		// なし
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-
+		// なし
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -59,8 +48,7 @@ public class AuthFilter implements Filter {
 	}
 
 	public void destroy() {
-		// TODO Auto-generated method stub
-
+		// なし
 	}
 
 }

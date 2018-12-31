@@ -33,7 +33,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 	private DealerSearchMapper dealerSearchMapper;
 	@Autowired
 	private DealersDetailProductsMapper dealersDetailProductsMapper;
-	// 課題No38のためモックで取得するためコメントアウト
+	// 課題No38のため
 //	@Autowired
 //	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
 //	@Autowired
@@ -69,8 +69,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		resp.setTakuban(d.getTakuban());
 		resp.setBusinessClassification(d.getBussinesType());
 		resp.setBusinessClassificationLabel(BusinessClassificationCd.getByCode(d.getBussinesType()).getName());
-		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法
-		// 暫定でモック対応
+		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法を適用したい、暫定でモック対応
 		resp.setProductFileds(this.getProductFiledsMock());
 		resp.setHpLink(d.getHpLink());
 		resp.setTwLink(d.getTwLink());
@@ -102,9 +101,6 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 //			arrayList.add(SearchDealerInfoDtoResp.qo2Dto(qo));
 		}
 		
-		// 検索条件に作品分野が指定されている場合
-		// 検索結果を作品分野で絞り込む
-		// TODO Logicで絞り込むよりテーブル側で絞り込めるよう制御したほうが楽そう。独自DAOで絞り込んだ形で取得するか、ERを工夫するか検討
 		if ("NAN".equals(dto.getProductFiled()) ? false : true) {
 			List<SearchDealerInfoDtoResp> list = new ArrayList<SearchDealerInfoDtoResp>(arrayList.size());
 			Integer categoriesId = Integer.valueOf(dto.getProductFiled());

@@ -2,7 +2,7 @@ package com.jp.wonfes.domain.excp;
 
 /**
  * Daoクラス利用時のエラーに対応
- * TODO 暫定利用、
+ * FIXME 不要なら削除する
  * @author rock
  *
  */

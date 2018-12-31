@@ -10,11 +10,7 @@
 	<jsp:include page="header.jsp" flush="true"></jsp:include>
 		<h2>登録画面</h2>
 		<div><font color="red">${message}</font></div>
-		TODO　作成中
 		<form:form modelAttribute="delaerRegistForm" method="post" action="/WonFesSys/g06/regist">
-			TODO　画像アイコン、アップボタン<br>
-			TODO クリアボタン<br>
-			TODO 検索画面へのリンク
 			<table border=1>
 				<tr>
 					<th bgcolor="#CCFF99">ディーラー名</th>

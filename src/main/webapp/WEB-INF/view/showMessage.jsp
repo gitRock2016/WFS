@@ -11,8 +11,8 @@
 	
 	<body>
 		<h2>${message}</h2>
-		TODO　作成中<br/>
 		
+	
 		
 	</body>
 	

@@ -41,7 +41,7 @@ public class WorkSearchController {
 	}
 	
 	// mock
-	// TODO Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
+	// Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
 //	private WorkInfoForm getMock1() {
 //		WorkInfoForm form = new WorkInfoForm();
 //		form.setProductId(1);

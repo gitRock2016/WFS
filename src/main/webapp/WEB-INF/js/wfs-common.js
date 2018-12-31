@@ -114,13 +114,6 @@ wfs.com.getFormatTakuban = function(val) {
 // 共通関数定義
 //--------------------------------------------------------------------------v
 
-// TODO ajax用に変更すること
-wfs.do_ajax=function(data){
-	let name = $("#dealerName").val();
-	alert("do_ajax関数の起動"+data+name);
-}
-	
-
 /**
  * inputFileId, type="file"オブジェクトのIDを指定する
  * previewObjId, プレビュー表示させたいimgオブジェクトのIDを指定する
