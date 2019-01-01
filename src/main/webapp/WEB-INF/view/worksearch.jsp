@@ -8,11 +8,10 @@
 		<h4>検索条件</h4>
 	</div>
 	
-	<form:form modelAttribute="fm" method="POST" action="/WonFesSys/wrk/wrk_04/search" id="workSearchForm">
-	
 	<div class="panel panel-default">
 	<div class="panel-body">
 
+	<form:form modelAttribute="fm" method="GET" action="/WonFesSys/wrk/wrk_04/search" id="workSearchForm">
 		<div class="col-lg-9">
 			<div class="form-group">
 				<label for="workName">作品名</label>
@@ -22,17 +21,16 @@
 			</div>
 			<label>値段</label>
 			<div class="form-group">
-					<input type="number" value="${fm.priceFrom }" name="priceFrom" id="priceFrom" class="form-control" min="0"/>
-					<%-- <form:input path="priceFrom" id="priceFrom" class="form-control" size="10" maxlength="10"/> --%>
+					<input type="number" value="${fm.priceFrom }" name="priceFrom" id="priceFrom" class="form-control" min="0"/>円以上
 					～
-					<input type="number" value="${fm.priceTo }" name="priceTo" id="priceTo" class="form-control" min="0"/>
-<%-- 					<form:input path="priceTo" id="priceTo" class="form-control" size="10" maxlength="10"/> --%>
+					<input type="number" value="${fm.priceTo }" name="priceTo" id="priceTo" class="form-control" min="0"/>円以下
 			</div>
 			<div class="form-group">
-				<label>販売時期：TODO 一旦直書き</label>
+				<label>販売時期：</label>
 				<div>
 					<input type="hidden" name="eventDateSelected" value="${fm.eventDate}" id="eventDateSelected"/>
 					<select name="eventDate" id="eventDate">
+						<!-- TODO　event_datesテーブルから取得した値を設定する -->
 						<option value="" ></option>
 						<option value="1">2017冬</option>
 						<option value="2">2017夏</option>
@@ -56,15 +54,14 @@
 				<button type="button" class="btn btn-primary" id="searchBtn">検索</button>
 			</div>
 		</div>
+	</form:form>
 	
 	</div>
 	</div>
 	
 	<div class="page-header">
 		<h4>検索結果
-			<c:if test="${fm.workListCount!=0}">
-				<span class="text-success" id="workListCount">${fm.workListCount}件表示</span>
-			</c:if>
+				<span class="text-success" id="workListCount">${workListCount}件表示</span>
 		</h4>
 	</div>
 	<table class="table table-striped table-hover table-bordered" id="favListTable">
@@ -77,10 +74,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:if test="${fm.workListCount==0}">
-				<p class="text-danger">※お気に入り登録した作品がありません。</p>
-			</c:if>
-			<c:forEach var="obj" items="${fm.workList}" varStatus="obj_status">
+			<c:forEach var="obj" items="${workList}" varStatus="obj_status">
 				<tr class="wfs-show">
 					<td>
 						<input type="hidden" name="productId" value="${obj.workId}" />
@@ -93,7 +87,5 @@
 			</c:forEach>
 		</tbody>
 	</table>
-		
-	</form:form>
 	
 </div>

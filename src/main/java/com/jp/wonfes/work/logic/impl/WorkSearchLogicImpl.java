@@ -118,12 +118,10 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 	public List<SearchWorkInfoRow> searchWorkInfoList(SearcWorkCondDtoReq dto) {
 
 		SelectWorkInfoQoReq qo = new SelectWorkInfoQoReq();
-		String _productName = Strings.isNullOrEmpty(dto.getProductName()) ? null : dto.getProductName() + "%";
-		qo.setProductName(_productName); // 前方一致
+		String _productName = Strings.isNullOrEmpty(dto.getProductName()) ? null : "%"+dto.getProductName() + "%";
+		qo.setProductName(_productName); // 部分一致
 		qo.setPriceFrom(dto.getPriceFrom());
 		qo.setPriceTo(dto.getPriceTo());
-		// 0は条件なしと判定する
-//		Integer _seasonId = dto.getSeasonId() == 0 ? null : dto.getSeasonId();
 		qo.setSeasonId(dto.getSeasonId() );
 		qo.setCategoryId(dto.getCategoryId());
 		List<SelectWorkInfoQoResp> qolist = this.workSearchMapper.selectWorkInfo(qo);

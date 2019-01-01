@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jp.wonfes.work.controller.form.WorkInfoForm;
-import com.jp.wonfes.work.controller.form.WorkSearchCondForm;
 import com.jp.wonfes.work.controller.form.WorkSearchForm;
 import com.jp.wonfes.work.controller.form.WorkSearchResultRowForm;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
@@ -35,7 +34,6 @@ public class WorkSearchController {
 	@RequestMapping(value = "/wrk/wrk_04/init", method = RequestMethod.GET)
 	public String initWrk04(Model model) {
 		
-//		model.addAttribute("fm", this.getMock2());
 		return "worksearch";
 	}
 	
@@ -44,10 +42,8 @@ public class WorkSearchController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/wrk/wrk_04/search", method = RequestMethod.POST)
+	@RequestMapping(value = "/wrk/wrk_04/search", method = RequestMethod.GET)
 	public String searchWrk04(@ModelAttribute WorkSearchForm form, Model model) {
-		
-		// wip　簡単な単項目チェック
 		
 		SearcWorkCondDtoReq dto = new SearcWorkCondDtoReq();
 		dto.setProductName(form.getWorkName());
@@ -56,13 +52,11 @@ public class WorkSearchController {
 		dto.setSeasonId(form.getEventDate());
 		dto.setCategoryId(form.getProductFiled());
 		List<SearchWorkInfoRow> dtoList = workSearchLogic.searchWorkInfoList(dto );
-		
-		List<WorkSearchResultRowForm> formList =dto2form(dtoList);
-		form.setWorkList(formList);
-		form.setWorkListCount(formList.size());
 
-//		model.addAttribute("fm", this.getMock2());
 		model.addAttribute("fm", form);
+		List<WorkSearchResultRowForm> formList =dto2form(dtoList);
+		model.addAttribute("workList", formList);
+		model.addAttribute("workListCount", formList.size());
 		
 		return "worksearch";
 	}
@@ -107,34 +101,34 @@ public class WorkSearchController {
 	
 	// mock
 	
-	private WorkSearchForm getMock2() {
-		
-		WorkSearchForm form = new WorkSearchForm();
-//		form.setWorkName("aaa");
-		// 検索結果
-		List<WorkSearchResultRowForm> workList =new ArrayList<WorkSearchResultRowForm>();
-		WorkSearchResultRowForm row1 = new WorkSearchResultRowForm();
-		row1.setWorkName("艦隊これくしょん -艦これ-「浜風」 ");
-		row1.setPrice(10000);
-		row1.setEventDate("2018冬");
-		row1.setCategoryName("艦隊これくしょん");
-		row1.setDealerId(1);
-		row1.setWorkId(1);
-		workList.add(row1);
-		WorkSearchResultRowForm row2 = new WorkSearchResultRowForm();
-		row2.setWorkName("天野めぐみ ");
-		row2.setPrice(8000);
-		row2.setEventDate("2017冬");
-		row2.setCategoryName("天野めぐみはスキだらけ!");
-		row2.setDealerId(3);
-		row2.setWorkId(1);
-		workList.add(row2);
-		form.setWorkList(workList);
-		// 検索結果件数
-		form.setWorkListCount(workList.size());
-		
-		return form;
-	}
+//	private WorkSearchForm getMock2() {
+//		
+//		WorkSearchForm form = new WorkSearchForm();
+////		form.setWorkName("aaa");
+//		// 検索結果
+//		List<WorkSearchResultRowForm> workList =new ArrayList<WorkSearchResultRowForm>();
+//		WorkSearchResultRowForm row1 = new WorkSearchResultRowForm();
+//		row1.setWorkName("艦隊これくしょん -艦これ-「浜風」 ");
+//		row1.setPrice(10000);
+//		row1.setEventDate("2018冬");
+//		row1.setCategoryName("艦隊これくしょん");
+//		row1.setDealerId(1);
+//		row1.setWorkId(1);
+//		workList.add(row1);
+//		WorkSearchResultRowForm row2 = new WorkSearchResultRowForm();
+//		row2.setWorkName("天野めぐみ ");
+//		row2.setPrice(8000);
+//		row2.setEventDate("2017冬");
+//		row2.setCategoryName("天野めぐみはスキだらけ!");
+//		row2.setDealerId(3);
+//		row2.setWorkId(1);
+//		workList.add(row2);
+//		form.setWorkList(workList);
+//		// 検索結果件数
+//		form.setWorkListCount(workList.size());
+//		
+//		return form;
+//	}
 	
 	// Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
 //	private WorkInfoForm getMock1() {

@@ -28,10 +28,10 @@
 				ddp.product_name like #{productName}
 			</if>
 			<if test="priceFrom != null">
-				and ddp.price <![CDATA[>]]> #{priceFrom}
+				and ddp.price <![CDATA[>=]]> #{priceFrom}
 			</if>
 			<if test="priceTo != null">
-				and ddp.price <![CDATA[<]]> #{priceTo}
+				and ddp.price <![CDATA[<=]]> #{priceTo}
 			</if>
 			<if test="seasonId != null">
 				and ddp.season_id = #{seasonId}
