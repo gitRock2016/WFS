@@ -211,5 +211,26 @@
 		</put-attribute>
 	</definition>
 	
+	<!-- 作品検索画面 -->
+	<definition name="worksearch" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品検索"/>
+		<put-attribute name="body" value="/WEB-INF/view/worksearch.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.worksearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="worksearch.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.worksearch" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="worksearch.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	
 	
 </tiles-definitions>

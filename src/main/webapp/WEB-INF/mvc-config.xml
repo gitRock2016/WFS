@@ -108,6 +108,7 @@
 	<bean id="dealerSearchMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.dealer.dao.mapper.DealerSearchMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
 	<bean id="userSearchMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.account.dao.mapper.UserSearchMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
 	<bean id="accountInfoSearchMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.account.dao.mapper.AccountInfoSearchMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
+	<bean id="workSearchMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"><property name="mapperInterface" value="com.jp.wonfes.work.dao.mapper.WorkSearchMapper"></property><property name="sqlSessionFactory" ref="sqlSessionFactory"></property></bean>
 
 	<bean id="tilesViewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
