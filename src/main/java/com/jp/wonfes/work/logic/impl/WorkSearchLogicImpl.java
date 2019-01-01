@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Strings;
 import com.jp.wonfes.cmmn.dao.mapper.CategoriesMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper;
@@ -22,12 +21,7 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsKey;
 import com.jp.wonfes.cmmn.dao.qo.EventDates;
 import com.jp.wonfes.common.ImgIconUrl;
-import com.jp.wonfes.work.dao.mapper.WorkSearchMapper;
-import com.jp.wonfes.work.dao.mapper.qo.SelectWorkInfoQoReq;
-import com.jp.wonfes.work.dao.mapper.qo.SelectWorkInfoQoResp;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
-import com.jp.wonfes.work.logic.dto.SearcWorkCondDtoReq;
-import com.jp.wonfes.work.logic.dto.SearchWorkInfoRow;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoReq;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoResp;
 
@@ -46,8 +40,6 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 	private CategoriesMapper categoriesMapper;
 	@Autowired
 	private ImgIconUrl imgIconUrl;
-	@Autowired
-	private WorkSearchMapper workSearchMapper;
 	
 	@Override
 	public WorkInfoDtoResp searchWorkInfo(WorkInfoDtoReq dto) {
@@ -112,32 +104,6 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 		resp.setProductImgUrls(imgUrlList);
 		
 		return resp;
-	}
-
-	@Override
-	public List<SearchWorkInfoRow> searchWorkInfoList(SearcWorkCondDtoReq dto) {
-
-		SelectWorkInfoQoReq qo = new SelectWorkInfoQoReq();
-		String _productName = Strings.isNullOrEmpty(dto.getProductName()) ? null : "%"+dto.getProductName() + "%";
-		qo.setProductName(_productName); // 部分一致
-		qo.setPriceFrom(dto.getPriceFrom());
-		qo.setPriceTo(dto.getPriceTo());
-		qo.setSeasonId(dto.getSeasonId() );
-		qo.setCategoryId(dto.getCategoryId());
-		List<SelectWorkInfoQoResp> qolist = this.workSearchMapper.selectWorkInfo(qo);
-		
-		ArrayList<SearchWorkInfoRow> rowList = new ArrayList<SearchWorkInfoRow>();
-		for(SelectWorkInfoQoResp qoResp :qolist) {
-			SearchWorkInfoRow row = new SearchWorkInfoRow();
-			row.setWorkName(qoResp.getProductName());
-			row.setWorkId(qoResp.getProductId());
-			row.setPrice(qoResp.getPrice());
-			row.setEventDate(qoResp.getEventAboutDate());
-			row.setCategoryName(qoResp.getCategoryName());
-			row.setDealerId(qoResp.getDealerId());
-			rowList.add(row);
-		}
-		return rowList;
 	}
 
 }

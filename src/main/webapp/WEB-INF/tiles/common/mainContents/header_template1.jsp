@@ -9,8 +9,6 @@
 <c:url value="/sample/init" var="sample_init" />
 <c:url value="/accnt/accnt_02" var="accnt_accnt_02" />
 <c:url value="/accnt/accnt_03/init" var="accnt_accnt_03_init" />
-<c:url value="/wrk/wrk_04/init" var="wrk04_init" />
-
 <c:set var="isSession" value="${sessionScope.login !=null }"/>
 
 <div id="header">
@@ -22,7 +20,7 @@
 			</div>
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
-					<li><a href="${wrk04_init }" title="作品検索">作品検索</a></li>
+					<li><a href="${top }" title="TODO 作成中">作品検索</a></li>
 					<c:if test="${isSession }">
 						<li><a href="${top }" title="TODO 作成中">作品登録</a></li>
 					</c:if>
