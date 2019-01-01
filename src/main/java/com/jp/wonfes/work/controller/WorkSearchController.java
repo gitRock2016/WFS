@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jp.wonfes.work.controller.form.WorkInfoForm;
+import com.jp.wonfes.work.controller.form.WorkSearchCondForm;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoReq;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoResp;
@@ -18,6 +19,22 @@ public class WorkSearchController {
 	
 	@Autowired
 	WorkSearchLogic workSearchLogic;
+	
+	/**
+	 * 初期表示
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/wrk/wrk_04/init", method = RequestMethod.GET)
+	public String initWrk04(@ModelAttribute WorkSearchCondForm form, Model model) {
+		// TODO 検索結果も含めFormにつめたほうが、記載が楽では？いちいち以下のようにパラメータを指定しなくて済む
+		model.addAttribute("dataCount",0);
+		model.addAttribute("fm", form);
+		return "worksearch";
+	}
+	
+	
+	
 	
 	/**
 	 * 初期表示
@@ -37,6 +54,9 @@ public class WorkSearchController {
 		model.addAttribute("workInfoForm", dtoResp);
 		return "workinfo";
 	}
+	
+	
+	
 	
 	// mock
 	// Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
