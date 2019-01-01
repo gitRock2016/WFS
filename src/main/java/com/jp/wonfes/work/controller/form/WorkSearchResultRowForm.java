@@ -1,6 +1,6 @@
 package com.jp.wonfes.work.controller.form;
 
-public class WorkSearchResultRow {
+public class WorkSearchResultRowForm {
 	private String workName;
 	private Integer price;
 	private String eventDate;

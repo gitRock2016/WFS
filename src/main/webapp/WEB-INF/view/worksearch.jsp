@@ -22,16 +22,18 @@
 			</div>
 			<label>値段</label>
 			<div class="form-group">
-					<input type="number" value="${fm.priceFrom }" id="priceFrom" class="form-control" min="0"/>
+					<input type="number" value="${fm.priceFrom }" name="priceFrom" id="priceFrom" class="form-control" min="0"/>
 					<%-- <form:input path="priceFrom" id="priceFrom" class="form-control" size="10" maxlength="10"/> --%>
 					～
-					<input type="number" value="${fm.priceTo }" id="priceTo" class="form-control" min="0"/>
+					<input type="number" value="${fm.priceTo }" name="priceTo" id="priceTo" class="form-control" min="0"/>
 <%-- 					<form:input path="priceTo" id="priceTo" class="form-control" size="10" maxlength="10"/> --%>
 			</div>
 			<div class="form-group">
 				<label>販売時期：TODO 一旦直書き</label>
 				<div>
-					<select name="eventDate">
+					<input type="hidden" name="eventDateSelected" value="${fm.eventDate}" id="eventDateSelected"/>
+					<select name="eventDate" id="eventDate">
+						<option value="" ></option>
 						<option value="1">2017冬</option>
 						<option value="2">2017夏</option>
 						<option value="3">2018冬</option>
@@ -41,8 +43,8 @@
 			</div>
 			<label>ジャンル</label>
 			<div class="form-group">
-					<input type="hidden" value="" id ="productFiled"/>
-					<input type="text" value="" id ="productFiledLabel" class="form-control"/>
+					<input type="hidden" name="productFiled" value="" id ="productFiled"/>
+					<input type="text" value="${fm.productFiledLabel}" name="productFiledLabel" id ="productFiledLabel" class="form-control"/>
 					<br>
 					<button type="button" class="btn btn-info btn-sm" id="productListBtn">ジャンル一覧</button>
 					<button type="button" class="btn btn-info btn-sm" id="clearProductListBtn">クリア</button>
@@ -60,8 +62,8 @@
 	
 	<div class="page-header">
 		<h4>検索結果
-			<c:if test="${fm.workListCount==0}">
-				<span class="text-success" id="workListCount">${fm.workListCount}</span><span class="text-success">件表示</span>
+			<c:if test="${fm.workListCount!=0}">
+				<span class="text-success" id="workListCount">${fm.workListCount}件表示</span>
 			</c:if>
 		</h4>
 	</div>

@@ -7,7 +7,7 @@
 		resultType="com.jp.wonfes.work.dao.mapper.qo.SelectWorkInfoQoResp">
 		select
 		   ddp.dealer_id               as dealerId
-		 , ddp.product_id              as producId
+		 , ddp.product_id              as productId
 		 , ddp.product_name            as productName
 		 , ddp.price                   as price
 		 , ddp.season_id               as seasonId
@@ -37,7 +37,7 @@
 				and ddp.season_id = #{seasonId}
 			</if>
 			<if test="categoryId != null">
-				and ddp.category_id = #{categoryId}
+				and ddpc.category_id = #{categoryId}
 			</if>
 		</where>
 	</select>

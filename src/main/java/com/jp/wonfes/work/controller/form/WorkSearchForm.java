@@ -9,8 +9,9 @@ public class WorkSearchForm {
 	private String eventDateLabel;
 	private Integer eventDate;
 	private Integer productFiled;
+	private String productFiledLabel;
 	private Integer workListCount;
-	private List<WorkSearchResultRow> workList;
+	private List<WorkSearchResultRowForm> workList;
 	public String getWorkName() {
 		return workName;
 	}
@@ -47,16 +48,22 @@ public class WorkSearchForm {
 	public void setProductFiled(Integer productFiled) {
 		this.productFiled = productFiled;
 	}
+	public String getProductFiledLabel() {
+		return productFiledLabel;
+	}
+	public void setProductFiledLabel(String productFiledLabel) {
+		this.productFiledLabel = productFiledLabel;
+	}
 	public Integer getWorkListCount() {
 		return workListCount;
 	}
 	public void setWorkListCount(Integer workListCount) {
 		this.workListCount = workListCount;
 	}
-	public List<WorkSearchResultRow> getWorkList() {
+	public List<WorkSearchResultRowForm> getWorkList() {
 		return workList;
 	}
-	public void setWorkList(List<WorkSearchResultRow> workList) {
+	public void setWorkList(List<WorkSearchResultRowForm> workList) {
 		this.workList = workList;
 	}
 	

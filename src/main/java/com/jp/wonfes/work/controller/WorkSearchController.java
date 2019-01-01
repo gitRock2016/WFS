@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.jp.wonfes.work.controller.form.WorkInfoForm;
 import com.jp.wonfes.work.controller.form.WorkSearchCondForm;
 import com.jp.wonfes.work.controller.form.WorkSearchForm;
-import com.jp.wonfes.work.controller.form.WorkSearchResultRow;
+import com.jp.wonfes.work.controller.form.WorkSearchResultRowForm;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
 import com.jp.wonfes.work.logic.dto.SearcWorkCondDtoReq;
 import com.jp.wonfes.work.logic.dto.SearchWorkInfoRow;
@@ -57,7 +57,7 @@ public class WorkSearchController {
 		dto.setCategoryId(form.getProductFiled());
 		List<SearchWorkInfoRow> dtoList = workSearchLogic.searchWorkInfoList(dto );
 		
-		List<WorkSearchResultRow> formList =dto2form(dtoList);
+		List<WorkSearchResultRowForm> formList =dto2form(dtoList);
 		form.setWorkList(formList);
 		form.setWorkListCount(formList.size());
 
@@ -67,16 +67,17 @@ public class WorkSearchController {
 		return "worksearch";
 	}
 	
-	private List<WorkSearchResultRow> dto2form(List<SearchWorkInfoRow> dtolist) {
-		List<WorkSearchResultRow> formList = new ArrayList<WorkSearchResultRow>();
+	private List<WorkSearchResultRowForm> dto2form(List<SearchWorkInfoRow> dtolist) {
+		List<WorkSearchResultRowForm> formList = new ArrayList<WorkSearchResultRowForm>();
 		for (SearchWorkInfoRow row : dtolist) {
-			WorkSearchResultRow formRow = new WorkSearchResultRow();
+			WorkSearchResultRowForm formRow = new WorkSearchResultRowForm();
 			formRow.setWorkName(row.getWorkName());
 			formRow.setWorkId(row.getWorkId());
 			formRow.setDealerId(row.getDealerId());
 			formRow.setPrice(row.getPrice());
 			formRow.setEventDate(row.getEventDate());
 			formRow.setCategoryName(row.getCategoryName());
+			formList.add(formRow);
 		}
 		return formList;
 	}
@@ -111,8 +112,8 @@ public class WorkSearchController {
 		WorkSearchForm form = new WorkSearchForm();
 //		form.setWorkName("aaa");
 		// 検索結果
-		List<WorkSearchResultRow> workList =new ArrayList<WorkSearchResultRow>();
-		WorkSearchResultRow row1 = new WorkSearchResultRow();
+		List<WorkSearchResultRowForm> workList =new ArrayList<WorkSearchResultRowForm>();
+		WorkSearchResultRowForm row1 = new WorkSearchResultRowForm();
 		row1.setWorkName("艦隊これくしょん -艦これ-「浜風」 ");
 		row1.setPrice(10000);
 		row1.setEventDate("2018冬");
@@ -120,7 +121,7 @@ public class WorkSearchController {
 		row1.setDealerId(1);
 		row1.setWorkId(1);
 		workList.add(row1);
-		WorkSearchResultRow row2 = new WorkSearchResultRow();
+		WorkSearchResultRowForm row2 = new WorkSearchResultRowForm();
 		row2.setWorkName("天野めぐみ ");
 		row2.setPrice(8000);
 		row2.setEventDate("2017冬");
