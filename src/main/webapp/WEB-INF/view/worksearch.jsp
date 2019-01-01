@@ -8,22 +8,25 @@
 		<h4>検索条件</h4>
 	</div>
 	
+	<form:form modelAttribute="fm" method="POST" action="/WonFesSys/wrk/wrk_04/search" id="workSearchForm">
+	
 	<div class="panel panel-default">
 	<div class="panel-body">
-	
-	<div class="col-lg-9">
-		<form:form modelAttribute="fm" method="get" action="/WonFesSys/dlr/dlr_05/search">
+
+		<div class="col-lg-9">
 			<div class="form-group">
 				<label for="workName">作品名</label>
 				<div>
-					<form:input path="workName" id="workName" class="form-control"/>
+					<input type="text" value="${fm.workName }" name="workName" id="workName" class="form-control"/>
 				</div>
 			</div>
 			<label>値段</label>
 			<div class="form-group">
-					<form:input path="priceFrom" id="priceFrom" class="form-control"/>
+					<input type="number" value="${fm.priceFrom }" id="priceFrom" class="form-control" min="0"/>
+					<%-- <form:input path="priceFrom" id="priceFrom" class="form-control" size="10" maxlength="10"/> --%>
 					～
-					<form:input path="priceTo" id="priceTo" class="form-control"/>
+					<input type="number" value="${fm.priceTo }" id="priceTo" class="form-control" min="0"/>
+<%-- 					<form:input path="priceTo" id="priceTo" class="form-control" size="10" maxlength="10"/> --%>
 			</div>
 			<div class="form-group">
 				<label>販売時期：TODO 一旦直書き</label>
@@ -50,16 +53,15 @@
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" id="searchBtn">検索</button>
 			</div>
-		</form:form>
-	</div>
+		</div>
 	
 	</div>
 	</div>
 	
 	<div class="page-header">
 		<h4>検索結果
-			<c:if test="${dataCount==0}">
-				<span class="text-success" id="workListCount">${dataCount}</span><span class="text-success">件表示</span>
+			<c:if test="${fm.workListCount==0}">
+				<span class="text-success" id="workListCount">${fm.workListCount}</span><span class="text-success">件表示</span>
 			</c:if>
 		</h4>
 	</div>
@@ -73,24 +75,23 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:if test="${dataCount==0}">
+			<c:if test="${fm.workListCount==0}">
 				<p class="text-danger">※お気に入り登録した作品がありません。</p>
 			</c:if>
-			<c:if test="${dataCount > 0}">
-				<c:forEach var="obj" items="${data}" varStatus="obj_status">
-					<tr class="wfs-show">
-						<td>
-							<input type="hidden" name="productId" value="${obj.productId}" />
-							<a href='#'>${obj.productName}</a>
-						</td>
-						<td><c:out value="${obj.price}" /></td>
-						<td><c:out value="${obj.eventDate}" /></td>
-						<td><c:out value="${obj.categoryName}" /><input type="hidden" name="categoryNameReading" value="${obj.categoryNameReading}" /></td>
-					</tr>
-				</c:forEach>
-			</c:if>
+			<c:forEach var="obj" items="${fm.workList}" varStatus="obj_status">
+				<tr class="wfs-show">
+					<td>
+						<input type="hidden" name="productId" value="${obj.workId}" />
+						<a href='#'>${obj.workName}</a>
+					</td>
+					<td><c:out value="${obj.price}" /></td>
+					<td><c:out value="${obj.eventDate}" /></td>
+					<td><c:out value="${obj.categoryName}" /></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 		
+	</form:form>
 	
 </div>

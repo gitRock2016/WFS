@@ -1,5 +1,8 @@
 package com.jp.wonfes.work.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jp.wonfes.work.controller.form.WorkInfoForm;
 import com.jp.wonfes.work.controller.form.WorkSearchCondForm;
+import com.jp.wonfes.work.controller.form.WorkSearchForm;
+import com.jp.wonfes.work.controller.form.WorkSearchResultRow;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
+import com.jp.wonfes.work.logic.dto.SearcWorkCondDtoReq;
+import com.jp.wonfes.work.logic.dto.SearchWorkInfoRow;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoReq;
 import com.jp.wonfes.work.logic.dto.WorkInfoDtoResp;
 
@@ -26,14 +33,53 @@ public class WorkSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wrk/wrk_04/init", method = RequestMethod.GET)
-	public String initWrk04(@ModelAttribute WorkSearchCondForm form, Model model) {
-		// TODO 検索結果も含めFormにつめたほうが、記載が楽では？いちいち以下のようにパラメータを指定しなくて済む
-		model.addAttribute("dataCount",0);
-		model.addAttribute("fm", form);
+	public String initWrk04(Model model) {
+		
+//		model.addAttribute("fm", this.getMock2());
 		return "worksearch";
 	}
 	
+	/**
+	 * 作品検索
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/wrk/wrk_04/search", method = RequestMethod.POST)
+	public String searchWrk04(@ModelAttribute WorkSearchForm form, Model model) {
+		
+		// wip　簡単な単項目チェック
+		
+		SearcWorkCondDtoReq dto = new SearcWorkCondDtoReq();
+		dto.setProductName(form.getWorkName());
+		dto.setPriceFrom(form.getPriceFrom());
+		dto.setPriceTo(form.getPriceTo());
+		dto.setSeasonId(form.getEventDate());
+		dto.setCategoryId(form.getProductFiled());
+		List<SearchWorkInfoRow> dtoList = workSearchLogic.searchWorkInfoList(dto );
+		
+		List<WorkSearchResultRow> formList =dto2form(dtoList);
+		form.setWorkList(formList);
+		form.setWorkListCount(formList.size());
+
+//		model.addAttribute("fm", this.getMock2());
+		model.addAttribute("fm", form);
+		
+		return "worksearch";
+	}
 	
+	private List<WorkSearchResultRow> dto2form(List<SearchWorkInfoRow> dtolist) {
+		List<WorkSearchResultRow> formList = new ArrayList<WorkSearchResultRow>();
+		for (SearchWorkInfoRow row : dtolist) {
+			WorkSearchResultRow formRow = new WorkSearchResultRow();
+			formRow.setWorkName(row.getWorkName());
+			formRow.setWorkId(row.getWorkId());
+			formRow.setDealerId(row.getDealerId());
+			formRow.setPrice(row.getPrice());
+			formRow.setEventDate(row.getEventDate());
+			formRow.setCategoryName(row.getCategoryName());
+		}
+		return formList;
+	}
 	
 	
 	/**
@@ -59,6 +105,36 @@ public class WorkSearchController {
 	
 	
 	// mock
+	
+	private WorkSearchForm getMock2() {
+		
+		WorkSearchForm form = new WorkSearchForm();
+//		form.setWorkName("aaa");
+		// 検索結果
+		List<WorkSearchResultRow> workList =new ArrayList<WorkSearchResultRow>();
+		WorkSearchResultRow row1 = new WorkSearchResultRow();
+		row1.setWorkName("艦隊これくしょん -艦これ-「浜風」 ");
+		row1.setPrice(10000);
+		row1.setEventDate("2018冬");
+		row1.setCategoryName("艦隊これくしょん");
+		row1.setDealerId(1);
+		row1.setWorkId(1);
+		workList.add(row1);
+		WorkSearchResultRow row2 = new WorkSearchResultRow();
+		row2.setWorkName("天野めぐみ ");
+		row2.setPrice(8000);
+		row2.setEventDate("2017冬");
+		row2.setCategoryName("天野めぐみはスキだらけ!");
+		row2.setDealerId(3);
+		row2.setWorkId(1);
+		workList.add(row2);
+		form.setWorkList(workList);
+		// 検索結果件数
+		form.setWorkListCount(workList.size());
+		
+		return form;
+	}
+	
 	// Formで作成したが、次回利用時はWorkInfoDtoRespから画面表示項目を取得すること
 //	private WorkInfoForm getMock1() {
 //		WorkInfoForm form = new WorkInfoForm();
