@@ -1,17 +1,20 @@
 package com.jp.wonfes.work.logic.dto;
 
-import java.util.List;
-
-import com.jp.wonfes.domain.work.WorkImg;
+import org.springframework.web.multipart.MultipartFile;
 
 public class WorkRegistInfoDtoReq {
 	private Integer dealerId;
 	private Integer productId;
 	private String productName;
+	private Integer categoryId;
 	private Integer price;
 	private String introduce;
 	private Integer seasonId;
-	private List<WorkImg> workImgs;
+	private MultipartFile workImg1;
+	private MultipartFile workImg2;
+	private MultipartFile workImg3;
+	private MultipartFile workImg4;
+	private MultipartFile workImg5;
 	
 	public Integer getDealerId() {
 		return dealerId;
@@ -31,6 +34,12 @@ public class WorkRegistInfoDtoReq {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 	public Integer getPrice() {
 		return price;
 	}
@@ -49,12 +58,38 @@ public class WorkRegistInfoDtoReq {
 	public void setSeasonId(Integer seasonId) {
 		this.seasonId = seasonId;
 	}
-	public List<WorkImg> getWorkImgs() {
-		return workImgs;
+	public MultipartFile getWorkImg1() {
+		return workImg1;
 	}
-	public void setWorkImgs(List<WorkImg> workImgs) {
-		this.workImgs = workImgs;
+	public void setWorkImg1(MultipartFile workImg1) {
+		this.workImg1 = workImg1;
 	}
+	public MultipartFile getWorkImg2() {
+		return workImg2;
+	}
+	public void setWorkImg2(MultipartFile workImg2) {
+		this.workImg2 = workImg2;
+	}
+	public MultipartFile getWorkImg3() {
+		return workImg3;
+	}
+	public void setWorkImg3(MultipartFile workImg3) {
+		this.workImg3 = workImg3;
+	}
+	public MultipartFile getWorkImg4() {
+		return workImg4;
+	}
+	public void setWorkImg4(MultipartFile workImg4) {
+		this.workImg4 = workImg4;
+	}
+	public MultipartFile getWorkImg5() {
+		return workImg5;
+	}
+	public void setWorkImg5(MultipartFile workImg5) {
+		this.workImg5 = workImg5;
+	}
+
 	
+
 	
 }
