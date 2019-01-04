@@ -1,7 +1,5 @@
 package com.jp.wonfes.work.logic.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class WorkEditInfoDtoReq extends WorkRegistInfoDtoReq{
 	private String workImg1DelFlg;
 	private String workImg2DelFlg;

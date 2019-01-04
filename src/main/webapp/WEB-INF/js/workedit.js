@@ -71,14 +71,8 @@ wfs.workedit.del = function(){
 }
 
 wfs.workedit.workEdit = function() {
-	let   target=$('form#workReigstForm');
-	const dealerId = $('input#dealerId').val();
-	const productId = $('input#productId').val();
-	let url = wfs.com.url.get('/wrk/wrk_01/regist/')
-			+ dealerId  + '/'
-			+ productId + '/'
-			+ '?reg=edit';
-	
+	let target = $('form#workReigstForm');
+	let url = wfs.com.url.get('/wrk/wrk_01/edit');
 	target.attr('action', url);
 	
 	// TODO dealerregistをまねたけど、チェックボックス押下時に対応してHIDDENを更新したほうが便利では？
@@ -99,7 +93,7 @@ wfs.workedit.workEdit = function() {
 
 wfs.workedit.formatEventDate = function(){
 	$("select#eventDate").attr("selected", false);
-	const selectedEventDate = "4" // 2018夏、が今年のため
+	const selectedEventDate = $('input#eventDateSelected').val();
 	$("select#eventDate").val(selectedEventDate);
 }
 wfs.workedit.formatWorkName = function() {
@@ -112,6 +106,8 @@ wfs.workedit.formatWorkName = function() {
 	target.bind('keydown keyup keypress change', function() {
 		wfs.workedit.countMoji (maxLength, $(this).val(),targetCount);
 	});
+	// 編集画面は値が入力された状態になるため、実行する
+	wfs.workedit.countMoji (maxLength, target.val(),targetCount);
 
 }
 
@@ -125,7 +121,8 @@ wfs.workedit.formatComment = function() {
 	target.bind('keydown keyup keypress change', function() {
 		wfs.workedit.countMoji (maxLength, $(this).val(),targetCount);
 	});
-
+	// 編集画面は値が入力された状態になるため、実行する
+	wfs.workedit.countMoji (maxLength, target.val(),targetCount);
 }
 /**
  * maxLength、最大の長さ

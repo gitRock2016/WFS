@@ -140,7 +140,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	@Override
 	public void editWorkInfo(WorkEditInfoDtoReq req) throws WfsLogicException, WfsSysytemException {
 		final Integer dealerId = req.getDealerId();
-		final Integer productId = this.getNewProductId(req.getDealerId());
+		final Integer productId =req.getProductId();
 
 		//1.dealers_detail_products、dealerIdとproductIDでupdate
 		DealersDetailProducts e1 = new DealersDetailProducts();
@@ -176,10 +176,11 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			
 		// DB
 		DealersDetailProductsImgsExample se1 = new DealersDetailProductsImgsExample();
+		String s =WorkImg.makeWorkImgFileNameExcludeExtention(dealerId, productId, 1);
 		se1.createCriteria()
 			.andDealerIdEqualTo(dealerId)
 			.andProductIdEqualTo(productId)
-			.andImgProductFileLike(WorkImg.makeWorkImgFileNameExcludeExtention(dealerId, productId, 1));
+			.andImgProductFileLike(s+"%");
 		if ("1".equals(req.getWorkImg1DelFlg())) {
 			// del
 			// WEBサーバーからはファイルは削除しない

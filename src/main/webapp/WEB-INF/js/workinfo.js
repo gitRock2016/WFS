@@ -4,8 +4,6 @@ if (typeof wfs.workinfo === "undefined") {
 
 $(function() {
 
-
-	// ジャンル一覧ボタン TODO　すたぶ 
 	$("#workEditBtn").on("click", function() {
 		const dealerId = $('input#dealerId').val();
 		const productId = $('input#productId').val();

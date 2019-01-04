@@ -109,17 +109,17 @@ public class WorkRegistController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wrk/wrk_01/init/{dealerId}/{productId}", params="reg=edit", method = RequestMethod.GET)
-	public String initWrk01Edit(@PathVariable("dealerId") Integer dealerId,
-			@PathVariable("productId") Integer productId, Model model) {
-		
-		WorkEditForm form = new WorkEditForm();
+	public String initWrk01Edit(@ModelAttribute("workRegistForm") WorkRegistForm form,
+			@PathVariable("dealerId") Integer dealerId, @PathVariable("productId") Integer productId, Model model) {
 
 		WorkInfoDtoReq dto= new WorkInfoDtoReq();
 		dto.setDealerId(dealerId);
 		dto.setProductId(productId);
 		WorkInfoDtoResp resp = workSearchLogic.searchWorkInfo(dto);
+		
 		form.setDealerId(resp.getDealerId());
 		form.setProductId(resp.getProductId());
+		form.setWorkName(resp.getWorkName());
 		form.setPrice(resp.getPrice());
 		// wip
 		// respに作品分野IDをもたせること
@@ -145,7 +145,7 @@ public class WorkRegistController {
 	 * @param f
 	 * @param r
 	 */
-	private void setUrl(WorkEditForm f, WorkInfoDtoResp r) {
+	private void setUrl(WorkRegistForm f, WorkInfoDtoResp r) {
 		
 		List<String> urls = r.getProductImgUrls();
 		for(String url : urls) {
@@ -199,14 +199,20 @@ public class WorkRegistController {
 		dto.setDealerId(form.getDealerId());
 		dto.setIntroduce(form.getComment());
 		dto.setPrice(form.getPrice());
+		dto.setProductId(form.getProductId());
 		dto.setProductName(form.getWorkName());
 		dto.setCategoryId(form.getProductFiled());
 		dto.setSeasonId(form.getEventDate());
 		dto.setWorkImg1(form.getWorkImg1());
+		dto.setWorkImg1DelFlg(form.getWorkImg1DelFlg());
 		dto.setWorkImg2(form.getWorkImg2());
+		dto.setWorkImg2DelFlg(form.getWorkImg2DelFlg());
 		dto.setWorkImg3(form.getWorkImg3());
+		dto.setWorkImg3DelFlg(form.getWorkImg3DelFlg());
 		dto.setWorkImg4(form.getWorkImg4());
+		dto.setWorkImg4DelFlg(form.getWorkImg4DelFlg());
 		dto.setWorkImg5(form.getWorkImg5());
+		dto.setWorkImg5DelFlg(form.getWorkImg5DelFlg());
 		
 		try {
 			this.workRegistLogic.editWorkInfo(dto);

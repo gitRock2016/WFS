@@ -25,17 +25,17 @@
 			<h4>作品詳細</h4>
 			<div class="form-group">
 				<label for="workName">作品名：</label>
-					<input type="text" value="" id="workName" name="workName"/><span class="countTarget"></span>文字
+					<input type="text" value="${workRegistForm.workName }" id="workName" name="workName"/><span class="countTarget"></span>文字
 			</div>
 			<div class="form-group">
 				<label for="price">値段：</label>
-					<input type="number" value="" id="price" name="price" min="0"/>
+					<input type="number" value="${workRegistForm.price }" id="price" name="price" min="0"/>
 			</div>
 			<div class="form-group">
 				<label>作品分野：</label>
 				<div class="abbreviatedFiled">
-					<input type="hidden" name="productFiled" value="" id ="productFiled"/>
-					<input type="text" value="" id="productFiledLabel" name="productFiledLabel"/>
+					<input type="hidden" name="productFiled" value="${workRegistForm.productFiled }" id ="productFiled"/>
+					<input type="text" value="${workRegistForm.productFiledLabel }" id="productFiledLabel" name="productFiledLabel"/>
 					<br>
 					<button type="button" class="btn btn-info btn-sm" id="clearProductListBtn">クリア</button>
 					<button type="button" class="btn btn-info btn-sm" id="productListBtn">ジャンル一覧</button>
@@ -48,12 +48,12 @@
 			<div class="form-group">
 				<label>紹介文</label>
 				<div id="commentArea">
-					<textarea rows="5" cols="50" name="comment" id="comment"></textarea><span class="countTarget"></span>文字
+					<textarea rows="5" cols="50" name="comment" id="comment">${workRegistForm.comment }</textarea><span class="countTarget"></span>文字
 				</div>
 			</div>
 			<div class="form-group">
 				<label>販売時期：</label>
-					<input type="hidden" name="eventDateSelected" value="" id="eventDateSelected"/>
+					<input type="hidden" name="eventDateSelected" value="${workRegistForm.eventDate }" id="eventDateSelected"/>
 					<select name="eventDate" id="eventDate">
 						<!-- TODO　event_datesテーブルから取得した値を設定する -->
 						<option value="" ></option>

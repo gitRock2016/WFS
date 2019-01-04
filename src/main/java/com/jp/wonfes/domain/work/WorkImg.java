@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.base.Strings;
 import com.jp.wonfes.common.WfsAbstractFile;
 import com.jp.wonfes.common.WfsApplicationConf;
 
@@ -121,7 +122,8 @@ public class WorkImg extends WfsAbstractFile {
 	 * @return
 	 */
 	public static String makeWorkImgFileName(Integer dealerId, Integer productId, Integer seq, String extention) {
-		return prefix + String.valueOf(dealerId) + "_" + String.valueOf(productId) + "_" + String.valueOf(seq) + "."+ extention;
+		String _extention = Strings.isNullOrEmpty(extention) ? "" : "." + extention;
+		return prefix + String.valueOf(dealerId) + "_" + String.valueOf(productId) + "_" + String.valueOf(seq) + _extention;
 	}
 	/**
 	 * 引数をもとに作品画像ファイル名（拡張子なし）を作成し返却する
