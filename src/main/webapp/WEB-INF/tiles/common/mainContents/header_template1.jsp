@@ -10,7 +10,6 @@
 <c:url value="/accnt/accnt_02" var="accnt_accnt_02" />
 <c:url value="/accnt/accnt_03/init" var="accnt_accnt_03_init" />
 <c:url value="/wrk/wrk_04/init" var="wrk04_init" />
-<c:url value="/wrk/wrk_01/init?reg=new" var="wrk01_init" />
 
 <c:set var="isSession" value="${sessionScope.login !=null }"/>
 
@@ -24,9 +23,6 @@
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
 					<li><a href="${wrk04_init }" title="作品検索">作品検索</a></li>
-					<c:if test="${isSession }">
-						<li><a href="${wrk01_init }" title="作品登録">作品登録</a></li>
-					</c:if>
 					<li><a href="${dlr05_init }" title=ディーラー検索>ディーラー検索</a></li>
 					<c:if test="${isSession }">
 						<li><a href="${dlr_01_show }" title="ディーラー登録">ディーラー登録</a></li>
