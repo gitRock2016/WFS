@@ -47,40 +47,39 @@
 	<div class="page-header">
 		<h4>お気に入り一覧
 		<span class="text-success" id="favListCount">${dataCount}</span><span class="text-success">件表示</span></h4>
-			
-		<table class="table table-striped table-hover table-bordered" id="favListTable">
-			<thead>
-				<tr>
-					<th>作品名</th>
-					<th>ジャンル</th>
-					<th>値段</th>
-					<th>卓番</th>
-					<th>ディーラー名</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:if test="${dataCount==0}">
-					<p class="text-danger">※お気に入り登録した作品がありません。</p>
-				</c:if>
-				<c:if test="${dataCount > 0}">
-					<c:forEach var="obj" items="${data}" varStatus="obj_status">
-						<tr class="wfs-show">
-							<td>
-								<input type="hidden" name="productId" value="${obj.productId}" />
-								<a href='#'>${obj.productName}</a>
-							</td>
-							<td><c:out value="${obj.categoryName}" /><input type="hidden" name="categoryNameReading" value="${obj.categoryNameReading}" /></td>
-							<td><c:out value="${obj.price}" /></td>
-							<td><c:out value="${obj.takuban}" /></td>
-							<td >
-								<input type="hidden" name="dealerId" value="${obj.dealerId}" />
-								<a href='${showDealerInfo}/${obj.dealerId}' target='_blank'>${obj.dealerName}</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-			</tbody>
-		</table>
-		
 	</div>
+	<table class="table table-striped table-hover table-bordered" id="favListTable">
+		<thead>
+			<tr>
+				<th>作品名</th>
+				<th>ジャンル</th>
+				<th>値段</th>
+				<th>卓番</th>
+				<th>ディーラー名</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:if test="${dataCount==0}">
+				<p class="text-danger">※お気に入り登録した作品がありません。</p>
+			</c:if>
+			<c:if test="${dataCount > 0}">
+				<c:forEach var="obj" items="${data}" varStatus="obj_status">
+					<tr class="wfs-show">
+						<td>
+							<input type="hidden" name="productId" value="${obj.productId}" />
+							<a href='#'>${obj.productName}</a>
+						</td>
+						<td><c:out value="${obj.categoryName}" /><input type="hidden" name="categoryNameReading" value="${obj.categoryNameReading}" /></td>
+						<td><c:out value="${obj.price}" /></td>
+						<td><c:out value="${obj.takuban}" /></td>
+						<td >
+							<input type="hidden" name="dealerId" value="${obj.dealerId}" />
+							<a href='${showDealerInfo}/${obj.dealerId}' target='_blank'>${obj.dealerName}</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</tbody>
+	</table>
+		
 </div>

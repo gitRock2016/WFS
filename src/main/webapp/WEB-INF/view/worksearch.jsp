@@ -14,16 +14,16 @@
 	<form:form modelAttribute="fm" method="GET" action="/WonFesSys/wrk/wrk_04/search" id="workSearchForm">
 		<div class="col-lg-9">
 			<div class="form-group">
-				<label for="workName">作品名</label>
+				<label for="workName">作品名：</label>
 				<div>
 					<input type="text" value="${fm.workName }" name="workName" id="workName" class="form-control"/>
 				</div>
 			</div>
-			<label>値段</label>
-			<div class="form-group">
-					<input type="number" value="${fm.priceFrom }" name="priceFrom" id="priceFrom" class="form-control" min="0"/>円以上
-					～
-					<input type="number" value="${fm.priceTo }" name="priceTo" id="priceTo" class="form-control" min="0"/>円以下
+			<label>値段：</label>
+			<div class="form-group" id="priceGroup">
+					<input type="number" value="${fm.priceFrom }" name="priceFrom" id="priceFrom" class="form-control" min="0"/><span>円以上</span>
+					<span>～</span>
+					<input type="number" value="${fm.priceTo }" name="priceTo" id="priceTo" class="form-control" min="0"/><span>円以下</span>
 			</div>
 			<div class="form-group">
 				<label>販売時期：</label>
@@ -39,7 +39,7 @@
 					</select>
 				</div>
 			</div>
-			<label>ジャンル</label>
+			<label>ジャンル：</label>
 			<div class="form-group">
 					<input type="hidden" name="productFiled" value="" id ="productFiled"/>
 					<input type="text" value="${fm.productFiledLabel}" name="productFiledLabel" id ="productFiledLabel" class="form-control"/>
@@ -77,8 +77,10 @@
 			<c:forEach var="obj" items="${workList}" varStatus="obj_status">
 				<tr class="wfs-show">
 					<td>
-						<input type="hidden" name="productId" value="${obj.workId}" />
-						<a href='#'>${obj.workName}</a>
+						<input type="hidden" name="productId${obj_status.count }" id="productId${obj_status.count }" value="${obj.workId}" />
+						<input type="hidden" name="dealerId${obj_status.count }" id="dealerId${obj_status.count }" value="${obj.dealerId}" />
+						<input type="hidden" name="workName${obj_status.count }" id="workName${obj_status.count }" value="${obj.workName}" />
+						
 					</td>
 					<td><c:out value="${obj.price}" /></td>
 					<td><c:out value="${obj.eventDate}" /></td>

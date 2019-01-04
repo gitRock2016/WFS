@@ -230,7 +230,32 @@
 			</definition>
 		</put-attribute>
 	</definition>
+
+	<!-- 作品登録画面 -->
+	<definition name="workregist" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workregist" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workregist.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workregist" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workregist.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
 	
+	<!-- 作品登録完了 -->
+	<definition name="workregistfin" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録完了"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregistfin.jsp" />
+	</definition>	
 	
 	
 </tiles-definitions>

@@ -1,7 +1,6 @@
 if (typeof wfs.worksearch === "undefined") {
 	wfs.worksearch = {}
 }
-wfs.worksearch.baseUrl = "/" + wfs.com.cont + "/dlr/dlr_04";
 
 $(function() {
 	
@@ -10,7 +9,10 @@ $(function() {
 	
 	// 販売時期
 	wfs.worksearch.formatEventDate();
-	
+
+	// 検索結果
+	wfs.worksearch.formatSearchList();
+
 	
 	// 検索ボタン
 	$("#searchBtn").on("click", function() {
@@ -37,6 +39,24 @@ $(function() {
 wfs.worksearch.searchDealerInfo = function() {
 	$('form#workSearchForm').submit();
 }
+wfs.worksearch.getWorkNameLink
+wfs.worksearch.formatSearchList = function(){
+	
+	// 検索結果
+	// 作品名称（Link）
+	const targetTr = $('table#favListTable').find('tr');
+	targetTr.each(function(){
+		let targetTd = $(this).find('td').eq(0); // 作品名称
+		let dealerId = targetTd.find('input:hidden[name^="dealerId"]').val(); 
+		let productId = targetTd.find('input:hidden[name^="product"]').val(); 
+		let workName = targetTd.find('input:hidden[name^="workName"]').val(); 
+		let url = wfs.com.url.get("/wrk/wrk_05/init/"+dealerId+"/"+productId);
+		let link = $('<a target="_blank"></a>').append(workName).attr('href', url);
+		targetTd.append(link);
+	});
+	
+}
+
 wfs.worksearch.formatEventDate = function(){
 	$("select#eventDate").attr("selected", false);
 	const _selectedEventDate = $('input#eventDateSelected').val();

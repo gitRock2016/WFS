@@ -23,9 +23,6 @@
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
 					<li><a href="${wrk04_init }" title="作品検索">作品検索</a></li>
-					<c:if test="${isSession }">
-						<li><a href="${top }" title="TODO 作成中">作品登録</a></li>
-					</c:if>
 					<li><a href="${dlr05_init }" title=ディーラー検索>ディーラー検索</a></li>
 					<c:if test="${isSession }">
 						<li><a href="${dlr_01_show }" title="ディーラー登録">ディーラー登録</a></li>

@@ -23,6 +23,7 @@ import com.jp.wonfes.dealer.logic.DealerRegistLogic;
 import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.EditDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDto;
+import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDtoResp;
 
 @Controller
 public class DealerRegistController {
@@ -62,8 +63,9 @@ public class DealerRegistController {
 		}
 		
 		RegistDealerInfoDto dto= RegistDealerInfoDto.form2Dto(dealerRegistForm);
+		RegistDealerInfoDtoResp resp = null;
 		try {
-			dealerRegistLogic.registDealerInfo(dto);
+			resp  = dealerRegistLogic.registDealerInfo(dto);
 		} catch (WfsLogicException e) {
 			model.addAttribute("danger_message", e.getMessage());
 			return "dealerregist";
@@ -73,6 +75,8 @@ public class DealerRegistController {
 		}
 		
 		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "ディーラ情報の登録処理" });
+		
+		model.addAttribute("dealerId", resp.getDealerId());
 		model.addAttribute("success_message", messageSucceed);
 
 		return "dealerregistfin";

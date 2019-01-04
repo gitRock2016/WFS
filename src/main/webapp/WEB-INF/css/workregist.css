@@ -1,0 +1,15 @@
+div#descriptionFiled{
+	float:left;
+}
+div#imgFiled{
+	float:right;
+}
+.clear{
+	clear:both;
+}
+.icon-image img {
+	margin-bottom: 10px;	
+}
+.icon-image img {
+	width:300px;
+}
