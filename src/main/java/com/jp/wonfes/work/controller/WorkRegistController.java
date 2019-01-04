@@ -60,7 +60,6 @@ public class WorkRegistController {
 	@RequestMapping(value = "/wrk/wrk_01/regist", method = RequestMethod.POST)
 	public String regist(@ModelAttribute @Valid WorkRegistForm form, BindingResult result, Model model) {
 		
-		// TODO 登録時の単項目チェック
 		if(result.hasErrors()) {
 			return "workregist";
 		}
