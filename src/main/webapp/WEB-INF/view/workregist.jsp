@@ -34,10 +34,12 @@
 				<div class="abbreviatedFiled">
 					<input type="hidden" name="productFiled" value="" id ="productFiled"/>
 					<input type="text" value="" id="productFiledLabel" name="productFiledLabel"/>
+					<br>
 					<button type="button" class="btn btn-info btn-sm" id="clearProductListBtn">クリア</button>
 					<button type="button" class="btn btn-info btn-sm" id="productListBtn">ジャンル一覧</button>
 					<br>
 					<button type="button" class="btn btn-danget btn-sm" id="stub_productListBtn" style="margin:2px;">ジャンル一覧(stub)</button>
+					<br>
 					※ジャンル一覧(stub)は固定で作品分野コード3（Re:ゼロから始める異世界生活）を指定する
 				</div>
 			</div>
@@ -65,7 +67,7 @@
 				<div id="workImg1Field">
 					<h4>作品画像1</h4>
 					<div class="icon-image">
-						<img src="#" id="workImgDisp1" />
+						<img src="${workRegistForm.workImg1Url }" id="workImgDisp1" />
 					</div>
 					<form:input type="file" name="workImg1" id="workImg1" path="workImg1" class="form-control-file"  value="作品画像1登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn1">作品画像1クリア</button>
@@ -73,7 +75,7 @@
 				<div id="workImg2Field">
 					<h4>作品画像2</h4>
 					<div class="icon-image">
-						<img src="#" id="workImgDisp2" />
+						<img src="${workRegistForm.workImg2Url }" id="workImgDisp2" />
 					</div>
 					<form:input type="file" name="workImg2" id="workImg2" path="workImg2" class="form-control-file"  value="作品画像2登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn2">作品画像2クリア</button>
@@ -81,7 +83,7 @@
 				<div id="workImg3Field">
 					<h4>作品画像3</h4>
 					<div class="icon-image">
-						<img src="#" id="workImgDisp3" />
+						<img src="${workRegistForm.workImg3Url }" id="workImgDisp3" />
 					</div>
 					<form:input type="file" name="workImg3" id="workImg3" path="workImg3" class="form-control-file"  value="作品画像3登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn3">作品画像3クリア</button>
@@ -89,7 +91,7 @@
 				<div id="workImg4Field">
 					<h4>作品画像4</h4>
 					<div class="icon-image">
-						<img src="" id="workImgDisp4" />
+						<img src="${workRegistForm.workImg4Url }" id="workImgDisp4" />
 					</div>
 					<form:input type="file" name="workImg4" id="workImg4" path="workImg4" class="form-control-file"  value="作品画像4登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn4">作品画像4クリア</button>
@@ -97,7 +99,7 @@
 				<div id="workImg5Field">
 					<h4>作品画像5</h4>
 					<div class="icon-image">
-						<img src="#" id="workImgDisp5" />
+						<img src="${workRegistForm.workImg5Url }" id="workImgDisp5" />
 					</div>
 					<form:input type="file" name="workImg5" id="workImg5" path="workImg5" class="form-control-file"  value="作品画像5登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn5">作品画像5クリア</button>
@@ -107,7 +109,7 @@
 	<div class="clear"></div>
 	<div class="col-lg-12" id="workRegistBtnFiled">
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary" id="workRegistBtn">作品登録</button>
+			<button type="submit" class="btn btn-primar8y" id="workRegistBtn">作品登録</button>
 		</div>
 	</div>
 	</form:form>

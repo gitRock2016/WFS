@@ -1,6 +1,5 @@
 package com.jp.wonfes.work.controller.form;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -13,8 +12,6 @@ public class WorkRegistForm {
 	@NotNull
 	private Integer dealerId;
 	@NotEmpty
-	// 名前が数字だけを入力した場合、数値の最大値としてチェックされてしまう（文字列長としてチェックしない）ため、Lengthを利用する
-//	@Max(20)
 	@Length(max=20)
 	private String workName;
 	@NotNull
@@ -23,7 +20,6 @@ public class WorkRegistForm {
 	@NotNull
 	private Integer productFiled;
 	@NotNull
-//	@Max(200)
 	@Length(min=0,max=200)
 	private String comment;
 	@NotNull
@@ -33,7 +29,12 @@ public class WorkRegistForm {
 	private MultipartFile workImg3;
 	private MultipartFile workImg4;
 	private MultipartFile workImg5;
-
+	private String workImg1Url;
+	private String workImg2Url;
+	private String workImg3Url;
+	private String workImg4Url;
+	private String workImg5Url;
+	
 	public Integer getDealerId() {
 		return dealerId;
 	}
@@ -100,6 +101,37 @@ public class WorkRegistForm {
 	public void setWorkImg5(MultipartFile workImg5) {
 		this.workImg5 = workImg5;
 	}
+	public String getWorkImg1Url() {
+		return workImg1Url;
+	}
+	public void setWorkImg1Url(String workImg1Url) {
+		this.workImg1Url = workImg1Url;
+	}
+	public String getWorkImg2Url() {
+		return workImg2Url;
+	}
+	public void setWorkImg2Url(String workImg2Url) {
+		this.workImg2Url = workImg2Url;
+	}
+	public String getWorkImg3Url() {
+		return workImg3Url;
+	}
+	public void setWorkImg3Url(String workImg3Url) {
+		this.workImg3Url = workImg3Url;
+	}
+	public String getWorkImg4Url() {
+		return workImg4Url;
+	}
+	public void setWorkImg4Url(String workImg4Url) {
+		this.workImg4Url = workImg4Url;
+	}
+	public String getWorkImg5Url() {
+		return workImg5Url;
+	}
+	public void setWorkImg5Url(String workImg5Url) {
+		this.workImg5Url = workImg5Url;
+	}
+	
 	
 	
 }

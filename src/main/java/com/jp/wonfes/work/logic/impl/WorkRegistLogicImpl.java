@@ -12,7 +12,6 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsSaledateKey;
-import com.jp.wonfes.common.WfsApplicationConf;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
@@ -20,6 +19,7 @@ import com.jp.wonfes.domain.work.WorkImg;
 import com.jp.wonfes.work.logic.WorkImgLogic;
 import com.jp.wonfes.work.logic.WorkRegistLogic;
 import com.jp.wonfes.work.logic.dto.WorkRegistInfoDtoReq;
+import com.jp.wonfes.work.logic.dto.WorkRegistInfoDtoResp;
 
 @Service
 public class WorkRegistLogicImpl implements WorkRegistLogic {
@@ -36,14 +36,17 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	private WfsMessage wfsMessage;
 	@Autowired
 	private WorkImgLogic workImgLogic;
-
+	
+	/**
+	 * 作品情報の新規登録処理
+	 */
 	@Override
-	public void registWorkInfo(WorkRegistInfoDtoReq req) throws WfsLogicException, WfsSysytemException{
-		
+	public WorkRegistInfoDtoResp registWorkInfo(WorkRegistInfoDtoReq req) throws WfsLogicException, WfsSysytemException{
+		WorkRegistInfoDtoResp resp = new WorkRegistInfoDtoResp();
 		final Integer dealerId = req.getDealerId();
 		final Integer productId = this.getNewProductId(req.getDealerId());
 		
-		// 作品の基本情報を登録
+		// 作品の基本情報
 		DealersDetailProducts r1 = new DealersDetailProducts();
 		r1.setDealerId(dealerId);
 		r1.setIntroduce(req.getIntroduce());
@@ -55,7 +58,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			throw new WfsLogicException(wfsMessage.getMessage("wfs.msg.e.wrk1"));
 		}
 		
-		// 作品の分野を登録
+		// 作品の分野
 		DealersDetailProductsCategoriesKey r2 = new DealersDetailProductsCategoriesKey();
 		r2.setDealerId(dealerId);
 		r2.setProductId(productId);
@@ -64,14 +67,14 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			throw new WfsLogicException(wfsMessage.getMessage("wfs.msg.e.wrk1"));
 		}
 		
-		// 作品の画像データ 
+		// 作品画像（DBへの登録、画像ファイル自体の登録）
 		DealersDetailProductsImgsKey r3 = new DealersDetailProductsImgsKey();
-		// TODO あとで作成
+		r3.setDealerId(dealerId);
+		r3.setProductId(productId);
+		
 		WorkImg img1 = new WorkImg(dealerId, productId, 1, req.getWorkImg1());
 		if(!img1.isEmpty()) {
 			workImgLogic.registWorkImg(img1);
-			r3.setDealerId(dealerId);
-			r3.setProductId(productId);
 			r3.setImgProductFile(img1.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
@@ -101,7 +104,6 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
 
-
 		// 作品を販売していた時期（いつのWFSで販売していたかの情報）
 		DealersDetailProductsSaledateKey r4 = new DealersDetailProductsSaledateKey();
 		r4.setDealerId(dealerId);
@@ -110,8 +112,9 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		if(dealersDetailProductsSaledateMapper.insert(r4) == 0 ) {
 			throw new WfsLogicException(wfsMessage.getMessage("wfs.msg.e.wrk1"));
 		}
-		
-		
+		resp.setDealerId(dealerId);
+		resp.setProductId(productId);
+		return resp;
 	}
 	
 	

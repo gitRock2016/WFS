@@ -10,22 +10,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jp.wonfes.common.ImgWorkUrl;
 import com.jp.wonfes.common.WfsLogicException;
+import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
-import com.jp.wonfes.domain.work.WorkImg;
 import com.jp.wonfes.work.controller.form.WorkRegistForm;
 import com.jp.wonfes.work.logic.WorkRegistLogic;
-import com.jp.wonfes.work.logic.WorkSearchLogic;
 import com.jp.wonfes.work.logic.dto.WorkRegistInfoDtoReq;
+import com.jp.wonfes.work.logic.dto.WorkRegistInfoDtoResp;
 
 @Controller
 public class WorkRegistController {
 	
 	@Autowired
 	private WorkRegistLogic workRegistLogic;
-	
 	@Autowired
-	WorkSearchLogic workSearchLogic;
+	private WfsMessage msg;
+	@Autowired
+	private ImgWorkUrl imgWorkUrl;
 	
 	/**
 	 * 初期表示
@@ -34,7 +36,17 @@ public class WorkRegistController {
 	 */
 	@RequestMapping(value = "/wrk/wrk_01/init", params="reg=new", method = RequestMethod.GET)
 	public String initWrk01(Model model) {
-		model.addAttribute("workRegistForm", new WorkRegistForm());
+		
+		WorkRegistForm form = new WorkRegistForm();
+		
+		String defaultWorkFileUrl = imgWorkUrl.getDefaultWorkFilePath();
+		form.setWorkImg1Url(defaultWorkFileUrl);
+		form.setWorkImg2Url(defaultWorkFileUrl);
+		form.setWorkImg3Url(defaultWorkFileUrl);
+		form.setWorkImg4Url(defaultWorkFileUrl);
+		form.setWorkImg5Url(defaultWorkFileUrl);
+		
+		model.addAttribute("workRegistForm", form);
 		return "workregist";
 	}
 	
@@ -64,16 +76,20 @@ public class WorkRegistController {
 		dto.setWorkImg3(form.getWorkImg3());
 		dto.setWorkImg4(form.getWorkImg4());
 		dto.setWorkImg5(form.getWorkImg5());
-
+		
+		WorkRegistInfoDtoResp resp = null;
 		try {
-			this.workRegistLogic.registWorkInfo(dto);
+			resp = this.workRegistLogic.registWorkInfo(dto);
 		} catch (WfsLogicException | WfsSysytemException e) {
 			model.addAttribute("danger_message", e.getMessage());
 			model.addAttribute("workRegistForm", form);
 			return "workregist";
 		}
-
-		return "workregist";
+		
+		model.addAttribute("success_message", msg.getMessage("wfs.msg.e.cmmn1" + new String[] { "作品情報の登録" }));
+		model.addAttribute("dealerId", resp.getDealerId());
+		model.addAttribute("productId", resp.getProductId());
+		return "workregistfin";
 	}
 
 }

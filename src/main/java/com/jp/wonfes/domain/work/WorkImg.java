@@ -2,16 +2,12 @@ package com.jp.wonfes.domain.work;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFilePermissions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jp.wonfes.common.WfsAbstractFile;
 import com.jp.wonfes.common.WfsApplicationConf;
-import com.jp.wonfes.common.WfsSysytemException;
 
 public class WorkImg extends WfsAbstractFile{
 	
