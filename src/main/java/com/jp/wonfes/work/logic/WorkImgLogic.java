@@ -7,7 +7,8 @@ import com.jp.wonfes.domain.work.WorkImg;
 public interface WorkImgLogic {
 	/**
 	 * 画像ファイル自体の登録処理<br>
-	 * 同名ファイルが存在する場合、上書きして保存する
+	 * 同名ファイルが存在する場合、上書きして保存する<br>
+	 * ファイルが空の場合、登録処理を行わない
 	 * @param workImg
 	 * @throws WfsLogicException
 	 * @throws WfsSysytemException

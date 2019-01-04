@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<c:set var="editFlg" value="${editFlg}"/>
 <div class="container">
 	<div class="page-header">
 		<h1>作品登録画面</h1>
@@ -18,6 +19,8 @@
 
 	<form:form modelAttribute="workRegistForm" method="POST" action="/WonFesSys/wrk/wrk_01/regist" id="workReigstForm" enctype="multipart/form-data" >
 		<input type="hidden" value="${workRegistForm.dealerId }" id="dealerId" name="dealerId"/>
+		<!-- wip 編集画面でのみ利用 -->
+		<input type="hidden" value="${workRegistForm.productId }" id="productId" name="productId"/>
 		<div class="col-lg-6" id="descriptionFiled">
 			<h4>作品詳細</h4>
 			<div class="form-group">
@@ -70,6 +73,13 @@
 					</div>
 					<form:input type="file" name="workImg1" id="workImg1" path="workImg1" class="form-control-file"  value="作品画像1登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn1">作品画像1クリア</button>
+					<c:if test="${editFlg}">
+						<label for="workImg1DelFlgCheck" >作品情報を削除しますか?
+							<input type="checkbox" id="workImg1DelFlgCheck" name="workImg1DelFlgCheck" value="1"/>
+						</label>
+							<input type="hidden" id="workImg1DelFlg" name="workImg1DelFlg"  value="0"/>
+					</c:if>
+					
 				</div>
 				<div id="workImg2Field">
 					<h4>作品画像2</h4>
@@ -78,6 +88,13 @@
 					</div>
 					<form:input type="file" name="workImg2" id="workImg2" path="workImg2" class="form-control-file"  value="作品画像2登録"/>
 					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn2">作品画像2クリア</button>
+					<c:if test="${editFlg}">
+						<label for="workImg2DelFlgCheck">作品情報を削除しますか? 
+							<input type="checkbox" id="workImg2DelFlgCheck" name="workImg2DelFlgCheck" value="1" />
+						</label>
+						<input type="hidden" id="workImg2DelFlg" name="workImg2DelFlg"
+							value="0" />
+					</c:if>
 				</div>
 				<div id="workImg3Field">
 					<h4>作品画像3</h4>
@@ -108,8 +125,12 @@
 	<div class="clear"></div>
 	<div class="col-lg-12" id="workRegistBtnFiled">
 		<div class="form-group">
-			<button type="submit" class="btn btn-primar8y" id="workRegistBtn">作品登録</button>
+			<button type="submit" class="btn btn-primary" id="workRegistBtn">作品登録</button>
 		</div>
+		<c:if test="${editFlg}">
+			<button type="button" class="btn btn-primary" id="workDelBtn">作品削除</button>
+		</c:if>
+		
 	</div>
 	</form:form>
 

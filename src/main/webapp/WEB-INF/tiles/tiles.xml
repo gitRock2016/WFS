@@ -255,7 +255,28 @@
 	<definition name="workregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="作品登録完了"/>
 		<put-attribute name="body" value="/WEB-INF/view/workregistfin.jsp" />
-	</definition>	
+	</definition>
+	
+	<!-- 作品情報編集 -->
+	<definition name="workedit" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録編集"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workedit" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workedit.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workedit" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workregist.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	
 	
 </tiles-definitions>

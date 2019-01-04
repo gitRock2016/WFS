@@ -19,6 +19,7 @@ public class WorkRegistForm {
 	private Integer price;
 	@NotNull
 	private Integer productFiled;
+	private String productFiledLabel;
 	@NotNull
 	@Length(min=0,max=200)
 	private String comment;
@@ -58,6 +59,12 @@ public class WorkRegistForm {
 	}
 	public void setProductFiled(Integer productFiled) {
 		this.productFiled = productFiled;
+	}
+	public String getProductFiledLabel() {
+		return productFiledLabel;
+	}
+	public void setProductFiledLabel(String productFiledLabel) {
+		this.productFiledLabel = productFiledLabel;
 	}
 	public String getComment() {
 		return comment;
