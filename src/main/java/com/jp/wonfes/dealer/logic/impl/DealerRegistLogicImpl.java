@@ -26,6 +26,7 @@ import com.jp.wonfes.dealer.logic.DealerRegistLogic;
 import com.jp.wonfes.dealer.logic.dto.DeleteDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.EditDealerInfoDto;
 import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDto;
+import com.jp.wonfes.dealer.logic.dto.RegistDealerInfoDtoResp;
 
 @Service
 public class DealerRegistLogicImpl implements DealerRegistLogic {
@@ -47,12 +48,15 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 	private static final String imgIconDel = "";
 
 	@Override
-	public void registDealerInfo(RegistDealerInfoDto dto) throws WfsLogicException, WfsSysytemException {
+	public RegistDealerInfoDtoResp registDealerInfo(RegistDealerInfoDto dto) throws WfsLogicException, WfsSysytemException {
+
+		RegistDealerInfoDtoResp resp = new RegistDealerInfoDtoResp();
 
 		// 登録処理(テーブル）
 		DealersExample e1 = new DealersExample();
 		List<Dealers> dlist =dealersMapper.selectByExample(e1);
 		Integer nextId = this.getDlistMax(dlist)+1; // Id
+		resp.setDealerId(nextId);
 		WfsImgIcon imgIcon = new WfsImgIcon(dto.getDealerIconImg(), nextId);
 		
 		Dealers dealer = new Dealers();
@@ -74,7 +78,8 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		if (!imgIcon.isEmpty()) {
 			wfsImgLogic.save(imgIcon);
 		}
-	
+		
+		return resp;
 	}
 
 	@Override

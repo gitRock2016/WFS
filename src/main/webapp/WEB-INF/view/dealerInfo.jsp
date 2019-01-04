@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<c:url value="/wrk/wrk_01/init/${dealerInfoForm.id }?reg=new" var="workRegistUrl" />
 <div class="container">
 	<div class="page-header">
 		<h1>ディーラー情報画面</h1>
@@ -62,7 +63,7 @@
 		</div>
 		<div class="form-group">
 			<button type="button" class="btn btn-primary" id="dealerEditBtn">ディーラ登録編集</button>
-			<button type="button" class="btn btn-primary" id="productRegBtn">作品登録</button>
+			<button type="button" class="btn btn-primary" id="productRegBtn" onclick='location.href="${workRegistUrl}"'>作品登録</button>
 		</div>
 	</div>
 

@@ -17,8 +17,7 @@
 	</spring:bind>
 
 	<form:form modelAttribute="workRegistForm" method="POST" action="/WonFesSys/wrk/wrk_01/regist" id="workReigstForm" enctype="multipart/form-data" >
-		<!-- TOFIX ディーラIDは一旦固定で作成する -->
-		<input type="hidden" value="1" id="dealerId" name="dealerId"/>
+		<input type="hidden" value="${workRegistForm.dealerId }" id="dealerId" name="dealerId"/>
 		<div class="col-lg-6" id="descriptionFiled">
 			<h4>作品詳細</h4>
 			<div class="form-group">

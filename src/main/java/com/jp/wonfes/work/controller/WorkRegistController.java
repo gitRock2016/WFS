@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,11 +35,11 @@ public class WorkRegistController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/wrk/wrk_01/init", params="reg=new", method = RequestMethod.GET)
-	public String initWrk01(Model model) {
+	@RequestMapping(value = "/wrk/wrk_01/init/{dealerId}", params="reg=new", method = RequestMethod.GET)
+	public String initWrk01(@PathVariable("dealerId") Integer dealerId,Model model) {
 		
 		WorkRegistForm form = new WorkRegistForm();
-		
+		form.setDealerId(dealerId);
 		String defaultWorkFileUrl = imgWorkUrl.getDefaultWorkFilePath();
 		form.setWorkImg1Url(defaultWorkFileUrl);
 		form.setWorkImg2Url(defaultWorkFileUrl);
@@ -86,7 +87,8 @@ public class WorkRegistController {
 			return "workregist";
 		}
 		
-		model.addAttribute("success_message", msg.getMessage("wfs.msg.e.cmmn1" + new String[] { "作品情報の登録" }));
+		String messageSucceed = msg.getMessage("wfs.msg.e.cmmn1", new String[] { "作品情報の登録処理" });
+		model.addAttribute("success_message", messageSucceed);
 		model.addAttribute("dealerId", resp.getDealerId());
 		model.addAttribute("productId", resp.getProductId());
 		return "workregistfin";
