@@ -124,13 +124,10 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	 * @return ディーラ詳細作品テーブルに登録されている作品ID＋１
 	 */
 	private int getNewProductId(Integer dealerId) {
-		// TODO 作品情報だけを管理するテーブルを作成したほうがよかった気がする・・・PK１つ、作品コードみたいなのをもたせて検索させるような感じ
 		DealersDetailProductsExample e1 = new DealersDetailProductsExample();
 		e1.createCriteria().andDealerIdEqualTo(dealerId);
 		int now = dealersDetailProductsMapper.countByExample(e1);
 		return now + 1;
 	}
-
-
 
 }
