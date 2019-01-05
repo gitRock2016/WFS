@@ -59,7 +59,7 @@ public class WorkImg extends WfsAbstractFile {
 	/**
 	 * ファイル名のみ（拡張子付き）<br>
 	 * 保存先のファイルパスは含まない
-	 * 
+	 * MultipartFileが空の場合は、空文字を返却する
 	 * @return
 	 */
 	public String getFileName() {

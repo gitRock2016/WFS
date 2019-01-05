@@ -1,10 +1,12 @@
 package com.jp.wonfes.work.logic.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Strings;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
@@ -75,49 +77,8 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		}
 		
 		// 作品画像（DBへの登録、画像ファイル自体の登録）
-//		DealersDetailProductsImgsKey r3 = new DealersDetailProductsImgsKey();
-//		r3.setDealerId(dealerId);
-//		r3.setProductId(productId);
-		DealersDetailProductsImgs r3 = new DealersDetailProductsImgs();
-		r3.setDealerId(dealerId);
-		r3.setProductId(productId);
-		
-		WorkImg img1 = new WorkImg(dealerId, productId, 1, req.getWorkImg1());
-		if(!img1.isEmpty()) {
-			workImgLogic.registWorkImg(img1);
-			r3.setImgSeq(1);
-			r3.setImgProductFile(img1.getFileName());
-			dealersDetailProductsImgsMapper.insert(r3);
-		}
-		
-		WorkImg img2 = new WorkImg(dealerId, productId, 2, req.getWorkImg2());
-		if(!img2.isEmpty()) {
-			workImgLogic.registWorkImg(img2);
-			r3.setImgSeq(2);
-			r3.setImgProductFile(img2.getFileName());
-			dealersDetailProductsImgsMapper.insert(r3);
-		}
-		WorkImg img3 = new WorkImg(dealerId, productId, 3, req.getWorkImg3());
-		if(!img3.isEmpty()) {
-			workImgLogic.registWorkImg(img3);
-			r3.setImgSeq(3);
-			r3.setImgProductFile(img3.getFileName());
-			dealersDetailProductsImgsMapper.insert(r3);
-		}
-		WorkImg img4 = new WorkImg(dealerId, productId, 4, req.getWorkImg4());
-		if(!img4.isEmpty()) {
-			workImgLogic.registWorkImg(img4);
-			r3.setImgSeq(4);
-			r3.setImgProductFile(img4.getFileName());
-			dealersDetailProductsImgsMapper.insert(r3);
-		}
-		WorkImg img5 = new WorkImg(dealerId, productId, 5, req.getWorkImg5());
-		if(!img5.isEmpty()) {
-			workImgLogic.registWorkImg(img5);
-			r3.setImgSeq(5);
-			r3.setImgProductFile(img5.getFileName());
-			dealersDetailProductsImgsMapper.insert(r3);
-		}
+		// 新規登録対象が存在していれば、削除する
+		this.insertWorkInfoImgs(dealerId, productId, req);
 
 		// 作品を販売していた時期（いつのWFSで販売していたかの情報）
 		DealersDetailProductsSaledateKey r4 = new DealersDetailProductsSaledateKey();
@@ -162,6 +123,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		dealersDetailProductsMapper.updateByPrimaryKey(e1);
 
 		//2.dealers_detail_products_categories、dealerIdとproductIDでupdate
+		// TODO １作品がもつ作品分野を複数にするなら、dealers_detail_products_imgsと同じテーブル構成でもいいのでは？
 		DealersDetailProductsCategoriesKey k2 = new DealersDetailProductsCategoriesKey();
 		k2.setDealerId(dealerId);
 		k2.setProductId(productId);
@@ -174,47 +136,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		dealersDetailProductsCategoriesMapper.updateByExample(k2, e2);
 
 		//3.dealers_detail_products_imgs、作品の画像データ
-		DealersDetailProductsImgsKey k3 = new DealersDetailProductsImgsKey();
-		k3.setDealerId(dealerId);
-		k3.setProductId(productId);
-		
-		// seq1の作品画像に対する処理
-		// WEBサーバー
-		WorkImg img1 = new WorkImg(dealerId, productId, 1, req.getWorkImg1());
-		workImgLogic.registWorkImg(img1);
-			
-		// DB
-		DealersDetailProductsImgsExample se1 = new DealersDetailProductsImgsExample();
-//		se1.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId).and
-//		String s =WorkImg.makeWorkImgFileNameExcludeExtention(dealerId, productId, 1);
-//		se1.createCriteria()
-//			.andDealerIdEqualTo(dealerId)
-//			.andProductIdEqualTo(productId)
-//			.andImgProductFileLike(s+"%");
-//		if ("1".equals(req.getWorkImg1DelFlg())) {
-//			// del
-//			// WEBサーバーからはファイルは削除しない
-//			dealersDetailProductsImgsMapper.deleteByExample(se1);
-//		} else {
-//			if(!img1.isEmpty()) { // 画面からファイルが送られた場合のみ、更新処理を行う
-//				// update
-//				// listで取得するが、運用上複数のレコードは取得されない
-//				// listにデータがある場合は要素１つだけの想定、
-//				List<DealersDetailProductsImgsKey> el1 = dealersDetailProductsImgsMapper.selectByExample(se1);
-//				if (!el1.isEmpty()) { // レコードが存在する
-//					DealersDetailProductsImgsExample se1u = new DealersDetailProductsImgsExample();
-//					se1u.createCriteria()
-//						.andDealerIdEqualTo(dealerId)
-//						.andProductIdEqualTo(productId)
-//						.andImgProductFileEqualTo(img1.getFileName());
-//					dealersDetailProductsImgsMapper.updateByExample(el1.get(0), se1u);
-//				}else { // レコードが存在しない
-//					k3.setImgProductFile(img1.getFileName());
-//					dealersDetailProductsImgsMapper.insert(k3);
-//				}
-//			}
-//		}
-		// wip seq2から5も作成すること
+		this.editWorkInfoImgs(dealerId, productId, req);
 
 		//4.dealers_detail_products_saledate、dealerIdとproductIDでupdate
 		DealersDetailProductsSaledateKey r5 = new DealersDetailProductsSaledateKey();
@@ -229,7 +151,99 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		dealersDetailProductsSaledateMapper.updateByExample(r5, e5);
 
 	}
-	
 
+	private void insertWorkInfoImgs(Integer dealerId, Integer productId, WorkRegistInfoDtoReq req)
+			throws WfsLogicException, WfsSysytemException {
+		// 作品画像（DBへの登録、画像ファイル自体の登録）
+		// 新規登録対象が存在していれば、削除する
+		DealersDetailProductsImgsExample re3 = new DealersDetailProductsImgsExample();
+		re3.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId);
+		List<DealersDetailProductsImgs> re3list = dealersDetailProductsImgsMapper.selectByExample(re3);
+		if (!re3list.isEmpty()) {
+			dealersDetailProductsImgsMapper.deleteByExample(re3);
+		}
+
+		ArrayList<WorkImg> workList = new ArrayList<WorkImg>();
+		workList.add(new WorkImg(dealerId, productId, 1, req.getWorkImg1()));
+		workList.add(new WorkImg(dealerId, productId, 2, req.getWorkImg2()));
+		workList.add(new WorkImg(dealerId, productId, 3, req.getWorkImg3()));
+		workList.add(new WorkImg(dealerId, productId, 4, req.getWorkImg4()));
+		workList.add(new WorkImg(dealerId, productId, 5, req.getWorkImg5()));
+
+		DealersDetailProductsImgs r3 = new DealersDetailProductsImgs();
+		r3.setDealerId(dealerId);
+		r3.setProductId(productId);
+		for (int i = 0; i < workList.size(); i++) {
+			int seq = i + 1;
+			WorkImg img = workList.get(i);
+			/** WEB */
+			workImgLogic.registWorkImg(img);
+			/** DB */
+			r3.setImgSeq(seq);
+			r3.setImgProductFile(img.getFileName());
+			dealersDetailProductsImgsMapper.insert(r3);
+		}
+	}
+	/**
+	 * 作品画像の更新時処理
+	 * dealers_detail_products_imgsに対する処理
+	 * 
+	 * @param dealerId
+	 * @param productId
+	 * @param req
+	 * @throws WfsLogicException
+	 * @throws WfsSysytemException
+	 */
+	private void editWorkInfoImgs(Integer dealerId, Integer productId, WorkEditInfoDtoReq req) throws WfsLogicException, WfsSysytemException {
+		/*
+		 * TODO 処理用のDTOクラス、削除フラグとWorkImgをフィール後に持つのをつくれば処理を簡略化できるのでは？・・・
+		 * */
+		
+		// 削除フラグ
+		String[] delflgs = {"0","0","0","0","0",};
+		delflgs[0] = Strings.isNullOrEmpty(req.getWorkImg1DelFlg()) ? "0" : req.getWorkImg1DelFlg();
+		delflgs[1] = Strings.isNullOrEmpty(req.getWorkImg2DelFlg()) ? "0" : req.getWorkImg2DelFlg();
+		delflgs[2] = Strings.isNullOrEmpty(req.getWorkImg3DelFlg()) ? "0" : req.getWorkImg3DelFlg();
+		delflgs[3] = Strings.isNullOrEmpty(req.getWorkImg4DelFlg()) ? "0" : req.getWorkImg4DelFlg();
+		delflgs[4] = Strings.isNullOrEmpty(req.getWorkImg5DelFlg()) ? "0" : req.getWorkImg5DelFlg();
+		
+		// 作品画像
+		// 削除フラグと要素数は一致して作成しないと実際のDBなどの更新処理がうまくいかない
+		List<WorkImg> workList = new ArrayList<WorkImg>();
+		workList.add(new WorkImg(dealerId, productId, 1, req.getWorkImg1()));
+		workList.add(new WorkImg(dealerId, productId, 2, req.getWorkImg2()));
+		workList.add(new WorkImg(dealerId, productId, 3, req.getWorkImg3()));
+		workList.add(new WorkImg(dealerId, productId, 4, req.getWorkImg4()));
+		workList.add(new WorkImg(dealerId, productId, 5, req.getWorkImg5()));
+
+		DealersDetailProductsImgsKey k3 = new DealersDetailProductsImgsKey();
+		k3.setDealerId(dealerId);
+		k3.setProductId(productId);
+		
+		DealersDetailProductsImgs e3 = new DealersDetailProductsImgs();
+		e3.setDealerId(dealerId);
+		e3.setProductId(productId);
+		
+		for (int i = 0; i < delflgs.length; i++) {
+			int seq = i + 1;
+			WorkImg w = workList.get(i);
+			
+			/** 作品画像ファイル */
+			workImgLogic.registWorkImg(w);
+			
+			/** DB */
+			if ("1".equals(delflgs[i])) {
+				// 削除フラグがONの場合
+				k3.setImgSeq(seq);
+				dealersDetailProductsImgsMapper.deleteByPrimaryKey(k3);
+			}
+			// 画面で削除指定しても、ファイルが送られてきた場合は登録する
+			if (!w.isEmpty()) {
+				e3.setImgSeq(seq);
+				e3.setImgProductFile(w.getFileName());
+				dealersDetailProductsImgsMapper.updateByPrimaryKey(e3);
+			}
+		}
+	}
 
 }
