@@ -24,7 +24,6 @@ $(function() {
 	$("#workImg1").change(function(){
 		wfs.imgPreview($(this).attr('id'), "workImgDisp1");
 	});
-	// wip 作品画像２から５も同様にする
 	$("#workImg2").change(function(){
 		wfs.imgPreview($(this).attr('id'), "workImgDisp2");
 	});
