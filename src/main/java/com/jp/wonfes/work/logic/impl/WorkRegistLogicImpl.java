@@ -13,6 +13,7 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgs;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsSaledateExample;
@@ -74,13 +75,17 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		}
 		
 		// 作品画像（DBへの登録、画像ファイル自体の登録）
-		DealersDetailProductsImgsKey r3 = new DealersDetailProductsImgsKey();
+//		DealersDetailProductsImgsKey r3 = new DealersDetailProductsImgsKey();
+//		r3.setDealerId(dealerId);
+//		r3.setProductId(productId);
+		DealersDetailProductsImgs r3 = new DealersDetailProductsImgs();
 		r3.setDealerId(dealerId);
 		r3.setProductId(productId);
 		
 		WorkImg img1 = new WorkImg(dealerId, productId, 1, req.getWorkImg1());
 		if(!img1.isEmpty()) {
 			workImgLogic.registWorkImg(img1);
+			r3.setImgSeq(1);
 			r3.setImgProductFile(img1.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
@@ -88,24 +93,28 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		WorkImg img2 = new WorkImg(dealerId, productId, 2, req.getWorkImg2());
 		if(!img2.isEmpty()) {
 			workImgLogic.registWorkImg(img2);
+			r3.setImgSeq(2);
 			r3.setImgProductFile(img2.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
 		WorkImg img3 = new WorkImg(dealerId, productId, 3, req.getWorkImg3());
 		if(!img3.isEmpty()) {
 			workImgLogic.registWorkImg(img3);
+			r3.setImgSeq(3);
 			r3.setImgProductFile(img3.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
 		WorkImg img4 = new WorkImg(dealerId, productId, 4, req.getWorkImg4());
 		if(!img4.isEmpty()) {
 			workImgLogic.registWorkImg(img4);
+			r3.setImgSeq(4);
 			r3.setImgProductFile(img4.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
 		WorkImg img5 = new WorkImg(dealerId, productId, 5, req.getWorkImg5());
 		if(!img5.isEmpty()) {
 			workImgLogic.registWorkImg(img5);
+			r3.setImgSeq(5);
 			r3.setImgProductFile(img5.getFileName());
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
@@ -176,34 +185,35 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			
 		// DB
 		DealersDetailProductsImgsExample se1 = new DealersDetailProductsImgsExample();
-		String s =WorkImg.makeWorkImgFileNameExcludeExtention(dealerId, productId, 1);
-		se1.createCriteria()
-			.andDealerIdEqualTo(dealerId)
-			.andProductIdEqualTo(productId)
-			.andImgProductFileLike(s+"%");
-		if ("1".equals(req.getWorkImg1DelFlg())) {
-			// del
-			// WEBサーバーからはファイルは削除しない
-			dealersDetailProductsImgsMapper.deleteByExample(se1);
-		} else {
-			if(!img1.isEmpty()) { // 画面からファイルが送られた場合のみ、更新処理を行う
-				// update
-				// listで取得するが、運用上複数のレコードは取得されない
-				// listにデータがある場合は要素１つだけの想定、
-				List<DealersDetailProductsImgsKey> el1 = dealersDetailProductsImgsMapper.selectByExample(se1);
-				if (!el1.isEmpty()) { // レコードが存在する
-					DealersDetailProductsImgsExample se1u = new DealersDetailProductsImgsExample();
-					se1u.createCriteria()
-						.andDealerIdEqualTo(dealerId)
-						.andProductIdEqualTo(productId)
-						.andImgProductFileEqualTo(img1.getFileName());
-					dealersDetailProductsImgsMapper.updateByExample(el1.get(0), se1u);
-				}else { // レコードが存在しない
-					k3.setImgProductFile(img1.getFileName());
-					dealersDetailProductsImgsMapper.insert(k3);
-				}
-			}
-		}
+//		se1.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId).and
+//		String s =WorkImg.makeWorkImgFileNameExcludeExtention(dealerId, productId, 1);
+//		se1.createCriteria()
+//			.andDealerIdEqualTo(dealerId)
+//			.andProductIdEqualTo(productId)
+//			.andImgProductFileLike(s+"%");
+//		if ("1".equals(req.getWorkImg1DelFlg())) {
+//			// del
+//			// WEBサーバーからはファイルは削除しない
+//			dealersDetailProductsImgsMapper.deleteByExample(se1);
+//		} else {
+//			if(!img1.isEmpty()) { // 画面からファイルが送られた場合のみ、更新処理を行う
+//				// update
+//				// listで取得するが、運用上複数のレコードは取得されない
+//				// listにデータがある場合は要素１つだけの想定、
+//				List<DealersDetailProductsImgsKey> el1 = dealersDetailProductsImgsMapper.selectByExample(se1);
+//				if (!el1.isEmpty()) { // レコードが存在する
+//					DealersDetailProductsImgsExample se1u = new DealersDetailProductsImgsExample();
+//					se1u.createCriteria()
+//						.andDealerIdEqualTo(dealerId)
+//						.andProductIdEqualTo(productId)
+//						.andImgProductFileEqualTo(img1.getFileName());
+//					dealersDetailProductsImgsMapper.updateByExample(el1.get(0), se1u);
+//				}else { // レコードが存在しない
+//					k3.setImgProductFile(img1.getFileName());
+//					dealersDetailProductsImgsMapper.insert(k3);
+//				}
+//			}
+//		}
 		// wip seq2から5も作成すること
 
 		//4.dealers_detail_products_saledate、dealerIdとproductIDでupdate

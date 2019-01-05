@@ -17,6 +17,7 @@ import com.jp.wonfes.cmmn.dao.qo.CategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesKey;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgs;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsKey;
@@ -92,10 +93,10 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 		// 作品画像へのURLを取得する
 		DealersDetailProductsImgsExample ex2 = new DealersDetailProductsImgsExample();
 		ex2.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId);
-		List<DealersDetailProductsImgsKey> imgsKeys = dealersDetailProductsImgsMapper.selectByExample(ex2);
+		List<DealersDetailProductsImgs> imgsKeys = dealersDetailProductsImgsMapper.selectByExample(ex2);
 		/** 作品画像のURL */
 		ArrayList<String> imgUrlList = new ArrayList<String>();
-		for (DealersDetailProductsImgsKey k : imgsKeys) {
+		for (DealersDetailProductsImgs k : imgsKeys) {
 			String fileName = k.getImgProductFile();
 			String url = imgIconUrl.getImgIconFilePath(dealerId, fileName);
 			imgUrlList.add(url);
