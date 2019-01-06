@@ -11,6 +11,7 @@
 		<button type="button" class="btn btn-primary" id="workEditBtn">作品登録編集</button>
 	</div>
 	<form:form modelAttribute="workInfoForm" method="GET" id="workInfoForm">
+		<input type="hidden" value="${ workInfoForm.dealerId }" id="dealerId" name="dealerId" />
 		<h2><c:out value="${workInfoForm.workName }" /></h2>
 		<div class="col-lg-5" id="descriptionFiled">
 			<div class="form-group">

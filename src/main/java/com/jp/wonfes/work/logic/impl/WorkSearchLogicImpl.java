@@ -17,8 +17,8 @@ import com.jp.wonfes.cmmn.dao.qo.CategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesKey;
+import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgs;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsExample;
-import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsKey;
 import com.jp.wonfes.cmmn.dao.qo.EventDates;
 import com.jp.wonfes.common.ImgIconUrl;
@@ -70,33 +70,37 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 		
 		// 作品分野を取得する
 		DealersDetailProductsCategoriesExample e3 = new DealersDetailProductsCategoriesExample();
+		// TODO テーブル上１対多でもてるが、実際には１対１, 必ずディーラ詳細作品に紐づく
 		e3.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId);
 		List<DealersDetailProductsCategoriesKey> d3 = dealersDetailProductsCategoriesMapper.selectByExample(e3);
-		CategoriesExample ex4 = new CategoriesExample();
-		ArrayList<Integer> _categoryIdList = new ArrayList<Integer>();
-		for(DealersDetailProductsCategoriesKey k :d3) {
-			_categoryIdList .add(k.getCategoryId());
-		}
-		ex4.createCriteria().andCategoryIdIn(_categoryIdList);
-		List<Categories> categoriesList = categoriesMapper.selectByExample(ex4);
-		/** 作品分野 */
+		
+		Integer categoryId = null;
 		String categoriesListName = null;
-		for(Categories c : categoriesList ) {
-			if(categoriesListName==null) {
-				categoriesListName = c.getCategoryName();
-			}else {
-				categoriesListName = categoriesListName +", " + c.getCategoryName();
-			}
+		if (d3.get(0) != null) {
+			DealersDetailProductsCategoriesKey d3_1 = d3.get(0); // ディーラ詳細作品テーブルに紐づくレコードが登録されていない場合、NULLで落ちる
+			categoryId = d3_1.getCategoryId();
+			CategoriesExample ex4 = new CategoriesExample();
+			ex4.createCriteria().andCategoryIdEqualTo(categoryId);
+			List<Categories> categoriesList = categoriesMapper.selectByExample(ex4);
+			categoriesListName = categoriesList.get(0).getCategoryName();
+		} else {
+			// TODO 紐づくテーブルがなければ落ちるため、暫定で以下の値をいれる
+			categoryId = 0;
+			categoriesListName = "TODO 作品分野が正しく登録されていません";
 		}
 		
 		// 作品画像へのURLを取得する
 		DealersDetailProductsImgsExample ex2 = new DealersDetailProductsImgsExample();
 		ex2.createCriteria().andDealerIdEqualTo(dealerId).andProductIdEqualTo(productId);
-		List<DealersDetailProductsImgsKey> imgsKeys = dealersDetailProductsImgsMapper.selectByExample(ex2);
+		List<DealersDetailProductsImgs> imgsKeys = dealersDetailProductsImgsMapper.selectByExample(ex2);
 		/** 作品画像のURL */
 		ArrayList<String> imgUrlList = new ArrayList<String>();
-		for (DealersDetailProductsImgsKey k : imgsKeys) {
+		for (DealersDetailProductsImgs k : imgsKeys) {
 			String fileName = k.getImgProductFile();
+			// 作品画像が登録されていない場合、画面に表示させないため
+			if(Strings.isNullOrEmpty(fileName)) {
+				continue;
+			}
 			String url = imgIconUrl.getImgIconFilePath(dealerId, fileName);
 			imgUrlList.add(url);
 		}
@@ -107,7 +111,9 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 		resp.setWorkName(d1.getProductName());
 		resp.setPrice(d1.getPrice());
 		resp.setProductFileds(categoriesListName);
+		resp.setProductFiled(categoryId);
 		resp.setComment(d1.getIntroduce());
+		resp.setEventDate(d1.getSeasonId());
 		resp.setEventAboutDate(d2.getEventAboutdate());
 		resp.setProductImgUrls(imgUrlList);
 		

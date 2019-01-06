@@ -31,6 +31,9 @@ public class WorkImgLogicImpl implements WorkImgLogic {
 	@Override
 	public void registWorkImg(WorkImg workImg) throws WfsLogicException, WfsSysytemException {
 		
+		// ファイルが空の場合登録処理を行わない
+		if(workImg.isEmpty()) return ;
+		
 		this.checkWorkImg(workImg);
 		
 		/** 作品画像の保存先フォルダ*/
