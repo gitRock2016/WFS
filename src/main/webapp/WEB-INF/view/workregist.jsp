@@ -70,8 +70,8 @@
 					<h4>作品画像1</h4>
 					<div class="icon-image">
 						<img src="${workRegistForm.workImg1Url }" id="workImgDisp1" />
-					<form:input type="file" name="workImg1" id="workImg1" path="workImg1" class="form-control-file"  value="作品画像1登録"/>
-					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn1">作品画像1クリア</button>
+						<form:input type="file" name="workImg1" id="workImg1" path="workImg1" class="form-control-file"  value="作品画像1登録"/>
+						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn1">作品画像1クリア</button>
 					</div>
 					<c:if test="${editFlg}">
 						<label for="workImgDelFlgCheck1" >作品情報を削除しますか?
@@ -84,9 +84,9 @@
 					<h4>作品画像2</h4>
 					<div class="icon-image">
 						<img src="${workRegistForm.workImg2Url }" id="workImgDisp2" />
+						<form:input type="file" name="workImg2" id="workImg2" path="workImg2" class="form-control-file"  value="作品画像2登録"/>
+						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn2">作品画像2クリア</button>
 					</div>
-					<form:input type="file" name="workImg2" id="workImg2" path="workImg2" class="form-control-file"  value="作品画像2登録"/>
-					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn2">作品画像2クリア</button>
 					<c:if test="${editFlg}">
 						<label for="workImgDelFlgCheck2" >作品情報を削除しますか?
 							<input type="checkbox" id="workImgDelFlgCheck2" name="workImgDelFlgCheck2"/>
@@ -98,9 +98,9 @@
 					<h4>作品画像3</h4>
 					<div class="icon-image">
 						<img src="${workRegistForm.workImg3Url }" id="workImgDisp3" />
+						<form:input type="file" name="workImg3" id="workImg3" path="workImg3" class="form-control-file"  value="作品画像3登録"/>
+						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn3">作品画像3クリア</button>
 					</div>
-					<form:input type="file" name="workImg3" id="workImg3" path="workImg3" class="form-control-file"  value="作品画像3登録"/>
-					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn3">作品画像3クリア</button>
 					<c:if test="${editFlg}">
 						<label for="workImgDelFlgCheck3" >作品情報を削除しますか?
 							<input type="checkbox" id="workImgDelFlgCheck3" name="workImgDelFlgCheck3"/>
@@ -112,9 +112,9 @@
 					<h4>作品画像4</h4>
 					<div class="icon-image">
 						<img src="${workRegistForm.workImg4Url }" id="workImgDisp4" />
+						<form:input type="file" name="workImg4" id="workImg4" path="workImg4" class="form-control-file"  value="作品画像4登録"/>
+						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn4">作品画像4クリア</button>
 					</div>
-					<form:input type="file" name="workImg4" id="workImg4" path="workImg4" class="form-control-file"  value="作品画像4登録"/>
-					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn4">作品画像4クリア</button>
 					<c:if test="${editFlg}">
 						<label for="workImgDelFlgCheck4" >作品情報を削除しますか?
 							<input type="checkbox" id="workImgDelFlgCheck4" name="workImgDelFlgCheck4"/>
@@ -126,9 +126,9 @@
 					<h4>作品画像5</h4>
 					<div class="icon-image">
 						<img src="${workRegistForm.workImg5Url }" id="workImgDisp5" />
+						<form:input type="file" name="workImg5" id="workImg5" path="workImg5" class="form-control-file"  value="作品画像5登録"/>
+						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn5">作品画像5クリア</button>
 					</div>
-					<form:input type="file" name="workImg5" id="workImg5" path="workImg5" class="form-control-file"  value="作品画像5登録"/>
-					<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn5">作品画像5クリア</button>
 					<c:if test="${editFlg}">
 						<label for="workImgDelFlgCheck5" >作品情報を削除しますか?
 							<input type="checkbox" id="workImgDelFlgCheck5" name="workImgDelFlgCheck5"/>

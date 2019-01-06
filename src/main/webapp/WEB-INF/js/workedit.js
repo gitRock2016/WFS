@@ -36,12 +36,17 @@ $(function() {
 			wfs.imgPreview(inputFileId, previewObjId);
 		});
 	});
-
-	$("#iconClearBtn").on('click', function() {
-		$('#iconImg').val('');
-		$('#iconImgDisp').attr('src','');
+	// 作品画像のクリアボタンにまとめてイベントを付与
+	$('button[id^="workImgClearBtn"]').each(function(index, e){
+		let seq = index+1;
+		let imgFileId = 'workImg'+seq;
+		let imgId='workImgDisp'+seq;
+		$(this).click('on', function(){
+			$('input:file#'+imgFileId).val('');
+			$('img#'+imgId).attr('src','');
+		});
 	});
-	
+
 	// 登録ボタン
 	$("#workRegistBtn").on("click", function() {
 		wfs.workedit.workEdit();
