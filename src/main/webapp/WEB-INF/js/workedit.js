@@ -20,21 +20,21 @@ $(function() {
 	// 紹介文
 	wfs.workedit.formatComment();
 
-	// 作品画像１を選択時
-	$("#workImg1").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp1");
+	// 作品画像
+	// チェックボックス（削除可否）にまとめてイベントを付与
+	$('input:checkbox[name^="workImgDelFlgCheck"]').on('click',function(){
+		const checked = $(this).prop('checked');
+		let target = $(this).next('input:hidden');
+		(checked) ? target.val("1") : target.val("0");
 	});
-	$("#workImg2").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp2");
-	});
-	$("#workImg3").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp3");
-	});
-	$("#workImg4").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp4");
-	});
-	$("#workImg5").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp5");
+	// 作品画像のファイルオブジェクトにまとめてイベントを付与
+	$('input:file[name^="workImg"]').each(function(index, e) {
+		let seq = index + 1;
+		let inputFileId = $(this).attr('id');
+		let previewObjId = 'workImgDisp' + seq;
+		$(this).change(function() {
+			wfs.imgPreview(inputFileId, previewObjId);
+		});
 	});
 
 	$("#iconClearBtn").on('click', function() {
@@ -75,15 +75,15 @@ wfs.workedit.workEdit = function() {
 	target.attr('action', url);
 	
 	// TODO dealerregistをまねたけど、チェックボックス押下時に対応してHIDDENを更新したほうが便利では？
-	const isDel1Flg = $("input:checkbox#workImg1DelFlgCheck").prop('checked');
-	if(isDel1Flg===true){
-		$("input:hidden#workImg1DelFlg").val("1");
-	}
-	
-	const isDel2Flg = $("input:checkbox#workImg2DelFlgCheck").prop('checked');
-	if(isDel2Flg===true){
-		$("input:hidden#workImg2DelFlg").val("1");
-	}
+//	const isDel1Flg = $("input:checkbox#workImg1DelFlgCheck").prop('checked');
+//	if(isDel1Flg===true){
+//		$("input:hidden#workImg1DelFlg").val("1");
+//	}
+//	
+//	const isDel2Flg = $("input:checkbox#workImg2DelFlgCheck").prop('checked');
+//	if(isDel2Flg===true){
+//		$("input:hidden#workImg2DelFlg").val("1");
+//	}
 	// wip 3-5も対応すること
 	
 	target.submit();

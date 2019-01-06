@@ -98,6 +98,10 @@ public class WorkSearchLogicImpl implements WorkSearchLogic {
 		ArrayList<String> imgUrlList = new ArrayList<String>();
 		for (DealersDetailProductsImgs k : imgsKeys) {
 			String fileName = k.getImgProductFile();
+			// 作品画像が登録されていない場合、画面に表示させないため
+			if(Strings.isNullOrEmpty(fileName)) {
+				continue;
+			}
 			String url = imgIconUrl.getImgIconFilePath(dealerId, fileName);
 			imgUrlList.add(url);
 		}

@@ -234,8 +234,11 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			/** DB */
 			if ("1".equals(delflgs[i])) {
 				// 削除フラグがONの場合
-				k3.setImgSeq(seq);
-				dealersDetailProductsImgsMapper.deleteByPrimaryKey(k3);
+//				k3.setImgSeq(seq);
+//				dealersDetailProductsImgsMapper.deleteByPrimaryKey(k3);
+				e3.setImgSeq(seq);
+				e3.setImgProductFile("");
+				dealersDetailProductsImgsMapper.updateByPrimaryKey(e3);
 			}
 			// 画面で削除指定しても、ファイルが送られてきた場合は登録する
 			if (!w.isEmpty()) {
