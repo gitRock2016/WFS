@@ -10,7 +10,6 @@ import com.google.common.base.Strings;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsCategoriesMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsImgsMapper;
 import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsMapper;
-import com.jp.wonfes.cmmn.dao.mapper.DealersDetailProductsSaledateMapper;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsCategoriesKey;
@@ -18,8 +17,6 @@ import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgs;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsExample;
 import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsImgsKey;
-import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsSaledateExample;
-import com.jp.wonfes.cmmn.dao.qo.DealersDetailProductsSaledateKey;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
@@ -39,8 +36,8 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
 	@Autowired
 	private DealersDetailProductsImgsMapper dealersDetailProductsImgsMapper;
-	@Autowired
-	private DealersDetailProductsSaledateMapper dealersDetailProductsSaledateMapper;
+//	@Autowired
+//	private DealersDetailProductsSaledateMapper dealersDetailProductsSaledateMapper;
 	@Autowired
 	private WfsMessage wfsMessage;
 	@Autowired
@@ -81,13 +78,15 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		this.insertWorkInfoImgs(dealerId, productId, req);
 
 		// 作品を販売していた時期（いつのWFSで販売していたかの情報）
-		DealersDetailProductsSaledateKey r4 = new DealersDetailProductsSaledateKey();
-		r4.setDealerId(dealerId);
-		r4.setProductId(productId);
-		r4.setEventDateId(req.getSeasonId());
-		if(dealersDetailProductsSaledateMapper.insert(r4) == 0 ) {
-			throw new WfsLogicException(wfsMessage.getMessage("wfs.msg.e.wrk1"));
-		}
+		// TODO　dealers_detail_products_saledateテーブルはリリース後対応とし利用しない
+//		DealersDetailProductsSaledateKey r4 = new DealersDetailProductsSaledateKey();
+//		r4.setDealerId(dealerId);
+//		r4.setProductId(productId);
+//		r4.setEventDateId(req.getSeasonId());
+//		if(dealersDetailProductsSaledateMapper.insert(r4) == 0 ) {
+//			throw new WfsLogicException(wfsMessage.getMessage("wfs.msg.e.wrk1"));
+//		}
+		
 		resp.setDealerId(dealerId);
 		resp.setProductId(productId);
 		return resp;
@@ -136,16 +135,17 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		dealersDetailProductsCategoriesMapper.updateByExample(k2, e2);
 
 		this.editWorkInfoImgs(dealerId, productId, req);
-
-		DealersDetailProductsSaledateKey r5 = new DealersDetailProductsSaledateKey();
-		r5.setDealerId(dealerId);
-		r5.setProductId(productId);
-		r5.setEventDateId(req.getSeasonId());
-		DealersDetailProductsSaledateExample e5 = new DealersDetailProductsSaledateExample();
-		e5.createCriteria()
-			.andDealerIdEqualTo(dealerId)
-			.andProductIdEqualTo(productId);
-		dealersDetailProductsSaledateMapper.updateByExample(r5, e5);
+		
+		// TODO　dealers_detail_products_saledateテーブルはリリース後対応とし利用しない
+//		DealersDetailProductsSaledateKey r5 = new DealersDetailProductsSaledateKey();
+//		r5.setDealerId(dealerId);
+//		r5.setProductId(productId);
+//		r5.setEventDateId(req.getSeasonId());
+//		DealersDetailProductsSaledateExample e5 = new DealersDetailProductsSaledateExample();
+//		e5.createCriteria()
+//			.andDealerIdEqualTo(dealerId)
+//			.andProductIdEqualTo(productId);
+//		dealersDetailProductsSaledateMapper.updateByExample(r5, e5);
 
 	}
 	

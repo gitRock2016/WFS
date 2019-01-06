@@ -12,7 +12,7 @@ public class WorkRegistForm {
 	@NotNull
 	private Integer dealerId;
 	@NotEmpty
-	@Length(max=20)
+	@Length(max=200)
 	private String workName;
 	@NotNull
 	@Min(0)

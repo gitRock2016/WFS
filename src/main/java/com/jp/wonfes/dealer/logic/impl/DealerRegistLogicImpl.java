@@ -125,10 +125,10 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 	@Override
 	public void deleteDealerInfo(DeleteDealerInfoDto dto) throws WfsLogicException {
 		Integer id = dto.getId();
-		
-		DealersDetailProductsSaledateExample example1 = new DealersDetailProductsSaledateExample();
-		example1.createCriteria().andDealerIdEqualTo(id);
-		int r1 = dealersDetailProductsSaledateMapper.deleteByExample(example1);
+		// TODO dealers_detail_products_saledateは今回リリースで利用しないため
+//		DealersDetailProductsSaledateExample example1 = new DealersDetailProductsSaledateExample();
+//		example1.createCriteria().andDealerIdEqualTo(id);
+//		int r1 = dealersDetailProductsSaledateMapper.deleteByExample(example1);
 		// TODO Loggerを導入したい
 		// System.out.println("DealersDetailProductsSaledate:削除件数:" + r1);
 		
@@ -150,7 +150,8 @@ public class DealerRegistLogicImpl implements DealerRegistLogic {
 		int r5 = dealersMapper.deleteByPrimaryKey(id);
 //		System.out.println("Dealers:削除件数:" + r5);
 		
-		if (r1 + r2 + r3 + r4 + r5 == 0) {
+//		if (r1 + r2 + r3 + r4 + r5 == 0) {
+		if (r2 + r3 + r4 + r5 == 0) {
 			throw new WfsLogicException("ディーラ情報の削除に失敗しました。");
 		}
 

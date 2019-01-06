@@ -71,7 +71,7 @@ $(function() {
 // --------------------------------------------------------------------------v
 
 wfs.workedit.del = function(){
-	// wip
+	// TODO 削除処理実装時に作成
 }
 
 wfs.workedit.workEdit = function() {

@@ -7,8 +7,10 @@ public class WorkInfoDtoResp {
 	private Integer productId;
 	private String workName;
 	private Integer price;
+	private Integer productFiled;
 	private String productFileds;
 	private String comment;
+	private Integer eventDate;
 	private String eventAboutDate;
 	private List<String> productImgUrls;
 
@@ -36,6 +38,12 @@ public class WorkInfoDtoResp {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
+	public Integer getProductFiled() {
+		return productFiled;
+	}
+	public void setProductFiled(Integer productFiled) {
+		this.productFiled = productFiled;
+	}
 	public String getProductFileds() {
 		return productFileds;
 	}
@@ -47,6 +55,12 @@ public class WorkInfoDtoResp {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public Integer getEventDate() {
+		return eventDate;
+	}
+	public void setEventDate(Integer eventDate) {
+		this.eventDate = eventDate;
 	}
 	public String getEventAboutDate() {
 		return eventAboutDate;

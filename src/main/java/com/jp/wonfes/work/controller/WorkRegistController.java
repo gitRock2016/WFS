@@ -18,7 +18,6 @@ import com.jp.wonfes.common.ImgWorkUrl;
 import com.jp.wonfes.common.WfsLogicException;
 import com.jp.wonfes.common.WfsMessage;
 import com.jp.wonfes.common.WfsSysytemException;
-import com.jp.wonfes.work.controller.form.WorkEditForm;
 import com.jp.wonfes.work.controller.form.WorkRegistForm;
 import com.jp.wonfes.work.logic.WorkRegistLogic;
 import com.jp.wonfes.work.logic.WorkSearchLogic;
@@ -109,7 +108,7 @@ public class WorkRegistController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wrk/wrk_01/init/{dealerId}/{productId}", params="reg=edit", method = RequestMethod.GET)
-	public String initWrk01Edit(@ModelAttribute("workRegistForm") WorkRegistForm form,
+	public String initWrk01Edit(@ModelAttribute WorkRegistForm form,
 			@PathVariable("dealerId") Integer dealerId, @PathVariable("productId") Integer productId, Model model) {
 
 		WorkInfoDtoReq dto= new WorkInfoDtoReq();
@@ -121,17 +120,10 @@ public class WorkRegistController {
 		form.setProductId(resp.getProductId());
 		form.setWorkName(resp.getWorkName());
 		form.setPrice(resp.getPrice());
-		// wip
-		// respに作品分野IDをもたせること
-		// その場合のフィールド定義はWorkRegistFormにあわせる（IDはInteger,名称はString）
-		form.setProductFiled(1);
+		form.setProductFiled(resp.getProductFiled());
 		form.setProductFiledLabel(resp.getProductFileds());
 		form.setComment(resp.getComment());
-		// wip
-		// respに販売時期IDを持たせること
-		form.setEventDate(4); // 暫定対応、固定で１
-		// wip
-		// respのListから各URLを１つずつ設定する
+		form.setEventDate(resp.getEventDate());
 		this.setUrl(form, resp);
 
 		model.addAttribute("workRegistForm", form);
@@ -189,9 +181,10 @@ public class WorkRegistController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wrk/wrk_01/edit", method = RequestMethod.POST)
-	public String edit(@ModelAttribute @Valid WorkEditForm form, BindingResult result, Model model) {
+	public String edit(@ModelAttribute @Valid WorkRegistForm form, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
+			model.addAttribute("editFlg", true);
 			return "workedit";
 		}
 		
@@ -219,6 +212,7 @@ public class WorkRegistController {
 		} catch (WfsLogicException | WfsSysytemException e) {
 			model.addAttribute("danger_message", e.getMessage());
 			model.addAttribute("workRegistForm", form);
+			model.addAttribute("editFlg", true);
 			return "workedit";
 		}
 		

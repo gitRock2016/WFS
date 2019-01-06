@@ -19,7 +19,6 @@
 
 	<form:form modelAttribute="workRegistForm" method="POST" action="/WonFesSys/wrk/wrk_01/regist" id="workReigstForm" enctype="multipart/form-data" >
 		<input type="hidden" value="${workRegistForm.dealerId }" id="dealerId" name="dealerId"/>
-		<!-- wip 編集画面でのみ利用 -->
 		<input type="hidden" value="${workRegistForm.productId }" id="productId" name="productId"/>
 		<div class="col-lg-6" id="descriptionFiled">
 			<h4>作品詳細</h4>
@@ -69,7 +68,9 @@
 				<div id="workImg1Field">
 					<h4>作品画像1</h4>
 					<div class="icon-image">
-						<img src="${workRegistForm.workImg1Url }" id="workImgDisp1" />
+						<c:set value="${workRegistForm.workImg1Url }" var ="workImg1UrlVal" />
+						<img src="${workImg1UrlVal}" id="workImgDisp1" />
+						<input type="hidden" value="${ workImg1UrlVal}" name="workImg1Url"/>
 						<form:input type="file" name="workImg1" id="workImg1" path="workImg1" class="form-control-file"  value="作品画像1登録"/>
 						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn1">作品画像1クリア</button>
 					</div>
@@ -83,7 +84,9 @@
 				<div id="workImg2Field">
 					<h4>作品画像2</h4>
 					<div class="icon-image">
-						<img src="${workRegistForm.workImg2Url }" id="workImgDisp2" />
+						<c:set value="${workRegistForm.workImg2Url }" var ="workImg2UrlVal" />
+						<img src="${workImg2UrlVal}" id="workImgDisp2" />
+						<input type="hidden" value="${ workImg2UrlVal}" name="workImg2Url"/>
 						<form:input type="file" name="workImg2" id="workImg2" path="workImg2" class="form-control-file"  value="作品画像2登録"/>
 						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn2">作品画像2クリア</button>
 					</div>
@@ -97,7 +100,9 @@
 				<div id="workImg3Field">
 					<h4>作品画像3</h4>
 					<div class="icon-image">
-						<img src="${workRegistForm.workImg3Url }" id="workImgDisp3" />
+						<c:set value="${workRegistForm.workImg3Url }" var ="workImg3UrlVal" />
+						<img src="${workImg3UrlVal}" id="workImgDisp3" />
+						<input type="hidden" value="${ workImg3UrlVal}" name="workImg3Url"/>
 						<form:input type="file" name="workImg3" id="workImg3" path="workImg3" class="form-control-file"  value="作品画像3登録"/>
 						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn3">作品画像3クリア</button>
 					</div>
@@ -111,7 +116,9 @@
 				<div id="workImg4Field">
 					<h4>作品画像4</h4>
 					<div class="icon-image">
-						<img src="${workRegistForm.workImg4Url }" id="workImgDisp4" />
+						<c:set value="${workRegistForm.workImg4Url }" var ="workImg4UrlVal" />
+						<img src="${workImg4UrlVal}" id="workImgDisp4" />
+						<input type="hidden" value="${ workImg4UrlVal}" name="workImg4Url"/>
 						<form:input type="file" name="workImg4" id="workImg4" path="workImg4" class="form-control-file"  value="作品画像4登録"/>
 						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn4">作品画像4クリア</button>
 					</div>
@@ -125,7 +132,9 @@
 				<div id="workImg5Field">
 					<h4>作品画像5</h4>
 					<div class="icon-image">
-						<img src="${workRegistForm.workImg5Url }" id="workImgDisp5" />
+						<c:set value="${workRegistForm.workImg5Url }" var ="workImg5UrlVal" />
+						<img src="${workImg5UrlVal}" id="workImgDisp5" />
+						<input type="hidden" value="${ workImg5UrlVal}" name="workImg5Url"/>
 						<form:input type="file" name="workImg5" id="workImg5" path="workImg5" class="form-control-file"  value="作品画像5登録"/>
 						<button type="button" class="btn btn-primary btn-sm" id="workImgClearBtn5">作品画像5クリア</button>
 					</div>
