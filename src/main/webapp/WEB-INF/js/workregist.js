@@ -17,26 +17,25 @@ $(function() {
 	// 紹介文
 	wfs.workregist.formatComment();
 
-	// 作品画像１を選択時
-	$("#workImg1").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp1");
+	// 作品画像
+	// 作品画像のファイルオブジェクトにまとめてイベントを付与
+	$('input:file[name^="workImg"]').each(function(index, e) {
+		let seq = index + 1;
+		let inputFileId = $(this).attr('id');
+		let previewObjId = 'workImgDisp' + seq;
+		$(this).change(function() {
+			wfs.imgPreview(inputFileId, previewObjId);
+		});
 	});
-	$("#workImg2").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp2");
-	});
-	$("#workImg3").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp3");
-	});
-	$("#workImg4").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp4");
-	});
-	$("#workImg5").change(function(){
-		wfs.imgPreview($(this).attr('id'), "workImgDisp5");
-	});
-
-	$("#iconClearBtn").on('click', function() {
-		$('#iconImg').val('');
-		$('#iconImgDisp').attr('src','');
+	// 作品画像のクリアボタンにまとめてイベントを付与
+	$('button[id^="workImgClearBtn"]').each(function(index, e){
+		let seq = index+1;
+		let imgFileId = 'workImg'+seq;
+		let imgId='workImgDisp'+seq;
+		$(this).click('on', function(){
+			$('input:file#'+imgFileId).val('');
+			$('img#'+imgId).attr('src','');
+		});
 	});
 	
 	// 登録ボタン

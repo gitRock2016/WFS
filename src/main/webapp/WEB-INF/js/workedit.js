@@ -78,21 +78,7 @@ wfs.workedit.workEdit = function() {
 	let target = $('form#workReigstForm');
 	let url = wfs.com.url.get('/wrk/wrk_01/edit');
 	target.attr('action', url);
-	
-	// TODO dealerregistをまねたけど、チェックボックス押下時に対応してHIDDENを更新したほうが便利では？
-//	const isDel1Flg = $("input:checkbox#workImg1DelFlgCheck").prop('checked');
-//	if(isDel1Flg===true){
-//		$("input:hidden#workImg1DelFlg").val("1");
-//	}
-//	
-//	const isDel2Flg = $("input:checkbox#workImg2DelFlgCheck").prop('checked');
-//	if(isDel2Flg===true){
-//		$("input:hidden#workImg2DelFlg").val("1");
-//	}
-	// wip 3-5も対応すること
-	
 	target.submit();
-	
 }
 
 wfs.workedit.formatEventDate = function(){
