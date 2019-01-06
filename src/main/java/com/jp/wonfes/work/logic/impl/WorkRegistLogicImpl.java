@@ -47,7 +47,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	private WorkImgLogic workImgLogic;
 	
 	/**
-	 * 作品情報の新規登録処理
+	 * 作品情報の新規登録時処理
 	 */
 	@Override
 	public WorkRegistInfoDtoResp registWorkInfo(WorkRegistInfoDtoReq req) throws WfsLogicException, WfsSysytemException{
@@ -106,13 +106,14 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		return now + 1;
 	}
 	
-	// wip
+	/**
+	 * 作品情報の更新時処理
+	 */
 	@Override
 	public void editWorkInfo(WorkEditInfoDtoReq req) throws WfsLogicException, WfsSysytemException {
 		final Integer dealerId = req.getDealerId();
 		final Integer productId =req.getProductId();
 
-		//1.dealers_detail_products、dealerIdとproductIDでupdate
 		DealersDetailProducts e1 = new DealersDetailProducts();
 		e1.setDealerId(dealerId);
 		e1.setProductId(productId);
@@ -122,7 +123,6 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		e1.setSeasonId(req.getSeasonId());
 		dealersDetailProductsMapper.updateByPrimaryKey(e1);
 
-		//2.dealers_detail_products_categories、dealerIdとproductIDでupdate
 		// TODO １作品がもつ作品分野を複数にするなら、dealers_detail_products_imgsと同じテーブル構成でもいいのでは？
 		DealersDetailProductsCategoriesKey k2 = new DealersDetailProductsCategoriesKey();
 		k2.setDealerId(dealerId);
@@ -135,10 +135,8 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			.andCategoryIdEqualTo(req.getCategoryId());
 		dealersDetailProductsCategoriesMapper.updateByExample(k2, e2);
 
-		//3.dealers_detail_products_imgs、作品の画像データ
 		this.editWorkInfoImgs(dealerId, productId, req);
 
-		//4.dealers_detail_products_saledate、dealerIdとproductIDでupdate
 		DealersDetailProductsSaledateKey r5 = new DealersDetailProductsSaledateKey();
 		r5.setDealerId(dealerId);
 		r5.setProductId(productId);
@@ -146,12 +144,19 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 		DealersDetailProductsSaledateExample e5 = new DealersDetailProductsSaledateExample();
 		e5.createCriteria()
 			.andDealerIdEqualTo(dealerId)
-			.andProductIdEqualTo(productId)
-			.andEventDateIdEqualTo(req.getSeasonId());
+			.andProductIdEqualTo(productId);
 		dealersDetailProductsSaledateMapper.updateByExample(r5, e5);
 
 	}
-
+	
+	/**
+	 * 作品画像の新規登録時処理
+	 * @param dealerId
+	 * @param productId
+	 * @param req
+	 * @throws WfsLogicException
+	 * @throws WfsSysytemException
+	 */
 	private void insertWorkInfoImgs(Integer dealerId, Integer productId, WorkRegistInfoDtoReq req)
 			throws WfsLogicException, WfsSysytemException {
 		// 作品画像（DBへの登録、画像ファイル自体の登録）
@@ -184,6 +189,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			dealersDetailProductsImgsMapper.insert(r3);
 		}
 	}
+	
 	/**
 	 * 作品画像の更新時処理
 	 * dealers_detail_products_imgsに対する処理
@@ -195,10 +201,7 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 	 * @throws WfsSysytemException
 	 */
 	private void editWorkInfoImgs(Integer dealerId, Integer productId, WorkEditInfoDtoReq req) throws WfsLogicException, WfsSysytemException {
-		/*
-		 * TODO 処理用のDTOクラス、削除フラグとWorkImgをフィール後に持つのをつくれば処理を簡略化できるのでは？・・・
-		 * */
-		
+		// TODO 処理用のDTOクラス、削除フラグとWorkImgをフィール後に持つのをつくれば処理を簡略化できるのでは？・・・
 		// 削除フラグ
 		String[] delflgs = {"0","0","0","0","0",};
 		delflgs[0] = Strings.isNullOrEmpty(req.getWorkImg1DelFlg()) ? "0" : req.getWorkImg1DelFlg();
@@ -234,8 +237,6 @@ public class WorkRegistLogicImpl implements WorkRegistLogic {
 			/** DB */
 			if ("1".equals(delflgs[i])) {
 				// 削除フラグがONの場合
-//				k3.setImgSeq(seq);
-//				dealersDetailProductsImgsMapper.deleteByPrimaryKey(k3);
 				e3.setImgSeq(seq);
 				e3.setImgProductFile("");
 				dealersDetailProductsImgsMapper.updateByPrimaryKey(e3);
