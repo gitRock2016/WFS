@@ -1,10 +1,8 @@
 package com.jp.wonfes.dealer.logic.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jp.wonfes.cmmn.dao.qo.Dealers;
-import com.jp.wonfes.cmmn.dao.qo.DealersDetailProducts;
 
 public class SearchDealerInfoDtoResp {
 	private Integer id;
@@ -17,7 +15,8 @@ public class SearchDealerInfoDtoResp {
 	private String productFileds;
 	private String hpLink;
 	private String twLink;
-	private List<DealersDetailProducts> productList;
+	private List<SearchDealerInfoProductDtoResp> productList;
+	
 	
 	public Integer getId() {
 		return id;
@@ -75,14 +74,13 @@ public class SearchDealerInfoDtoResp {
 	public void setProductFileds(String productFileds) {
 		this.productFileds = productFileds;
 	}
-	public List<DealersDetailProducts> getProductList() {
+	
+	public List<SearchDealerInfoProductDtoResp> getProductList() {
 		return productList;
 	}
-	public void setProductList(List<DealersDetailProducts> productList) {
+	public void setProductList(List<SearchDealerInfoProductDtoResp> productList) {
 		this.productList = productList;
 	}
-
-	
 	public static SearchDealerInfoDtoResp qo2Dto(Dealers qo) {
 		SearchDealerInfoDtoResp dto = new SearchDealerInfoDtoResp();
 		dto.setId(qo.getDealerId());

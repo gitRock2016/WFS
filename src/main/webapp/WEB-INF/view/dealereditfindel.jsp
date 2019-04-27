@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <c:url value="/dlr/dlr_05/init" var="dlr05_init" />
-<c:url value="/dlr/dlr_01_01/show?reg=new" var="dlr_01_01_show" />
+<c:url value="/dlr/dlr_01/show?reg=new" var="dlr_01_show" />
 
 <div class="container">
 	<div class="page-header">

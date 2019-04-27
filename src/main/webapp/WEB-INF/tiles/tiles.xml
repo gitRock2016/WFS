@@ -25,6 +25,8 @@
  	<definition name="mainContents.baseLayoutCss" template="/WEB-INF/tiles/common/mainContents/layout_template1_css.jsp">
 		<put-list-attribute name="cssfiles">
 			<add-attribute value="honoka/bootstrap.css" />
+			<add-attribute value="wfs-common.css" />
+			<add-attribute value="layout_header.css" />
 		</put-list-attribute>
 	</definition>
 	
@@ -40,16 +42,70 @@
 	コントローラはdefinitionタグのname属性で指定された画面名を返却すること
 -->
 	<!-- contents -->
+	<!-- top画面 -->
+	<definition name="top" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="WFS"/>
+		<put-attribute name="body" value="/WEB-INF/view/top.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.top" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="top.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+
 	<!-- アカウント情報画面 -->
 	<definition name="accountinfo" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント情報"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountinfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountinfoJs" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountinfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.accountinfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="accountinfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
+	<!-- アカウント管理画面 -->
+	<definition name="accountmanager" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="アカウント管理"/>
+		<put-attribute name="body" value="/WEB-INF/view/accountmanager.jsp" />
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.accountmanager" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="accountmanager.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountmanager" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountmanager.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
 	<!-- アカウント登録画面 -->
 	<definition name="accountregist" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="アカウント登録"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.accountregist" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="accountregist.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
 	</definition>
 
 	<!-- ディーラー検索画面 -->
@@ -69,7 +125,7 @@
 	<definition name="accountregistfin" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラー登録完了"/>
 		<put-attribute name="body" value="/WEB-INF/view/accountregistfin.jsp" />
-	</definition>	
+	</definition>
 	
 	<!-- ディーラー情報登録画面 -->
 	<definition name="dealerregist" extends="mainContents.baseLayout">
@@ -129,17 +185,98 @@
 		<put-attribute name="body" value="/WEB-INF/view/dealerregistfin.jsp" />
 	</definition>
 	
-	<!-- ディーラー情報登録編集完了 -->
-	<!-- TODO 仕様にないので後で削除 -->
-	<definition name="dealereditfinreg" extends="mainContents.baseLayout">
- 		<put-attribute name="titleName" value="ディーラ情報登録編集完了"/>
-		<put-attribute name="body" value="/WEB-INF/view/dealereditfinreg.jsp" />
-	</definition>
-	
 	<!-- ディーラー情報削除完了 -->
 	<definition name="dealereditfindel" extends="mainContents.baseLayout">
  		<put-attribute name="titleName" value="ディーラ情報削除完了画面"/>
 		<put-attribute name="body" value="/WEB-INF/view/dealereditfindel.jsp" />
 	</definition>
+	
+	<!-- 作品情報画面 -->
+	<definition name="workinfo" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品情報"/>
+		<put-attribute name="body" value="/WEB-INF/view/workinfo.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workinfo" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workinfo.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workinfo" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workinfo.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	<!-- 作品検索画面 -->
+	<definition name="worksearch" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品検索"/>
+		<put-attribute name="body" value="/WEB-INF/view/worksearch.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.worksearch" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="worksearch.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.worksearch" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="worksearch.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
 
+	<!-- 作品登録画面 -->
+	<definition name="workregist" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workregist" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workregist.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workregist" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workregist.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	<!-- 作品登録完了 -->
+	<definition name="workregistfin" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録完了"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregistfin.jsp" />
+	</definition>
+	
+	<!-- 作品情報編集 -->
+	<definition name="workedit" extends="mainContents.baseLayout">
+ 		<put-attribute name="titleName" value="作品登録編集"/>
+		<put-attribute name="body" value="/WEB-INF/view/workregist.jsp" />
+		<put-attribute name="headerJs">
+			<definition name="mainContents.baseLayoutJs.workedit" extends="mainContents.baseLayoutJs">
+				<put-list-attribute name="jsfiles" inherit="true">
+					<add-attribute value="workedit.js" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+		<put-attribute name="headerCss">
+			<definition name="mainContents.baseLayoutCss.workedit" extends="mainContents.baseLayoutCss">
+				<put-list-attribute name="cssfiles" inherit="true">
+					<add-attribute value="workregist.css" />
+				</put-list-attribute>
+			</definition>
+		</put-attribute>
+	</definition>
+	
+	
+	
 </tiles-definitions>

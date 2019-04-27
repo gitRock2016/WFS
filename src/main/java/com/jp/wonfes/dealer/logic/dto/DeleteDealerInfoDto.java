@@ -1,6 +1,5 @@
 package com.jp.wonfes.dealer.logic.dto;
 
-import com.jp.wonfes.dealer.controller.form.DealerEditForm;
 import com.jp.wonfes.dealer.controller.form.DealerRegistForm;
 
 public class DeleteDealerInfoDto {

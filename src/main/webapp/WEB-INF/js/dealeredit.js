@@ -3,7 +3,7 @@ if (typeof wfs.dealeredit === "undefined") {
 }
 
 wfs.dealeredit.action = {}
-wfs.dealeredit.action.edit = "/" + wfs.com.cont + "/dlr/dlr_01_01/edit";
+wfs.dealeredit.action.edit = "/" + wfs.com.cont + "/dlr/dlr_01/edit";
 wfs.dealeredit.action.del = "/" + wfs.com.cont + "/dlr/dlr_01_04/delete";
 
 // btnObjは押下したボタンを表すJQオブジェクト

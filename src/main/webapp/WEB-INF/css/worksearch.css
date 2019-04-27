@@ -1,0 +1,20 @@
+/* •K—v‚É‰ž‚¶’è‹`‚·‚é*/
+input#priceFrom{
+	width:40%;
+}
+input#priceTo{
+	width:40%;
+}
+form#workSearchForm div#priceGroup{
+	display: flex;
+	
+}
+form#workSearchForm div#priceGroup input{
+	vertical-align:middle;
+}
+form#workSearchForm div#priceGroup span{
+	vertical-align:middle;
+	margin-top: 7px;
+	margin-left: 3px;
+	margin-right: 3px;
+}

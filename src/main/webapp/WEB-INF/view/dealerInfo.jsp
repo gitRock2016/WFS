@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<c:url value="/wrk/wrk_01/init/${dealerInfoForm.id }?reg=new" var="workRegistUrl" />
 <div class="container">
 	<div class="page-header">
 		<h1>ディーラー情報画面</h1>
@@ -62,13 +63,13 @@
 		</div>
 		<div class="form-group">
 			<button type="button" class="btn btn-primary" id="dealerEditBtn">ディーラ登録編集</button>
-			<button type="button" class="btn btn-primary" id="productRegBtn">作品登録</button>
+			<button type="button" class="btn btn-primary" id="productRegBtn" onclick='location.href="${workRegistUrl}"'>作品登録</button>
 		</div>
 	</div>
 
 	<div class="col-lg-12">
 		<div class="bs-component">
-			<table class="table table-striped table-hover table-bordered">
+			<table class="table table-striped table-hover table-bordered" id="searchResultDealerInfo">
 				<thead>
 					<tr>
 						<th>作品名</th>
@@ -80,7 +81,11 @@
 						<c:forEach var="obj" items="${dealerInfoForm.productList}"
 							varStatus="obj_status">
 							<tr class="table-info">
-								<td><c:out value="${obj.productName}" /></td>
+								<td>
+									<input type="hidden" value="${obj.productName }" name="productName_${obj_status.count} }"/>
+									<input type="hidden" value="${obj.dealerId }" name="dealerId_${obj_status.count} }"/>
+									<input type="hidden" value="${obj.productId }" name="productId_${obj_status.count} }"/>
+								</td>
 								<td><c:out value="${obj.price}" /></td>
 							</tr>
 						</c:forEach>

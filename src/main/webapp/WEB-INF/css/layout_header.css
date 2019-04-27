@@ -1,0 +1,16 @@
+/* bootstrap‚Ìã‘‚« */
+/* header‘S‘Ì*/
+div#header .container{
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-size:contain;
+}
+/* header ƒƒjƒ…[æ“ª*/
+div#header .navbar-default{
+	background-image: url("/WonFesSys/img/header2.jpg");
+}
+div#header .navbar-default a{
+	color: #009999;
+}
+
+

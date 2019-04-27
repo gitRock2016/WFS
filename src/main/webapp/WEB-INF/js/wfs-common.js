@@ -28,7 +28,7 @@ wfs.com={
 			get:function(childUrl){
 				const s = childUrl.substr(0,1);
 				// よく間違えそうな誤りだけチェック
-				if(s!=="/"){alert("URL指定誤り、先頭の/は不要です：");} 
+				if (s !== "/") {childUrl = "/" + childUrl} 
 				return wfs.com.baseUrl+childUrl;
 			}
 		}
@@ -114,13 +114,6 @@ wfs.com.getFormatTakuban = function(val) {
 // 共通関数定義
 //--------------------------------------------------------------------------v
 
-// TODO ajax用に変更すること
-wfs.do_ajax=function(data){
-	let name = $("#dealerName").val();
-	alert("do_ajax関数の起動"+data+name);
-}
-	
-
 /**
  * inputFileId, type="file"オブジェクトのIDを指定する
  * previewObjId, プレビュー表示させたいimgオブジェクトのIDを指定する
@@ -152,5 +145,74 @@ wfs.imgPreview=function(inputFileId, previewObjId){
 //	});
 //
 //}
+
+
+wfs.katakanaToHiragana = function(str){
+	return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+		var chr = match.charCodeAt(0) - 0x60;
+		return String.fromCharCode(chr);
+	});
+}
+
+/**
+ * ソートする
+ * 昇順にソート
+ * ひらがな：あ、い、・・・
+ * 数値：１，２，・・・
+ * 対応：数値、ひらがな、カタカナ
+ */
+wfs.sortAscMoji = function(a, b) {
+	let aa = wfs.katakanaToHiragana(a.toString());
+	let bb = wfs.katakanaToHiragana(b.toString());
+	if(aa < bb){
+		return -1;
+	}else if(aa > bb){
+		return 1
+	}else{
+		return 0;
+	}
+}
+
+wfs.sortAscNum = function(a, b) {
+	return a - b;
+}
+
+wfs.sortDescNum = function(a, b){
+	return -1 * wfs.sortAscNum(a, b);
+}
+
+/**
+ * Class
+ * */
+
+WfsSortObj = function (key, obj){
+	this.key=key; // ソートするためのキー
+	this.obj=obj; // ソートされるオブジェクト 
+}
+WfsSortObj.prototype.getKey = function(){
+	return this.key;
+}
+WfsSortObj.prototype.getObj= function(){
+	return this.obj;
+}
+
+WfsSortFactory = function() {
+	this.sorts = []; // WfsSortObjを格納する
+	this.sorteds = []; // ソート済のWfsSortObj
+}
+WfsSortFactory.prototype.setWfsSort = function(wfsSortObj) {
+	this.sorts.push(wfsSortObj);
+}
+WfsSortFactory.prototype.sort = function(f) {
+	this.sorteds = this.sorts.concat();
+	this.sorteds = this.sorteds.sort(function(a, b) {
+		let akey = a.getKey();
+		let bkey = b.getKey();
+		return f(akey, bkey);
+	})
+}
+WfsSortFactory.prototype.getSorts = function() {
+	return this.sorteds;
+}
 
 

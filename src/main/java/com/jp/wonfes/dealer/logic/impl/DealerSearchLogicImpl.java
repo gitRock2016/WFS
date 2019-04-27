@@ -19,8 +19,9 @@ import com.jp.wonfes.dealer.dao.mapper.DealerSearchMapper;
 import com.jp.wonfes.dealer.dao.qo.SelectDealersCategoriesQoResp;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoReq;
 import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoDtoResp;
+import com.jp.wonfes.dealer.logic.dto.SearchDealerInfoProductDtoResp;
 import com.jp.wonfes.domain.code.BusinessClassificationCd;
-import com.jp.wonfes.service.dao.WfsDataException;
+import com.jp.wonfes.domain.excp.WfsDataException;
 
 @Service
 public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerSearchLogic {
@@ -32,7 +33,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 	private DealerSearchMapper dealerSearchMapper;
 	@Autowired
 	private DealersDetailProductsMapper dealersDetailProductsMapper;
-	// 課題No38のためモックで取得するためコメントアウト
+	// 課題No38のため
 //	@Autowired
 //	private DealersDetailProductsCategoriesMapper dealersDetailProductsCategoriesMapper;
 //	@Autowired
@@ -68,12 +69,11 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		resp.setTakuban(d.getTakuban());
 		resp.setBusinessClassification(d.getBussinesType());
 		resp.setBusinessClassificationLabel(BusinessClassificationCd.getByCode(d.getBussinesType()).getName());
-		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法
-		// 暫定でモック対応
+		// TODO 課題No38　マスタテーブルから値を取得する汎用的な方法を適用したい、暫定でモック対応
 		resp.setProductFileds(this.getProductFiledsMock());
 		resp.setHpLink(d.getHpLink());
 		resp.setTwLink(d.getTwLink());
-		resp.setProductList(productList);
+		resp.setProductList(this.getQo2dto(productList));
 		
 		return resp;
 	}
@@ -101,9 +101,6 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 //			arrayList.add(SearchDealerInfoDtoResp.qo2Dto(qo));
 		}
 		
-		// 検索条件に作品分野が指定されている場合
-		// 検索結果を作品分野で絞り込む
-		// TODO Logicで絞り込むよりテーブル側で絞り込めるよう制御したほうが楽そう。独自DAOで絞り込んだ形で取得するか、ERを工夫するか検討
 		if ("NAN".equals(dto.getProductFiled()) ? false : true) {
 			List<SearchDealerInfoDtoResp> list = new ArrayList<SearchDealerInfoDtoResp>(arrayList.size());
 			Integer categoriesId = Integer.valueOf(dto.getProductFiled());
@@ -122,6 +119,19 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 		return arrayList;
 	}
 	
+	private List<SearchDealerInfoProductDtoResp> getQo2dto(List<DealersDetailProducts> productList) {
+		List<SearchDealerInfoProductDtoResp> list = new ArrayList<SearchDealerInfoProductDtoResp>();
+		for (DealersDetailProducts qo : productList) {
+			SearchDealerInfoProductDtoResp dto = new SearchDealerInfoProductDtoResp();
+			dto.setDealerId(qo.getDealerId());
+			dto.setProductId(qo.getProductId());
+			dto.setProductName(qo.getProductName());
+			dto.setPrice(qo.getPrice());
+			list.add(dto);
+		}
+		return list;
+	}
+
 	// モック
 	/**
 	 * マスタの名称を格納する
@@ -157,5 +167,7 @@ public class DealerSearchLogicImpl implements com.jp.wonfes.dealer.logic.DealerS
 			}
 		};
 	}
+
+
 
 }

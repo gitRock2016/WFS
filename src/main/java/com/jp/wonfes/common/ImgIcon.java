@@ -8,17 +8,11 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImgIcon {
 	
-//	@Autowired
-//	private WfsApplicationConf wfsApplicationConf; 
-	
-	private static final int iconFileNameMaxLength = 10;
+//	private static final int iconFileNameMaxLength = 10;
 	private static final String[] extentionList = {"jpeg","jpg","gif","png","BMP"};
 
 	private String dealerId;
@@ -31,9 +25,7 @@ public class ImgIcon {
 		this.dealerId = dealerId;
 		this.imgIcon = dealerIconImg;
 		this.imgIconName = this.getFormatIconName(dealerIconImg.getOriginalFilename());
-		// TODO window専用の対応
 		this.savePlaceByDealerId = wfsImgPath + "\\" + dealerId;
-//		this.savePlaceByDealerId = wfsApplicationConf.getWfsImgPath() + "\\" + dealerId;
 		this.ImgIconAbsoluteFileName = this.savePlaceByDealerId + "\\" + this.imgIconName;
 	}
 	
@@ -64,8 +56,6 @@ public class ImgIcon {
 
 	// 画像ファイルであるかどうか
 	public boolean isImgFile() {
-		// TODO extentionListに拡張子が含まれるかどうかを判定すること
-		// 暫定TRUE
 		List<String> l = Arrays.asList(extentionList);
 		return l.contains(this.getExtention());
 	}
