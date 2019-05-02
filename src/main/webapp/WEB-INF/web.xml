@@ -8,7 +8,7 @@
 	id="WebApp_ID" version="2.5">
 
 	<!-- git管理の都合により、プロジェクト名にあわせ変更。もともとは「WonFesSys」 -->
-	<display-name>WonFesSys2</display-name>
+	<display-name>WonFesSys</display-name>
 
 	 <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
